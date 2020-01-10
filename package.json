@@ -11,7 +11,8 @@
     "commander": "^4.1.0",
     "discord-akairo": "^7.5.6",
     "discord.js": "^11.5.1",
-    "esm": "^3.2.25"
+    "esm": "^3.2.25",
+    "signale": "^1.4.0"
   },
   "devDependencies": {},
   "scripts": {
