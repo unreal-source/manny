@@ -11,7 +11,7 @@ class ReadyListener extends Listener {
 
   async exec () {
     // Log connection state
-    log.info(`${this.client.user.username} successfully connected to ${this.client.guilds.first().name}. All systems operational.`)
+    log.success(`${this.client.user.username} successfully connected to ${this.client.guilds.first().name}. All systems operational.`)
   }
 }
 
