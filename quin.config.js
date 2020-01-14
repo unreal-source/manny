@@ -15,5 +15,8 @@ export default {
     blue: [77, 171, 247],
     violet: [151, 117, 250],
     pink: [250, 162, 193]
-  }
+  },
+
+  // Log channels
+  serverLogChannel: 'server-log'
 }
