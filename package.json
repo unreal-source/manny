@@ -17,10 +17,11 @@
     "signale": "^1.4.0"
   },
   "devDependencies": {
+    "snazzy": "^8.0.0",
     "standard": "^14.3.1"
   },
   "scripts": {
     "start": "node -r esm quin",
-    "test": "standard"
+    "test": "standard | snazzy"
   }
 }
