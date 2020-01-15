@@ -18,5 +18,6 @@ export default {
   },
 
   // Log channels
+  modLogChannel: 'mod-log',
   userLogChannel: 'user-log'
 }
