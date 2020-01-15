@@ -29,12 +29,12 @@ class GuildMemberAddListener extends Listener {
 
       // Check if the member joined Discord in the last 15 minutes
       if (timeSinceJoin.minutes <= 15) {
-        message+= ' :sparkles: `NEW TO DISCORD`'
+        message += ' :sparkles: `NEW TO DISCORD`'
       }
 
       // Check if the member is a bot
       if (member.user.bot) {
-        message+= ' :robot: `BOT`'
+        message += ' :robot: `BOT`'
       }
 
       return channel.send(message)

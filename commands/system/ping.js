@@ -6,7 +6,7 @@ class PingCommand extends Command {
       aliases: ['ping'],
       category: 'System',
       description: {
-        content: `Check the bot's latency.`,
+        content: 'Ping the bot to check its latency.',
         usage: '!ping'
       },
       channelRestriction: 'guild',

@@ -2,7 +2,7 @@ import { Command } from 'discord-akairo'
 import pkg from '../../package.json'
 
 class VersionCommand extends Command {
-  constructor() {
+  constructor () {
     super('version', {
       aliases: ['version'],
       category: 'System',

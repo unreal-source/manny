@@ -4,7 +4,7 @@ import path from 'path'
 class QuinClient extends AkairoClient {
   constructor (config, owner) {
     super({
-      //Akairo options
+      // Akairo options
       ownerId: owner,
       prefix: config.defaultPrefix,
       allowMention: true,
@@ -13,7 +13,7 @@ class QuinClient extends AkairoClient {
       commandDirectory: path.join(__dirname, '..', 'commands'),
       listenerDirectory: path.join(__dirname, '..', 'listeners')
     }, {
-      //Discord.js options
+      // Discord.js options
       disableEveryone: true,
       disabledEvents: ['TYPING_START']
     })

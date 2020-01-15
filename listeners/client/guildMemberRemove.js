@@ -17,7 +17,7 @@ class GuildMemberRemoveListener extends Listener {
 
     // Check if the member is a bot
     if (member.user.bot) {
-      message+= ' :robot: `BOT`'
+      message += ' :robot: `BOT`'
     }
 
     return channel.send(message)

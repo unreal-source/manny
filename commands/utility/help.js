@@ -19,7 +19,7 @@ class HelpCommand extends Command {
           optional: true,
           prompt: {
             start: 'Which command do you need help with?',
-            retry:'That is not a valid command. Please try again.',
+            retry: 'That is not a valid command. Please try again.',
             optional: true
           }
         }
@@ -33,8 +33,8 @@ class HelpCommand extends Command {
 
     // Initialize embed
     const embed = this.client.util.embed()
-    .setColor(config.embedColors.violet)
-    .setTitle('Command List')
+      .setColor(config.embedColors.violet)
+      .setTitle('Command List')
 
     // !help - List all commands available to the user
     if (!command) {
@@ -75,10 +75,10 @@ class HelpCommand extends Command {
 
       // Fill out embed
       embed
-      .setTitle(`${this.client.config.commandPrefix}${command.id}`)
-      .setDescription(command.description.content)
-      .addField('Usage', `\`\`\`${command.description.usage}\`\`\``)
-      .addField('Arguments', argsField)
+        .setTitle(`${this.client.config.commandPrefix}${command.id}`)
+        .setDescription(command.description.content)
+        .addField('Usage', `\`\`\`${command.description.usage}\`\`\``)
+        .addField('Arguments', argsField)
 
       // Only send this embed via DM
       if (message.channel.type !== 'dm') {

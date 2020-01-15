@@ -35,7 +35,7 @@ class UserInfoCommand extends Command {
 
     // Human-friendly date when this user joined Discord
     const discordJoinDate = DateTime.fromISO(member.user.createdAt.toISOString())
-    
+
     // Human-friendly date when this user joined the guild
     const guildJoinDate = DateTime.fromISO(member.joinedAt.toISOString())
 
@@ -52,14 +52,14 @@ class UserInfoCommand extends Command {
 
     // Initialize & populate embed
     const embed = this.client.util.embed()
-    .setColor(config.embedColors.violet)
-    .setThumbnail(avatar)
-    .setTitle(member.user.bot ? `${member.displayName} (${status[member.presence.status]}) :robot:` :  `${member.displayName} (${status[member.presence.status]})`)
-    .addField('Username', member.user.tag, true)
-    .addField('ID', member.id, true)
-    .addField(`Joined Server`, `${guildJoinDate.toLocaleString(DateTime.DATE_SHORT)} ${guildJoinDate.toLocaleString(DateTime.TIME_SIMPLE)} ${guildJoinDate.offsetNameShort}`)
-    .addField('Joined Discord', `${discordJoinDate.toLocaleString(DateTime.DATE_SHORT)} ${discordJoinDate.toLocaleString(DateTime.TIME_SIMPLE)} ${discordJoinDate.offsetNameShort}`)
-    .addField('Last Seen', `${lastMessageDate.toLocaleString(DateTime.DATE_SHORT)} ${lastMessageDate.toLocaleString(DateTime.TIME_SIMPLE)} ${lastMessageDate.offsetNameShort}`)
+      .setColor(config.embedColors.violet)
+      .setThumbnail(avatar)
+      .setTitle(member.user.bot ? `${member.displayName} (${status[member.presence.status]}) :robot:` : `${member.displayName} (${status[member.presence.status]})`)
+      .addField('Username', member.user.tag, true)
+      .addField('ID', member.id, true)
+      .addField('Joined Server', `${guildJoinDate.toLocaleString(DateTime.DATE_SHORT)} ${guildJoinDate.toLocaleString(DateTime.TIME_SIMPLE)} ${guildJoinDate.offsetNameShort}`)
+      .addField('Joined Discord', `${discordJoinDate.toLocaleString(DateTime.DATE_SHORT)} ${discordJoinDate.toLocaleString(DateTime.TIME_SIMPLE)} ${discordJoinDate.offsetNameShort}`)
+      .addField('Last Seen', `${lastMessageDate.toLocaleString(DateTime.DATE_SHORT)} ${lastMessageDate.toLocaleString(DateTime.TIME_SIMPLE)} ${lastMessageDate.offsetNameShort}`)
 
     // Send embed
     return message.util.send({ embed })

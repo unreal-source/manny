@@ -65,7 +65,7 @@ class PurgeCommand extends Command {
         log.error(error)
 
         // Notify the message author that message deletion failed
-        return message.util.send(`Failed to delete messages. Check the logs for more details.`)
+        return message.util.send('Failed to delete messages. Check the logs for more details.')
       }
     } else {
       // Fetch the requested number of messages from this channel

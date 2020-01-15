@@ -37,13 +37,13 @@ class ServerInfoCommand extends Command {
 
     // Initialize & populate embed
     const embed = this.client.util.embed()
-    .setColor(config.embedColors.violet)
-    .setTitle(guild.name)
-    .setDescription(config.serverDescription)
-    .setThumbnail(guildIcon)
-    .addField('Creation Date', `${creationDate.toLocaleString(DateTime.DATE_SHORT)} ${creationDate.toLocaleString(DateTime.TIME_SIMPLE)} ${creationDate.offsetNameShort}`, true)
-    .addField('Members', `${totalMembers} (${onlineMembers} online)`, true)
-    .addField('Invite', `https://discord.gg/${inviteCode}`)
+      .setColor(config.embedColors.violet)
+      .setTitle(guild.name)
+      .setDescription(config.serverDescription)
+      .setThumbnail(guildIcon)
+      .addField('Creation Date', `${creationDate.toLocaleString(DateTime.DATE_SHORT)} ${creationDate.toLocaleString(DateTime.TIME_SIMPLE)} ${creationDate.offsetNameShort}`, true)
+      .addField('Members', `${totalMembers} (${onlineMembers} online)`, true)
+      .addField('Invite', `https://discord.gg/${inviteCode}`)
 
     // Send the embed
     return message.util.send({ embed })

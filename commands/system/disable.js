@@ -19,7 +19,7 @@ class DisableCommand extends Command {
           description: 'The command to disable',
           prompt: {
             start: 'Which command do you want to disable?',
-            retry: `That is not a valid command. Please try again.`
+            retry: 'That is not a valid command. Please try again.'
           }
         }
       ]

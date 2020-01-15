@@ -19,7 +19,7 @@ class EnableCommand extends Command {
           description: 'The command to enable',
           prompt: {
             start: 'Which command do you want to enable?',
-            retry: `That is not a valid command. Please try again.`
+            retry: 'That is not a valid command. Please try again.'
           }
         }
       ]
