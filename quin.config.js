@@ -18,5 +18,5 @@ export default {
   },
 
   // Log channels
-  serverLogChannel: 'server-log'
+  userLogChannel: 'user-log'
 }
