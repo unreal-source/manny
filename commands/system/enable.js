@@ -30,6 +30,9 @@ class EnableCommand extends Command {
     // Get command object
     const command = await this.handler.modules.get(args.command.id)
 
+    // Get mod log channel
+    const logChannel = await this.client.channels.find(channel => channel.name === this.client.config.modLogChannel)
+
     // Is the command already enabled?
     if (command.enabled) {
       return message.util.send(`:information_source: The **${args.command}** command is already enabled.`)
@@ -37,6 +40,9 @@ class EnableCommand extends Command {
 
     // Enable command
     await command.enable()
+
+    // Log action
+    logChannel.send(`:white_check_mark: ${message.author} enabled the **${command.id}** command.`)
 
     // Send response
     return message.util.send(`:white_check_mark: The **${args.command}** command is now **enabled**.`)

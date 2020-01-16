@@ -30,6 +30,9 @@ class DisableCommand extends Command {
     // Get command object
     const command = await this.handler.modules.get(args.command.id)
 
+    // Get mod log channel
+    const logChannel = await this.client.channels.find(channel => channel.name === this.client.config.modLogChannel)
+
     // Is the command protected?
     if (command.protected) {
       return message.util.send(`:warning: The **${args.command}** command is **protected** and can't be disabled.`)
@@ -42,6 +45,9 @@ class DisableCommand extends Command {
 
     // Disable command
     await command.disable()
+
+    // Log action
+    logChannel.send(`:no_entry_sign: ${message.author} disabled the **${command.id}** command.`)
 
     // Send response
     return message.util.send(`:no_entry_sign: The **${args.command}** command is now **disabled.**`)
