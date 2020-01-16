@@ -24,7 +24,7 @@ While it's not required, in most cases you'll want to test your new functionalit
 4. If you haven't already, spin up a new Discord server and invite your bot to it.
 5. Run the bot locally: `node -r esm quin -t <your-app-token>`
 
-When you're ready, submit a Pull Request and wait for your changes to be reviewed!
+When you're ready, [submit a Pull Request](https://github.com/unreal-slackers/quin/compare) and wait for your changes to be reviewed!
 
 ## Links
 - Discord.js - [Docs](https://discord.js.org/#/docs/main/stable/general/welcome) | [Guide](https://discordjs.guide/) | [Source](https://github.com/discordjs/discord.js)
