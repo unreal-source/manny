@@ -10,7 +10,7 @@ class CommandDisabledListener extends Listener {
   }
 
   async exec (command) {
-    // Get the server log channel
+    // Get the mod log channel
     const channel = await this.client.channels.find(c => c.name === this.client.config.modLogChannel)
 
     // Log for debugging
