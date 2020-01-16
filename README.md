@@ -1,2 +1,2 @@
 # Quin
-The successor to Unrealbot
+The successor to Unrealbot and AAICharacter
