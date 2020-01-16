@@ -46,6 +46,9 @@ class PurgeCommand extends Command {
   }
 
   async exec (message, { amount, author }) {
+    // Get mod log channel
+    const logChannel = await this.client.channels.find(channel => channel.name === this.client.config.modLogChannel)
+
     // Delete the message containing the command
     await message.delete()
 
@@ -59,7 +62,10 @@ class PurgeCommand extends Command {
         const filteredMessages = await messages.filter(message => message.author.id === author.id).first(amount)
 
         // Delete the messages
-        return message.channel.bulkDelete(filteredMessages)
+        await message.channel.bulkDelete(filteredMessages)
+
+        // Log action
+        return logChannel.send(`:x: **${message.author.username}** deleted ${amount} ${amount > 1 ? 'messages' : 'message'} from **${author.tag}** in ${message.channel}.`)
       } catch (error) {
         // Log the error for debugging
         log.error(error)
@@ -69,7 +75,10 @@ class PurgeCommand extends Command {
       }
     } else {
       // Fetch the requested number of messages from this channel
-      return message.channel.bulkDelete(amount)
+      await message.channel.bulkDelete(amount)
+
+      // Log action
+      return logChannel.send(`:x: **${message.author.tag}** deleted ${amount} ${amount > 1 ? 'messages' : 'message'} in ${message.channel}.`)
     }
   }
 }
