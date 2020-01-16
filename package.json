@@ -1,7 +1,7 @@
 {
   "name": "quin",
   "version": "0.0.0",
-  "description": "The successor to Unrealbot",
+  "description": "The successor to Unrealbot and AAICharacter",
   "main": "quin.js",
   "engines": {
     "node": "^12.10.0"
