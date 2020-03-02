@@ -13,7 +13,7 @@
     "discord.js": "^11.5.1",
     "esm": "^3.2.25",
     "luxon": "^1.22.0",
-    "pretty-ms": "^6.0.0",
+    "pretty-ms": "^6.0.1",
     "signale": "^1.4.0"
   },
   "devDependencies": {
