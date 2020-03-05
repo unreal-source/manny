@@ -5,7 +5,8 @@ import pkg from './package.json'
 import * as Sentry from '@sentry/node'
 
 // CLI
-cli.version(pkg.version)
+cli
+  .version(pkg.version)
   .option('-t, --token <token>', 'Bot token')
   .option('-o, --owner <id>', 'Owner ID')
   .option('-s, --sentry <dsn>', 'Sentry DSN')
