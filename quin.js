@@ -58,6 +58,7 @@ class QuinClient extends AkairoClient {
     })
 
     this.commandHandler.loadAll()
+    this.commandHandler.useListenerHandler(this.listenerHandler)
 
     // Listeners
     this.listenerHandler = new ListenerHandler(this, {
@@ -65,7 +66,6 @@ class QuinClient extends AkairoClient {
     })
 
     this.listenerHandler.loadAll()
-    this.commandHandler.useListenerHandler(this.listenerHandler)
   }
 }
 
