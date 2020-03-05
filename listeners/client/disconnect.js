@@ -5,13 +5,13 @@ class DisconnectListener extends Listener {
   constructor () {
     super('disconnect', {
       emitter: 'client',
-      eventName: 'disconnect'
+      event: 'disconnect'
     })
   }
 
   async exec () {
     // Log connection state
-    log.info(`${this.client.user.username} disconnected from ${this.client.guilds.first().name}.`)
+    log.info(`${this.client.user.username} disconnected from ${this.client.guilds.cache.first().name}.`)
   }
 }
 
