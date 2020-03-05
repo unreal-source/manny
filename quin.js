@@ -1,6 +1,7 @@
 import { AkairoClient, CommandHandler, ListenerHandler } from 'discord-akairo'
 import cli from 'commander'
 import config from './quin.config.js'
+import log from './util/logger.js'
 import pkg from './package.json'
 import * as Sentry from '@sentry/node'
 
@@ -71,3 +72,9 @@ class QuinClient extends AkairoClient {
 const client = new QuinClient()
 
 client.login(token)
+
+// Handle promise rejections
+process.on('unhandledRejection', err => {
+  log.error('Unhandled Promise Rejection!')
+  log.error(err)
+})
