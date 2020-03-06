@@ -6,14 +6,14 @@ class GuildMemberAddListener extends Listener {
   constructor () {
     super('guildMemberAdd', {
       emitter: 'client',
-      eventName: 'guildMemberAdd'
+      event: 'guildMemberAdd'
     })
   }
 
-  async exec (member) {
+  exec (member) {
     try {
       // Get the server log channel
-      const channel = this.client.channels.find(c => c.name === this.client.config.userLogChannel)
+      const channel = this.client.channels.cache.find(c => c.name === this.client.config.userLogChannel)
 
       // Initialize log message
       let message = `:inbox_tray: <@${member.user.id}> joined the server.`
