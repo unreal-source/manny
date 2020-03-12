@@ -1,4 +1,4 @@
-import { Command } from 'discord-akairo'
+import { Command, Argument } from 'discord-akairo'
 import log from '../../util/logger.js'
 
 class PurgeCommand extends Command {
@@ -11,43 +11,34 @@ class PurgeCommand extends Command {
         usage: '!purge <amount> [author]'
       },
       channelRestriction: 'guild',
-      userPermissions: ['BAN_MEMBERS'],
-      args: [
-        {
-          id: 'amount',
-          type: arg => {
-            // Fail if arg is empty or not a number
-            if (!arg || isNaN(arg)) return null
-            // Attempt to parse amount as integer
-            const amount = parseInt(arg)
-            // Amount must be between 1-50
-            if (amount < 1 || amount > 50) return null
-            // Return amount
-            return amount
-          },
-          description: 'The number of messages to delete. Max is 50.',
-          prompt: {
-            start: 'How many messages do you want to delete?',
-            retry: 'Please enter a number between 1 and 50.'
-          }
-        },
-        {
-          id: 'author',
-          type: 'relevant',
-          description: 'The author of the messages you want to delete.',
-          prompt: {
-            start: 'Enter the username or ID of the author.',
-            retry: 'Please enter a valid username or ID.',
-            optional: true
-          }
-        }
-      ]
+      userPermissions: ['BAN_MEMBERS']
     })
   }
 
-  async exec (message, { amount, author }) {
+  * args () {
+    const count = yield {
+      type: Argument.range('number', 1, 50, true),
+      prompt: {
+        start: 'How many messages do you want to delete?',
+        retry: 'Please enter a number between 1 and 50.'
+      }
+    }
+
+    const author = yield {
+      type: 'member',
+      prompt: {
+        start: 'Enter the username or ID of the author.',
+        retry: 'Please enter a valid username or ID.',
+        optional: true
+      }
+    }
+
+    return { count, author }
+  }
+
+  async exec (message, { count, author }) {
     // Get mod log channel
-    const logChannel = await this.client.channels.find(channel => channel.name === this.client.config.modLogChannel)
+    const logChannel = await this.client.channels.cache.find(channel => channel.name === this.client.config.modLogChannel)
 
     // Delete the message containing the command
     await message.delete()
@@ -56,16 +47,16 @@ class PurgeCommand extends Command {
     if (author) {
       try {
         // Fetch the requested number of messages from this channel
-        const messages = await message.channel.fetchMessages()
+        const messages = await message.channel.messages.fetch()
 
         // Filter for messages by the provided author
-        const filteredMessages = await messages.filter(message => message.author.id === author.id).first(amount)
+        const filteredMessages = await messages.filter(message => message.author.id === author.id).first(count)
 
         // Delete the messages
         await message.channel.bulkDelete(filteredMessages)
 
         // Log action
-        return logChannel.send(`:x: **${message.author.username}** deleted ${amount} ${amount > 1 ? 'messages' : 'message'} from **${author.tag}** in ${message.channel}.`)
+        return logChannel.send(`:x: **${message.author.username}** deleted ${count} ${count > 1 ? 'messages' : 'message'} from **${author.tag}** in ${message.channel}.`)
       } catch (error) {
         // Log the error for debugging
         log.error(error)
@@ -75,10 +66,10 @@ class PurgeCommand extends Command {
       }
     } else {
       // Fetch the requested number of messages from this channel
-      await message.channel.bulkDelete(amount)
+      await message.channel.bulkDelete(count)
 
       // Log action
-      return logChannel.send(`:x: **${message.author.tag}** deleted ${amount} ${amount > 1 ? 'messages' : 'message'} in ${message.channel}.`)
+      return logChannel.send(`:x: **${message.author.tag}** deleted ${count} ${count > 1 ? 'messages' : 'message'} in ${message.channel}.`)
     }
   }
 }
