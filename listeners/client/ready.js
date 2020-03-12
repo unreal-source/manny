@@ -5,13 +5,13 @@ class ReadyListener extends Listener {
   constructor () {
     super('ready', {
       emitter: 'client',
-      eventName: 'ready'
+      event: 'ready'
     })
   }
 
   async exec () {
     // Log connection state
-    log.success(`${this.client.user.username} successfully connected to ${this.client.guilds.first().name}. All systems operational.`)
+    log.success(`${this.client.user.username} successfully connected to ${this.client.guilds.cache.first().name}. All systems operational.`)
   }
 }
 

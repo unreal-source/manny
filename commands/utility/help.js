@@ -10,26 +10,27 @@ class HelpCommand extends Command {
         content: 'Get a list of commands for the bot.',
         usage: '!help [command]'
       },
-      userPermissions: ['SEND_MESSAGES'],
-      args: [
-        {
-          id: 'command',
-          type: 'commandAlias',
-          description: 'The command you want to learn more about',
-          optional: true,
-          prompt: {
-            start: 'Which command do you need help with?',
-            retry: 'That is not a valid command. Please try again.',
-            optional: true
-          }
-        }
-      ]
+      userPermissions: ['SEND_MESSAGES']
     })
   }
 
-  async exec (message, { command }) {
+  * args () {
+    const command = yield {
+      type: 'command',
+      optional: true,
+      prompt: {
+        start: 'Which command do you need help with?',
+        retry: 'That is not a valid command. Please try again.',
+        optional: true
+      }
+    }
+
+    return { command }
+  }
+
+  exec (message, { command }) {
     // Get the user as a guild member
-    const member = this.client.guilds.first().member(message.author)
+    const member = this.client.guilds.cache.first().member(message.author)
 
     // Initialize embed
     const embed = this.client.util.embed()
@@ -70,15 +71,12 @@ class HelpCommand extends Command {
 
     // !help [command] - Give detailed instructions for a command
     if (member.permissions.has(command.userPermissions)) {
-      // Command arguments
-      const argsField = command.args.length ? command.args.map(arg => `**${arg.id}** - ${arg.description}`) : 'No arguments'
-
       // Fill out embed
       embed
         .setTitle(`${this.client.config.commandPrefix}${command.id}`)
         .setDescription(command.description.content)
         .addField('Usage', `\`\`\`${command.description.usage}\`\`\``)
-        .addField('Arguments', argsField)
+        .addField('Arguments', command.args ? command.args.map(arg => `**${arg.id}** - ${arg.description}`) : 'No arguments')
 
       // Only send this embed via DM
       if (message.channel.type !== 'dm') {
