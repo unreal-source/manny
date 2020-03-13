@@ -11,7 +11,7 @@ class PurgeCommand extends Command {
         usage: '!purge <amount> [author]'
       },
       channelRestriction: 'guild',
-      userPermissions: ['BAN_MEMBERS']
+      memberPermissions: ['BAN_MEMBERS']
     })
   }
 
@@ -24,33 +24,33 @@ class PurgeCommand extends Command {
       }
     }
 
-    const user = yield {
+    const member = yield {
       type: 'member',
       prompt: {
-        start: 'Enter the username or ID of the author.',
-        retry: 'Please enter a valid username or ID.',
+        start: 'Enter the @username or ID of the member.',
+        retry: 'Please enter a valid membername or ID.',
         optional: true
       }
     }
 
-    return { count, user }
+    return { count, member }
   }
 
-  async exec (message, { count, user }) {
+  async exec (message, { count, member }) {
     const logChannel = this.client.channels.cache.find(channel => channel.name === this.client.config.modLogChannel)
 
     // Delete the message containing the command
     await message.delete()
 
-    // If user is provided, only delete messages from that user
-    if (user) {
+    // If member is provided, only delete messages from that member
+    if (member) {
       try {
         const messages = await message.channel.messages.fetch()
-        const filteredMessages = await messages.filter(message => message.user.id === user.id).first(count)
+        const filteredMessages = await messages.filter(message => message.author.id === member.id).first(count)
 
         await message.channel.bulkDelete(filteredMessages)
 
-        return logChannel.send(`:x: **${message.user.username}** deleted ${count} ${count > 1 ? 'messages' : 'message'} from **${user.tag}** in ${message.channel}.`)
+        return logChannel.send(`:x: **${message.author.tag}** deleted ${count} ${count > 1 ? 'messages' : 'message'} from **${member.user.tag}** in ${message.channel}.`)
       } catch (error) {
         log.error(error)
 
