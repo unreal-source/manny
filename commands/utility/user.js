@@ -32,9 +32,7 @@ class UserInfoCommand extends Command {
 
   async exec (message, { member }) {
     const discordJoinDate = DateTime.fromISO(member.user.createdAt.toISOString())
-
     const guildJoinDate = DateTime.fromISO(member.joinedAt.toISOString())
-
     const lastMessageDate = DateTime.fromISO(member.lastMessage.createdAt.toISOString())
 
     const status = {
