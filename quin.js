@@ -54,7 +54,7 @@ class QuinClient extends AkairoClient {
       allowMention: true,
       commandUtil: true,
       handleEdits: true,
-      prefix: config.commandPrefix
+      prefix: config.defaultPrefix
     })
 
     this.commandHandler.loadAll()

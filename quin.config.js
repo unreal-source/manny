@@ -1,6 +1,6 @@
 export default {
-  // Used as the prefix for commands, e.g. !ping
-  commandPrefix: '!',
+  // Default prefix for all commands
+  defaultPrefix: '!',
 
   // Appears under the server name when the Server Info command is used
   serverDescription: '',
