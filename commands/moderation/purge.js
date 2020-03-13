@@ -24,7 +24,7 @@ class PurgeCommand extends Command {
       }
     }
 
-    const author = yield {
+    const user = yield {
       type: 'member',
       prompt: {
         start: 'Enter the username or ID of the author.',
@@ -33,44 +33,34 @@ class PurgeCommand extends Command {
       }
     }
 
-    return { count, author }
+    return { count, user }
   }
 
-  async exec (message, { count, author }) {
-    // Get mod log channel
-    const logChannel = await this.client.channels.cache.find(channel => channel.name === this.client.config.modLogChannel)
+  async exec (message, { count, user }) {
+    const logChannel = this.client.channels.cache.find(channel => channel.name === this.client.config.modLogChannel)
 
     // Delete the message containing the command
     await message.delete()
 
-    // If an author is provided, filter for messages by that author
-    if (author) {
+    // If user is provided, only delete messages from that user
+    if (user) {
       try {
-        // Fetch the requested number of messages from this channel
         const messages = await message.channel.messages.fetch()
+        const filteredMessages = await messages.filter(message => message.user.id === user.id).first(count)
 
-        // Filter for messages by the provided author
-        const filteredMessages = await messages.filter(message => message.author.id === author.id).first(count)
-
-        // Delete the messages
         await message.channel.bulkDelete(filteredMessages)
 
-        // Log action
-        return logChannel.send(`:x: **${message.author.username}** deleted ${count} ${count > 1 ? 'messages' : 'message'} from **${author.tag}** in ${message.channel}.`)
+        return logChannel.send(`:x: **${message.user.username}** deleted ${count} ${count > 1 ? 'messages' : 'message'} from **${user.tag}** in ${message.channel}.`)
       } catch (error) {
-        // Log the error for debugging
         log.error(error)
 
-        // Notify the message author that message deletion failed
-        return message.util.send('Failed to delete messages. Check the logs for more details.')
+        return message.author.send('Failed to delete messages. Check the logs for more details.')
       }
-    } else {
-      // Fetch the requested number of messages from this channel
-      await message.channel.bulkDelete(count)
-
-      // Log action
-      return logChannel.send(`:x: **${message.author.tag}** deleted ${count} ${count > 1 ? 'messages' : 'message'} in ${message.channel}.`)
     }
+
+    await message.channel.bulkDelete(count)
+
+    return logChannel.send(`:x: **${message.author.tag}** deleted ${count} ${count > 1 ? 'messages' : 'message'} in ${message.channel}.`)
   }
 }
 
