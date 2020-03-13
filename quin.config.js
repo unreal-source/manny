@@ -2,10 +2,13 @@ export default {
   // Default prefix for all commands
   defaultPrefix: '!',
 
-  // Appears under the server name when the Server Info command is used
+  // Displayed with the Server Info command
   serverDescription: '',
 
-  // Can be used to color the left border on embeds
+  // Used for flagging members who are new to Discord
+  newToDiscordThreshold: 15,
+
+  // Used to color the left border on embeds
   embedColors: {
     red: [255, 107, 107],
     orange: [255, 169, 77],
