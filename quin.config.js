@@ -2,9 +2,6 @@ export default {
   // Default prefix for all commands
   defaultPrefix: '!',
 
-  // Displayed with the Server Info command
-  serverDescription: '',
-
   // Used for flagging members who are new to Discord
   newToDiscordThreshold: 15,
 
@@ -18,6 +15,13 @@ export default {
     blue: [77, 171, 247],
     violet: [151, 117, 250],
     pink: [250, 162, 193]
+  },
+
+  // Useful links
+  links: {
+    github: 'https://github.com/unrealcommons',
+    twitter: 'https://twitter.com/unrealcommons',
+    website: 'https://unrealcommons.org'
   },
 
   // Log channels
