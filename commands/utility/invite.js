@@ -15,8 +15,7 @@ class InviteCommand extends Command {
   }
 
   exec (message) {
-    // Reply with invite link
-    return message.util.send(`https://discord.gg/${message.guild.fetchVanityCode()}`)
+    return message.util.send(`https://discord.gg/${message.guild.vanityURLCode}`)
   }
 }
 

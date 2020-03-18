@@ -9,8 +9,7 @@ class ReadyListener extends Listener {
     })
   }
 
-  async exec () {
-    // Log connection state
+  exec () {
     log.success(`${this.client.user.username} successfully connected to ${this.client.guilds.cache.first().name}. All systems operational.`)
   }
 }

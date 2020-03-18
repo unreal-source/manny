@@ -13,19 +13,15 @@ cli
   .option('-s, --sentry <dsn>', 'Sentry DSN')
   .parse(process.argv)
 
-const token = cli.token ? cli.token : process.env.BOT_TOKEN
-const owner = cli.owner ? cli.owner : process.env.OWNER_ID
-const dsn = cli.sentry ? cli.sentry : process.env.SENTRY_DSN
-
 // Sentry
-Sentry.init({ dsn: dsn })
+Sentry.init({ dsn: cli.sentry ? cli.sentry : process.env.SENTRY_DSN })
 
 // Discord client
 class QuinClient extends AkairoClient {
   constructor () {
     super({
       // Akairo options
-      ownerId: owner
+      ownerId: cli.owner ? cli.owner : process.env.OWNER_ID
     }, {
       // Discord.js options
       disableMentions: 'everyone',
@@ -54,7 +50,7 @@ class QuinClient extends AkairoClient {
       allowMention: true,
       commandUtil: true,
       handleEdits: true,
-      prefix: config.commandPrefix
+      prefix: config.defaultPrefix
     })
 
     this.commandHandler.loadAll()
@@ -71,7 +67,7 @@ class QuinClient extends AkairoClient {
 
 const client = new QuinClient()
 
-client.login(token)
+client.login(cli.token ? cli.token : process.env.BOT_TOKEN)
 
 // Handle promise rejections
 process.on('unhandledRejection', err => {

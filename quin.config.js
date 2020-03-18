@@ -1,11 +1,11 @@
 export default {
-  // Used as the prefix for commands, e.g. !ping
-  commandPrefix: '!',
+  // Default prefix for all commands
+  defaultPrefix: '!',
 
-  // Appears under the server name when the Server Info command is used
-  serverDescription: '',
+  // Used for flagging members who are new to Discord
+  newToDiscordThreshold: 15,
 
-  // Can be used to color the left border on embeds
+  // Used to color the left border on embeds
   embedColors: {
     red: [255, 107, 107],
     orange: [255, 169, 77],
@@ -15,6 +15,13 @@ export default {
     blue: [77, 171, 247],
     violet: [151, 117, 250],
     pink: [250, 162, 193]
+  },
+
+  // Useful links
+  links: {
+    github: 'https://github.com/unrealcommons',
+    twitter: 'https://twitter.com/unrealcommons',
+    website: 'https://unrealcommons.org'
   },
 
   // Log channels

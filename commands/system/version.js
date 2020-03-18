@@ -7,7 +7,7 @@ class VersionCommand extends Command {
       aliases: ['version'],
       category: 'System',
       description: {
-        content: 'Get the version number of the bot.',
+        content: 'Get the bot\'s current version number.',
         usage: '!version'
       },
       channelRestriction: 'guild',
@@ -16,8 +16,7 @@ class VersionCommand extends Command {
     })
   }
 
-  async exec (message) {
-    // Return the bot's current version number
+  exec (message) {
     return message.util.send(pkg.version)
   }
 }
