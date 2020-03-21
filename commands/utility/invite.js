@@ -9,7 +9,7 @@ class InviteCommand extends Command {
         content: 'Get the invite link for this server',
         usage: '!invite'
       },
-      channelRestriction: 'guild',
+      channel: 'guild',
       userPermissions: ['SEND_MESSAGES']
     })
   }

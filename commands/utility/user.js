@@ -11,7 +11,7 @@ class UserInfoCommand extends Command {
         content: 'Get information about a user.',
         usage: '!user [@username or ID]'
       },
-      channelRestriction: 'guild',
+      channel: 'guild',
       userPermissions: ['SEND_MESSAGES']
     })
   }

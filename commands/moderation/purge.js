@@ -10,7 +10,7 @@ class PurgeCommand extends Command {
         content: 'Delete messages in bulk and optionally filter by author.',
         usage: '!purge <amount> [author]'
       },
-      channelRestriction: 'guild',
+      channel: 'guild',
       memberPermissions: ['BAN_MEMBERS']
     })
   }

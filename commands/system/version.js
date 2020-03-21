@@ -10,7 +10,7 @@ class VersionCommand extends Command {
         content: 'Get the bot\'s current version number.',
         usage: '!version'
       },
-      channelRestriction: 'guild',
+      channel: 'guild',
       userPermissions: ['MANAGE_GUILD'],
       protected: true
     })
