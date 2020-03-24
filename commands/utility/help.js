@@ -39,53 +39,34 @@ class HelpCommand extends Command {
 
     // !help - List all commands available to the user
     if (!command) {
-      // Get command categories
       const categories = this.handler.categories.values()
 
-      // Loop through categories
       for (const category of categories) {
-        // Filter category for available commands
         const availableCommands = category.filter(cmd => member.permissions.has(cmd.userPermissions))
 
-        // Only add category to embed if commands are available
         if (availableCommands.size !== 0) {
-          // Generate list of available commands for embed
-          const commandList = availableCommands.map(cmd => `**${this.client.config.commandPrefix}${cmd.aliases[0]}** - ${cmd.description.content}`).join('\n')
+          const commandList = availableCommands.map(cmd => `**${cmd.prefix ? cmd.prefix : this.client.config.defaultPrefix}${cmd.aliases[0]}** - ${cmd.description.content}`).join('\n')
 
-          // Add list to embed
           embed.addField(`${category.id} Commands`, commandList)
         }
       }
 
-      // Add additional tips to embed footer
-      embed.setFooter(`Say ${this.client.config.commandPrefix}help [command] to learn more about a command. Example: ${this.client.config.commandPrefix}help ping`)
-
-      // Only send this embed via DM
-      if (message.channel.type !== 'dm') {
-        message.reply('I sent you a DM with more information.')
-      }
-
-      // Send the embed
-      return message.author.send({ embed })
+      embed.setFooter(`Say ${this.client.config.defaultPrefix}help [command] to learn more about a command. Example: ${this.client.config.defaultPrefix}help ping`)
     }
 
-    // !help [command] - Give detailed instructions for a command
+    // !help [command] - Give more information about a command
     if (member.permissions.has(command.userPermissions)) {
-      // Fill out embed
       embed
-        .setTitle(`${this.client.config.commandPrefix}${command.id}`)
+        .setTitle(command.description.name)
         .setDescription(command.description.content)
         .addField('Usage', `\`\`\`${command.description.usage}\`\`\``)
-        .addField('Arguments', command.args ? command.args.map(arg => `**${arg.id}** - ${arg.description}`) : 'No arguments')
-
-      // Only send this embed via DM
-      if (message.channel.type !== 'dm') {
-        message.reply('I sent you a DM with more information.')
-      }
-
-      // Send the embed
-      return message.author.send({ embed })
     }
+
+    if (message.channel.type !== 'dm') {
+      message.reply('I sent you a DM with more information.')
+    }
+
+    return message.author.send({ embed })
   }
 }
 
