@@ -17,7 +17,7 @@ class UptimeCommand extends Command {
   }
 
   async exec (message) {
-    const uptime = await ms(this.client.uptime, { verbose: true, secDecimalDigits: 0 })
+    const uptime = await ms(this.client.uptime, { verbose: true, secondsDecimalDigits: 0 })
 
     return message.util.send(`:stopwatch: I have been online for **${uptime}**.`)
   }
