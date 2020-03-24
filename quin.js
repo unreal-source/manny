@@ -2,6 +2,7 @@ import { AkairoClient, CommandHandler, ListenerHandler } from 'discord-akairo'
 import cli from 'commander'
 import config from './quin.config.js'
 import log from './util/logger.js'
+import ms from 'ms'
 import pkg from './package.json'
 import * as Sentry from '@sentry/node'
 
@@ -50,7 +51,16 @@ class QuinClient extends AkairoClient {
       allowMention: true,
       commandUtil: true,
       handleEdits: true,
-      prefix: config.defaultPrefix
+      prefix: config.defaultPrefix,
+      argumentDefaults: {
+        prompt: {
+          cancel: 'OK. The command was cancelled.',
+          ended: 'Too many attempts. Please start again.',
+          timeout: 'The timer expired. Please start again.',
+          retries: 3,
+          time: ms('5m')
+        }
+      }
     })
 
     this.commandHandler.loadAll()
@@ -69,7 +79,7 @@ const client = new QuinClient()
 
 client.login(cli.token ? cli.token : process.env.BOT_TOKEN)
 
-// Handle promise rejections
+// Report unhandled promise rejections
 process.on('unhandledRejection', err => {
   log.error('Unhandled Promise Rejection!')
   log.error(err)
