@@ -55,13 +55,14 @@ class HelpCommand extends Command {
     }
 
     // !help [command] - Give more information about a command
-    if (member.permissions.has(command.userPermissions)) {
+    if (command && member.permissions.has(command.userPermissions)) {
       embed
         .setTitle(command.description.name)
         .setDescription(command.description.content)
         .addField('Usage', `\`\`\`${command.description.usage}\`\`\``)
     }
 
+    // Always send the command list in a direct message
     if (message.channel.type !== 'dm') {
       message.reply('I sent you a DM with more information.')
     }
