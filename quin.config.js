@@ -25,6 +25,13 @@ export default {
   },
 
   // Log channels
-  modLogChannel: 'mod-log',
-  userLogChannel: 'user-log'
+  modLogChannel: '551658054849003540',
+  userLogChannel: '495053365655633920',
+
+  // Job board channels
+  permanentJobsChannel: '692565224984805436',
+  contractJobsChannel: '692565242374389820',
+  unpaidGigsChannel: '692565261559136296',
+  hireFreelancerChannel: '',
+  hireStudioChannel: ''
 }
