@@ -10,7 +10,7 @@
     "@sentry/node": "^5.15.4",
     "commander": "^5.0.0",
     "discord-akairo": "^8.0.0",
-    "discord.js": "^12.0.2",
+    "discord.js": "^12.1.1",
     "esm": "^3.2.25",
     "luxon": "^1.22.2",
     "ms": "^2.1.2",
