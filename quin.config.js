@@ -17,7 +17,7 @@ export default {
     pink: [250, 162, 193]
   },
 
-  // Useful links
+  // Displayed with the Server Info command
   links: {
     github: 'https://github.com/unrealcommons',
     twitter: 'https://twitter.com/unrealcommons',
