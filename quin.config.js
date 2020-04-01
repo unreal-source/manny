@@ -24,14 +24,16 @@ export default {
     website: 'https://unrealcommons.org'
   },
 
-  // Log channels
-  modLogChannel: '551658054849003540',
-  userLogChannel: '495053365655633920',
+  logChannels: {
+    modLog: '551658054849003540',
+    userLog: '495053365655633920'
+  },
 
-  // Job board channels
-  permanentJobsChannel: '692565224984805436',
-  contractJobsChannel: '692565242374389820',
-  unpaidGigsChannel: '692565261559136296',
-  hireFreelancerChannel: '',
-  hireStudioChannel: ''
+  jobChannels: {
+    permanentJobs: '692565224984805436',
+    contractJobs: '692565242374389820',
+    unpaidGigs: '692565261559136296',
+    hireFreelancer: '',
+    hireStudio: ''
+  }
 }
