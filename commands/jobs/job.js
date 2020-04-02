@@ -117,6 +117,11 @@ class JobCommand extends Command {
       }
     }
 
+    if (review === 2) {
+      await message.util.send('OK. The command was cancelled.')
+      return Flag.cancel()
+    }
+
     return { compensation, type, length, role, employer, location, remote, responsibilities, qualifications, apply, review, embed }
   }
 
