@@ -125,11 +125,12 @@ class JobCommand extends Command {
     return { compensation, type, length, role, employer, location, remote, responsibilities, qualifications, apply, review, embed }
   }
 
-  exec (message, { type, embed }) {
-    const channel = this.client.channels.cache.get(type === 1 ? config.permanentJobsChannel : config.contractJobsChannel)
+  async exec (message, { type, embed }) {
     const channel = this.client.channels.cache.get(type === 1 ? config.jobChannels.permanentJobs : config.jobChannels.contractJobs)
+    const post = await channel.send(embed)
+    const editedPost = embed.setFooter(`POST ID: ${post.id}`)
 
-    return channel.send(`Posted by <@${message.author.id}>`, { embed })
+    return post.edit(`Posted by <@${message.author.id}>`, editedPost)
   }
 }
 
