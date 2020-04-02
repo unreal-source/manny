@@ -11,7 +11,7 @@ class GuildMemberAddListener extends Listener {
   }
 
   exec (member) {
-    const channel = this.client.channels.cache.find(c => c.name === this.client.config.userLogChannel)
+    const channel = this.client.channels.cache.get(config.logChannels.userLog)
 
     // Flag bots
     if (member.user.bot) {
