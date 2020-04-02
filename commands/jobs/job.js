@@ -127,6 +127,7 @@ class JobCommand extends Command {
 
   exec (message, { type, embed }) {
     const channel = this.client.channels.cache.get(type === 1 ? config.permanentJobsChannel : config.contractJobsChannel)
+    const channel = this.client.channels.cache.get(type === 1 ? config.jobChannels.permanentJobs : config.jobChannels.contractJobs)
 
     return channel.send(`Posted by <@${message.author.id}>`, { embed })
   }
