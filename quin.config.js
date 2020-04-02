@@ -30,6 +30,7 @@ export default {
   },
 
   jobChannels: {
+    category: '692565207184048129',
     permanentJobs: '692565224984805436',
     contractJobs: '692565242374389820',
     unpaidGigs: '692565261559136296',
