@@ -34,7 +34,7 @@ export default {
     permanentJobs: '692565224984805436',
     contractJobs: '692565242374389820',
     unpaidGigs: '692565261559136296',
-    hireFreelancer: '',
-    hireStudio: ''
+    hireFreelancer: '695155145306013697',
+    hireStudio: '695155159692738570'
   }
 }
