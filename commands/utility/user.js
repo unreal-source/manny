@@ -8,6 +8,7 @@ class UserInfoCommand extends Command {
       aliases: ['user'],
       category: 'Utility',
       description: {
+        name: 'User Info',
         content: 'Get information about a user.',
         usage: '!user [@username or ID]'
       },

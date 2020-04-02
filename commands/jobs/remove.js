@@ -8,6 +8,7 @@ class RemoveCommand extends Command {
       prefix: '$',
       category: 'Job Board',
       description: {
+        name: 'Remove Post',
         content: 'Remove your post from the job board',
         usage: '$remove <post ID>'
       },

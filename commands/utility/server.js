@@ -8,6 +8,7 @@ class ServerInfoCommand extends Command {
       aliases: ['server'],
       category: 'Utility',
       description: {
+        name: 'Server Info',
         content: 'Get information about this Discord server.',
         usage: '!server'
       },

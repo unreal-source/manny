@@ -6,6 +6,7 @@ class InviteCommand extends Command {
       aliases: ['invite'],
       category: 'Utility',
       description: {
+        name: 'Invite',
         content: 'Get the invite link for this server',
         usage: '!invite'
       },

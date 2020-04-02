@@ -8,6 +8,7 @@ class PurgeCommand extends Command {
       aliases: ['purge'],
       category: 'Moderation',
       description: {
+        name: 'Purge Messages',
         content: 'Delete messages in bulk and optionally filter by author.',
         usage: '!purge <amount> [author]'
       },

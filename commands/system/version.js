@@ -7,6 +7,7 @@ class VersionCommand extends Command {
       aliases: ['version'],
       category: 'System',
       description: {
+        name: 'Bot Version',
         content: 'Get the bot\'s current version number.',
         usage: '!version'
       },

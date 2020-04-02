@@ -7,6 +7,7 @@ class HelpCommand extends Command {
       aliases: ['help'],
       category: 'Utility',
       description: {
+        name: 'Help',
         content: 'Get a list of commands for the bot.',
         usage: '!help [command]'
       },

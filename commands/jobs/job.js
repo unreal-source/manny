@@ -8,6 +8,7 @@ class JobCommand extends Command {
       prefix: '$',
       category: 'Job Board',
       description: {
+        name: 'Post Job',
         content: 'Post a job on the job board',
         usage: '$job'
       },
