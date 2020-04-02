@@ -1,4 +1,5 @@
 import { Command, Argument } from 'discord-akairo'
+import config from '../../quin.config.js'
 import log from '../../util/logger.js'
 
 class PurgeCommand extends Command {
@@ -37,7 +38,7 @@ class PurgeCommand extends Command {
   }
 
   async exec (message, { count, member }) {
-    const logChannel = this.client.channels.cache.find(channel => channel.name === this.client.config.modLogChannel)
+    const logChannel = this.client.channels.cache.get(config.logChannels.modLog)
 
     // Delete the message containing the command
     await message.delete()
