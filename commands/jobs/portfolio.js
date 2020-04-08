@@ -20,34 +20,34 @@ class PortfolioCommand extends Command {
     const type = yield {
       type: Argument.range('number', 1, 2, true),
       prompt: {
-        start: 'Are you posting as an individual freelancer or a studio?\n\n1. Freelancer\n2. Studio',
+        start: '__**Are you posting as an individual freelancer or a studio?**__\nPlease choose a number.\n\n**1. Freelancer**\n**2. Studio**',
         retry: 'Please choose a number.'
       }
     }
 
     const name = yield {
       prompt: {
-        start: type === 1 ? 'What is your name?' : 'What is the name of your studio?'
+        start: type === 1 ? '__**What is your name**__?' : '__**What is the name of your studio?**__'
       }
     }
 
     const services = yield {
       prompt: {
-        start: 'List the services you offer.'
+        start: '__**List the services you offer.**__'
       }
     }
 
     const url = yield {
       type: 'url',
       prompt: {
-        start: 'Add a URL to your portfolio website.',
+        start: '__**Enter the URL for your portfolio website.**__\nExample: https://acmegames.com',
         retry: 'A portfolio URL is required.'
       }
     }
 
     const contact = yield {
       prompt: {
-        start: 'How can prospective clients contact you?'
+        start: '__**How can prospective clients contact you?**__'
       }
     }
 
@@ -62,7 +62,7 @@ class PortfolioCommand extends Command {
       type: Argument.range('number', 1, 2, true),
       prompt: {
         start: message => {
-          const content = 'Please review your post to make sure it is accurate.\n\n1. Send Post\n2. Start Over'
+          const content = '__**Review your post to make sure it\'s accurate.**__\nPlease choose a number.\n\n**1. Send Post**\n**2. Start Over**\n_ _'
           return { content, embed }
         },
         retry: 'Please choose a number.'
@@ -82,7 +82,9 @@ class PortfolioCommand extends Command {
     const post = await channel.send(embed)
     const editedPost = embed.setFooter(`POST ID: ${post.id}`)
 
-    return post.edit(`Posted by <@${message.author.id}>`, editedPost)
+    post.edit(`Posted by <@${message.author.id}>`, editedPost)
+
+    return message.util.send(`Your post has been added to **#${channel.name}**.`)
   }
 }
 

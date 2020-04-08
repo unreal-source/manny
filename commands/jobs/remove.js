@@ -47,7 +47,7 @@ class RemoveCommand extends Command {
         type: Argument.range('number', 1, 2, true),
         prompt: {
           start: message => {
-            const content = 'Remove this post?\n\n1. Yes\n2. No\n_ _'
+            const content = `__**Remove this post from #${post.channel.name}?**__\nPlease choose a number.\n\n**1. Remove Post**\n**2. Cancel**\n_ _`
             const embed = post.embeds[0]
             return { content, embed }
           },
@@ -69,7 +69,7 @@ class RemoveCommand extends Command {
 
   async exec (message, { post }) {
     await post.delete()
-    return message.util.send(`OK. Your post was removed from **#${post.channel.name}**.`)
+    return message.util.send(`Your post was removed from **#${post.channel.name}**.`)
   }
 }
 
