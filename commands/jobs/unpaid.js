@@ -18,14 +18,18 @@ class UnpaidCommand extends Command {
 
   async * args (message) {
     const title = yield {
+      type: Argument.validate('string', (message, value) => value.length < 256),
       prompt: {
-        start: '__**Add a title that clearly states what you\'re looking for.**__\nExample: Character Artist Needed for Mod Project'
+        start: '__**Add a title that clearly states what you\'re looking for.**__\nExample: Character Artist Needed for Mod Project',
+        retry: (message, data) => `Your title has **${data.phrase.length}** characters, exceeding the **256** character limit. Please try again.`
       }
     }
 
     const description = yield {
+      type: Argument.validate('string', (message, value) => value.length < 2048),
       prompt: {
-        start: '__**Add a detailed description of the project and your needs.**__\n'
+        start: '__**Add a detailed description of the project and your needs.**__\n',
+        retry: (message, data) => `Your title has **${data.phrase.length}** characters, exceeding the **2048** character limit. Please try again.`
       }
     }
 

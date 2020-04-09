@@ -75,14 +75,18 @@ class JobCommand extends Command {
     }
 
     const responsibilities = yield {
+      type: Argument.validate('string', (message, value) => value.length < 1024),
       prompt: {
-        start: '__**List the responsibilities associated with this role.**__'
+        start: '__**List the responsibilities associated with this role.**__\n',
+        retry: (message, data) => `Your message has **${data.phrase.length}** characters, exceeding the **1024** character limit. Please try again.`
       }
     }
 
     const qualifications = yield {
+      type: Argument.validate('string', (message, value) => value.length < 1024),
       prompt: {
-        start: '__**List the qualifications for this role.**__'
+        start: '__**List the qualifications for this role.**__',
+        retry: (message, data) => `Your message has **${data.phrase.length}** characters, exceeding the **1024** character limit. Please try again.`
       }
     }
 

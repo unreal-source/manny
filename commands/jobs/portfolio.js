@@ -32,8 +32,10 @@ class PortfolioCommand extends Command {
     }
 
     const services = yield {
+      type: Argument.validate('string', (message, value) => value.length < 1024),
       prompt: {
-        start: '__**List the services you offer.**__'
+        start: '__**List the services you offer.**__',
+        retry: (message, data) => `Your message has **${data.phrase.length}** characters, exceeding the **1024** character limit. Please try again.`
       }
     }
 
