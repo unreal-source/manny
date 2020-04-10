@@ -42,9 +42,6 @@ class QuinClient extends AkairoClient {
       }
     })
 
-    // Config
-    this.config = config
-
     // Commands
     this.commandHandler = new CommandHandler(this, {
       directory: './commands/',

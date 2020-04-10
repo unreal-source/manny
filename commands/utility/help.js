@@ -46,13 +46,13 @@ class HelpCommand extends Command {
         const availableCommands = category.filter(cmd => member.permissions.has(cmd.userPermissions))
 
         if (availableCommands.size !== 0) {
-          const commandList = availableCommands.map(cmd => `**${cmd.prefix ? cmd.prefix : this.client.config.defaultPrefix}${cmd.aliases[0]}** - ${cmd.description.content}`).join('\n')
+          const commandList = availableCommands.map(cmd => `**${cmd.prefix ? cmd.prefix : config.defaultPrefix}${cmd.aliases[0]}** - ${cmd.description.content}`).join('\n')
 
           embed.addField(`${category.id} Commands`, commandList)
         }
       }
 
-      embed.setFooter(`Say ${this.client.config.defaultPrefix}help [command] to learn more about a command. Example: ${this.client.config.defaultPrefix}help ping`)
+      embed.setFooter(`Say ${config.defaultPrefix}help [command] to learn more about a command. Example: ${config.defaultPrefix}help ping`)
     }
 
     // !help [command] - Give more information about a command

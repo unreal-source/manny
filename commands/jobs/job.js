@@ -97,7 +97,7 @@ class JobCommand extends Command {
     }
 
     const embed = this.client.util.embed()
-      .setColor(this.client.config.embedColors.violet)
+      .setColor(config.embedColors.violet)
       .setTitle(`${role} at ${employer}`)
       .setDescription(remote === '1' ? ':globe_with_meridians: Remote Friendly' : '')
       .addField('Location', location, true)
