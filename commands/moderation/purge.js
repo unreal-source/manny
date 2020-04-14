@@ -52,7 +52,7 @@ class PurgeCommand extends Command {
 
         await message.channel.bulkDelete(filteredMessages)
 
-        return logChannel.send(`:x: **${message.author.tag}** deleted ${count} ${count > 1 ? 'messages' : 'message'} from **${member.user.tag}** in ${message.channel}.`)
+        return logChannel.send(`:broom: **${message.author.tag}** deleted **${count} ${count > 1 ? 'messages' : 'message'}** from **${member.user.tag}** in **#${message.channel.name}**.`)
       } catch (error) {
         log.error(error)
 
@@ -62,7 +62,7 @@ class PurgeCommand extends Command {
 
     await message.channel.bulkDelete(count)
 
-    return logChannel.send(`:x: **${message.author.tag}** deleted ${count} ${count > 1 ? 'messages' : 'message'} in ${message.channel}.`)
+    return logChannel.send(`:broom: **${message.author.tag}** deleted **${count} ${count > 1 ? 'messages' : 'message'}** in **#${message.channel.name}**.`)
   }
 }
 
