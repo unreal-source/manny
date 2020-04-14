@@ -10,6 +10,10 @@ class ReadyListener extends Listener {
   }
 
   exec () {
+    this.client.user.setActivity('the server • !help', {
+      type: 'WATCHING'
+    })
+
     log.success(`${this.client.user.username} successfully connected to ${this.client.guilds.cache.first().name}. All systems operational.`)
   }
 }
