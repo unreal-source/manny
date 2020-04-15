@@ -23,7 +23,7 @@ class UserInfoCommand extends Command {
       default: message => message.member,
       prompt: {
         start: 'Which user do you want to look up?',
-        retry: 'Please enter a valid username or ID.',
+        retry: 'User not found. Please enter a valid username or ID.',
         optional: true
       }
     }
@@ -34,7 +34,6 @@ class UserInfoCommand extends Command {
   async exec (message, { member }) {
     const discordJoinDate = DateTime.fromISO(member.user.createdAt.toISOString())
     const guildJoinDate = DateTime.fromISO(member.joinedAt.toISOString())
-    const lastMessageDate = DateTime.fromISO(member.lastMessage.createdAt.toISOString())
 
     const status = {
       online: ':green_circle: Online',
@@ -46,13 +45,13 @@ class UserInfoCommand extends Command {
     const embed = this.client.util.embed()
       .setColor(config.embedColors.violet)
       .setThumbnail(member.user.displayAvatarURL())
-      .setTitle(member.user.bot ? `${member.displayName} :robot:` : `${member.displayName}`)
-      .setDescription(status[member.presence.status])
-      .addField('Username', member.user.tag)
+      .setTitle(member.displayName)
+      .setDescription(member.user.bot ? `${member.user.tag} \`BOT\`` : member.user.tag)
+      .addField('Status', status[member.presence.status])
       .addField('ID', member.id)
+      .addField('Roles', member.roles.cache.map(role => `\`${role.name}\``).join(' '))
       .addField('Joined Server', `${guildJoinDate.toLocaleString(DateTime.DATE_SHORT)} ${guildJoinDate.toLocaleString(DateTime.TIME_SIMPLE)} ${guildJoinDate.offsetNameShort}`)
       .addField('Joined Discord', `${discordJoinDate.toLocaleString(DateTime.DATE_SHORT)} ${discordJoinDate.toLocaleString(DateTime.TIME_SIMPLE)} ${discordJoinDate.offsetNameShort}`)
-      .addField('Last Seen', `${lastMessageDate.toLocaleString(DateTime.DATE_SHORT)} ${lastMessageDate.toLocaleString(DateTime.TIME_SIMPLE)} ${lastMessageDate.offsetNameShort}`)
 
     return message.util.send({ embed })
   }
