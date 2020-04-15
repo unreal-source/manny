@@ -17,11 +17,25 @@ class ServerInfoCommand extends Command {
     })
   }
 
+  // TODO: Add Nitro Boost info (current tier, current total boosts, number of boosts until next tier)
   async exec (message) {
     const guild = await message.guild.fetch()
     const creationDate = DateTime.fromISO(guild.createdAt.toISOString())
     const totalMembers = guild.memberCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     const onlineMembers = guild.members.cache.filter(member => member.presence.status === 'online').size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+
+    const premiumTier = {
+      0: 'No Level',
+      1: 'Level 1',
+      2: 'Level 2',
+      3: 'Level 3'
+    }
+
+    const premiumThreshold = {
+      1: 2,
+      2: 15,
+      3: 30
+    }
 
     const embed = this.client.util.embed()
       .setColor(config.embedColors.violet)
@@ -30,7 +44,8 @@ class ServerInfoCommand extends Command {
       .setThumbnail(guild.iconURL())
       .addField('Members', totalMembers, true)
       .addField('Online', onlineMembers, true)
-      .addField('Created On', `${creationDate.toLocaleString(DateTime.DATE_SHORT)} ${creationDate.toLocaleString(DateTime.TIME_SIMPLE)} ${creationDate.offsetNameShort}`)
+      .addField('Server Boost', `${premiumTier[guild.premiumTier]} • ${guild.premiumSubscriptionCount} Boosts • ${premiumThreshold[guild.premiumTier + 1] - guild.premiumSubscriptionCount} boosts until ${premiumTier[guild.premiumTier + 1]}`)
+      .addField('Created On', creationDate.toLocaleString(DateTime.DATE_FULL))
       .addField('Website', config.links.website)
       .addField('GitHub', config.links.github)
       .addField('Twitter', config.links.twitter)
