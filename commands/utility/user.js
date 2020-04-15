@@ -50,9 +50,8 @@ class UserInfoCommand extends Command {
       .addField('Status', status[member.presence.status])
       .addField('ID', member.id)
       .addField('Roles', member.roles.cache.map(role => `\`${role.name}\``).join(' '))
-      .addField('Joined Server', `${guildJoinDate.toLocaleString(DateTime.DATE_SHORT)} ${guildJoinDate.toLocaleString(DateTime.TIME_SIMPLE)} ${guildJoinDate.offsetNameShort}`)
-      .addField('Joined Discord', `${discordJoinDate.toLocaleString(DateTime.DATE_SHORT)} ${discordJoinDate.toLocaleString(DateTime.TIME_SIMPLE)} ${discordJoinDate.offsetNameShort}`)
-
+      .addField('Joined Server', guildJoinDate.toLocaleString(DateTime.DATE_FULL))
+      .addField('Joined Discord', discordJoinDate.toLocaleString(DateTime.DATE_FULL))
     return message.util.send({ embed })
   }
 }
