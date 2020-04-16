@@ -17,7 +17,6 @@ class ServerInfoCommand extends Command {
     })
   }
 
-  // TODO: Add Nitro Boost info (current tier, current total boosts, number of boosts until next tier)
   async exec (message) {
     const guild = await message.guild.fetch()
     const creationDate = DateTime.fromISO(guild.createdAt.toISOString())
