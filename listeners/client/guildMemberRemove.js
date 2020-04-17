@@ -1,4 +1,5 @@
 import { Listener } from 'discord-akairo'
+import config from '../../quin.config.js'
 
 class GuildMemberRemoveListener extends Listener {
   constructor () {
@@ -9,7 +10,7 @@ class GuildMemberRemoveListener extends Listener {
   }
 
   exec (member) {
-    const channel = this.client.channels.cache.find(c => c.name === this.client.config.userLogChannel)
+    const channel = this.client.channels.cache.get(config.logChannels.userLog)
 
     if (member.user.bot) {
       return channel.send(`:robot: **${member.user.tag}** was removed from the server.`)
