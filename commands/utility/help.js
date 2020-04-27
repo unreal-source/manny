@@ -1,5 +1,5 @@
 import { Command } from 'discord-akairo'
-import config from '../../quin.config.js'
+import config from '../../quin.config'
 
 class HelpCommand extends Command {
   constructor () {

@@ -1,6 +1,6 @@
 import { Command, Argument } from 'discord-akairo'
-import config from '../../quin.config.js'
-import log from '../../util/logger.js'
+import config from '../../quin.config'
+import log from '../../util/logger'
 
 class PurgeCommand extends Command {
   constructor () {

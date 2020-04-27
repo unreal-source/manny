@@ -1,6 +1,6 @@
 import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
-import config from '../../quin.config.js'
+import config from '../../quin.config'
 
 class UserInfoCommand extends Command {
   constructor () {

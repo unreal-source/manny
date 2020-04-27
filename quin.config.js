@@ -1,5 +1,5 @@
 export default {
-  // Default prefix for all commands
+  // The default prefix for commands
   defaultPrefix: '!',
 
   // Used for flagging members who are new to Discord
@@ -19,9 +19,9 @@ export default {
 
   // Displayed with the Server Info command
   links: {
-    github: 'https://github.com/unrealcommons',
-    twitter: 'https://twitter.com/unrealcommons',
-    website: 'https://unrealcommons.org'
+    github: 'https://github.com/unreal-slackers',
+    twitter: 'https://twitter.com/unrealslackers',
+    website: 'https://unrealslackers.org'
   },
 
   logChannels: {

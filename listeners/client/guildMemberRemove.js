@@ -1,5 +1,5 @@
 import { Listener } from 'discord-akairo'
-import config from '../../quin.config.js'
+import config from '../../bot.config'
 
 class GuildMemberRemoveListener extends Listener {
   constructor () {
