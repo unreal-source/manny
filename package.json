@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "snazzy": "^8.0.0",
-    "standard": "^14.3.3"
+    "standard": "^14.3.4"
   },
   "scripts": {
     "start": "node -r esm quin",
