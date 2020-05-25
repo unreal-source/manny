@@ -1,11 +1,11 @@
 import { Command } from 'discord-akairo'
-import config from '../../quin.config'
+import config from '../../bot.config'
 
 class HelpCommand extends Command {
   constructor () {
     super('help', {
       aliases: ['help'],
-      category: 'Utility',
+      category: 'Info',
       description: {
         name: 'Help',
         content: 'Get a list of commands for the bot.',

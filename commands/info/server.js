@@ -1,12 +1,12 @@
 import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
-import config from '../../quin.config'
+import config from '../../bot.config'
 
 class ServerInfoCommand extends Command {
   constructor () {
     super('server', {
       aliases: ['server'],
-      category: 'Utility',
+      category: 'Info',
       description: {
         name: 'Server Info',
         content: 'Get information about this Discord server.',

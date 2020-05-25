@@ -1,12 +1,12 @@
 import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
-import config from '../../quin.config'
+import config from '../../bot.config'
 
 class UserInfoCommand extends Command {
   constructor () {
     super('user', {
       aliases: ['user'],
-      category: 'Utility',
+      category: 'Info',
       description: {
         name: 'User Info',
         content: 'Get information about a user.',

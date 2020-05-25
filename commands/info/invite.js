@@ -4,7 +4,7 @@ class InviteCommand extends Command {
   constructor () {
     super('invite', {
       aliases: ['invite'],
-      category: 'Utility',
+      category: 'Info',
       description: {
         name: 'Invite',
         content: 'Get the invite link for this server',
