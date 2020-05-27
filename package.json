@@ -7,22 +7,25 @@
     "node": "^12.10.0"
   },
   "dependencies": {
-    "@sentry/node": "^5.15.4",
-    "commander": "^5.0.0",
+    "@sentry/node": "^5.15.5",
+    "commander": "^5.1.0",
     "discord-akairo": "^8.0.0",
     "discord.js": "^12.2.0",
     "esm": "^3.2.25",
-    "luxon": "^1.23.0",
+    "luxon": "^1.24.1",
     "ms": "^2.1.2",
+    "pg": "^8.2.1",
+    "pg-hstore": "^2.3.3",
     "pretty-ms": "^6.0.1",
+    "sequelize": "^5.21.11",
     "signale": "^1.4.0"
   },
   "devDependencies": {
     "snazzy": "^8.0.0",
-    "standard": "^14.3.3"
+    "standard": "^14.3.4"
   },
   "scripts": {
-    "start": "node -r esm quin",
-    "test": "standard | snazzy"
+    "start": "node -r esm bot",
+    "lint": "standard | snazzy"
   }
 }
