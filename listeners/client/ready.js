@@ -1,5 +1,6 @@
 import { Listener } from 'discord-akairo'
-import log from '../../util/logger.js'
+import config from '../../bot.config'
+import log from '../../util/logger'
 
 class ReadyListener extends Listener {
   constructor () {
