@@ -1,5 +1,5 @@
 import { Command, Argument } from 'discord-akairo'
-import config from '../../quin.config'
+import config from '../../bot.config'
 import log from '../../util/logger'
 
 class PurgeCommand extends Command {

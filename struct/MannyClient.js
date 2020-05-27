@@ -1,9 +1,11 @@
 import { AkairoClient, CommandHandler, ListenerHandler } from 'discord-akairo'
+import log from '../util/logger'
 import ms from 'ms'
+import Sequelize from 'sequelize'
 
-class QuinClient extends AkairoClient {
-  constructor (config, owner) {
-    super({ ownerID: owner }, {
+class MannyClient extends AkairoClient {
+  constructor (config, ownerID) {
+    super({ ownerID: ownerID }, {
       disableMentions: 'everyone',
       ws: {
         intents: [
@@ -37,6 +39,7 @@ class QuinClient extends AkairoClient {
         }
       }
     })
+
     this.listenerHandler = new ListenerHandler(this, {
       directory: './listeners/'
     })
@@ -51,9 +54,39 @@ class QuinClient extends AkairoClient {
     this.listenerHandler.loadAll()
   }
 
-  async start (token) {
+  async start (token, dbURL) {
+    if (dbURL) {
+      const db = new Sequelize(dbURL, { logging: false })
+      const UserHistory = db.define('UserHistory', {
+        user_id: {
+          type: Sequelize.STRING,
+          primaryKey: true,
+          allowNull: false
+        },
+        mutes: {
+          type: Sequelize.ARRAY(Sequelize.JSONB)
+        },
+        strikes: {
+          type: Sequelize.ARRAY(Sequelize.JSONB)
+        },
+        bans: {
+          type: Sequelize.ARRAY(Sequelize.JSONB)
+        }
+      })
+
+      try {
+        await db.authenticate()
+        await UserHistory.sync()
+        log.success('Successfully connected to database.')
+      } catch (error) {
+        log.error('Failed to connect to database.')
+        log.error(error)
+        process.exit(1)
+      }
+    }
+
     return this.login(token)
   }
 }
 
-export default QuinClient
+export default MannyClient

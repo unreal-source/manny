@@ -1,8 +1,8 @@
 {
-  "name": "quin",
+  "name": "manny",
   "version": "0.0.0",
-  "description": "The successor to Unrealbot and AAICharacter",
-  "main": "quin.js",
+  "description": "Everyone's favorite mannequin.",
+  "main": "bot.js",
   "engines": {
     "node": "^12.10.0"
   },

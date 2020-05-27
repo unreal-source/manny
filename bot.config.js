@@ -1,11 +1,11 @@
 export default {
-  // The default prefix for commands
   defaultPrefix: '!',
-
-  // Used for flagging members who are new to Discord
   newToDiscordThreshold: 15,
-
-  // Used to color the left border on embeds
+  serverShield: {
+    joinDuration: 60000,
+    joinCount: 20,
+    alertChannel: '275091426038251540'
+  },
   embedColors: {
     red: [255, 107, 107],
     orange: [255, 169, 77],
@@ -16,19 +16,15 @@ export default {
     violet: [151, 117, 250],
     pink: [250, 162, 193]
   },
-
-  // Displayed with the Server Info command
   links: {
     github: 'https://github.com/unreal-slackers',
     twitter: 'https://twitter.com/unrealslackers',
     website: 'https://unrealslackers.org'
   },
-
   logChannels: {
     modLog: '551658054849003540',
     userLog: '495053365655633920'
   },
-
   jobChannels: {
     category: '692565207184048129',
     permanentJobs: '692565224984805436',
