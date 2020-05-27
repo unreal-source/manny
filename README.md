@@ -1,4 +1,4 @@
-# Quin
-The successor to Unrealbot and AAICharacter
+# Manny
+Everyone's favorite mannequin.
 
 :warning: **Work in progress!** :warning:
