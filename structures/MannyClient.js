@@ -1,5 +1,5 @@
 import { AkairoClient, CommandHandler, ListenerHandler } from 'discord-akairo'
-import log from '../util/logger'
+import log from '../utilities/logger'
 import ms from 'ms'
 import Sequelize from 'sequelize'
 

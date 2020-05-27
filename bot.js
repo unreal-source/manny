@@ -1,7 +1,7 @@
-import MannyClient from './struct/MannyClient'
+import MannyClient from './structures/MannyClient'
 import cli from 'commander'
 import config from './bot.config'
-import log from './util/logger'
+import log from './utilities/logger'
 import pkg from './package.json'
 import * as Sentry from '@sentry/node'
 
