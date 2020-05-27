@@ -30,15 +30,12 @@ class HelpCommand extends Command {
   }
 
   exec (message, { command }) {
-    // Get the user as a guild member
     const member = this.client.guilds.cache.first().member(message.author)
-
-    // Initialize embed
     const embed = this.client.util.embed()
       .setColor(config.embedColors.violet)
       .setTitle('Command List')
 
-    // !help - List all commands available to the user
+    // !help
     if (!command) {
       const categories = this.handler.categories.values()
 
@@ -55,7 +52,7 @@ class HelpCommand extends Command {
       embed.setFooter(`Say ${config.defaultPrefix}help [command] to learn more about a command. Example: ${config.defaultPrefix}help ping`)
     }
 
-    // !help [command] - Give more information about a command
+    // !help [command]
     if (command && member.permissions.has(command.userPermissions)) {
       embed
         .setTitle(command.description.name)
