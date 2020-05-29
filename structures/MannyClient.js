@@ -1,11 +1,11 @@
 import { AkairoClient, CommandHandler, ListenerHandler } from 'discord-akairo'
+import Database from './Database'
 import log from '../utilities/logger'
 import ms from 'ms'
-import Sequelize from 'sequelize'
 
 class MannyClient extends AkairoClient {
-  constructor (config, ownerID) {
-    super({ ownerID: ownerID }, {
+  constructor (config) {
+    super({ ownerID: process.env.OWNER_ID }, {
       disableMentions: 'everyone',
       ws: {
         intents: [
@@ -54,38 +54,14 @@ class MannyClient extends AkairoClient {
     this.listenerHandler.loadAll()
   }
 
-  async start (token, dbURL) {
-    if (dbURL) {
-      const db = new Sequelize(dbURL, { logging: false })
-      const UserHistory = db.define('UserHistory', {
-        user_id: {
-          type: Sequelize.STRING,
-          primaryKey: true,
-          allowNull: false
-        },
-        mutes: {
-          type: Sequelize.ARRAY(Sequelize.JSONB)
-        },
-        strikes: {
-          type: Sequelize.ARRAY(Sequelize.JSONB)
-        },
-        bans: {
-          type: Sequelize.ARRAY(Sequelize.JSONB)
-        }
-      })
-
-      try {
-        await db.authenticate()
-        await UserHistory.sync()
-        log.success('Successfully connected to database.')
-      } catch (error) {
-        log.error('Failed to connect to database.')
-        log.error(error)
-        process.exit(1)
-      }
+  async start () {
+    if (process.env.DB_URL) {
+      await Database.authenticate()
+    } else {
+      log.warn('DB_URL not found, skipping database connection')
     }
 
-    return this.login(token)
+    return this.login(process.env.BOT_TOKEN)
   }
 }
 
