@@ -22,14 +22,14 @@ class ReadyListener extends Listener {
     setInterval(() => {
       const newMemberCount = this.client.guilds.cache.first().memberCount
       const difference = newMemberCount - oldMemberCount
+      const channel = this.client.channels.cache.get(config.shield.alertChannel)
 
-      if (difference >= config.serverShield.joinCount) {
-        const channel = this.client.channels.cache.get(config.serverShield.alertChannel)
+      if (difference >= config.shield.joinCount) {
         channel.send(`Unusual activity detected. ${difference} new ${difference < 2 ? 'member' : 'members'} joined the server in the last 10 seconds.`)
       }
 
       oldMemberCount = newMemberCount
-    }, config.serverShield.joinDuration)
+    }, config.shield.joinDuration)
   }
 }
 
