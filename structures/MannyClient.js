@@ -12,13 +12,10 @@ class MannyClient extends AkairoClient {
           'GUILDS',
           'GUILD_MEMBERS',
           'GUILD_BANS',
-          'GUILD_EMOJIS',
           'GUILD_VOICE_STATES',
           'GUILD_PRESENCES',
           'GUILD_MESSAGES',
-          'GUILD_MESSAGE_REACTIONS',
-          'DIRECT_MESSAGES',
-          'DIRECT_MESSAGE_REACTIONS'
+          'DIRECT_MESSAGES'
         ]
       }
     })
