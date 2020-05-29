@@ -52,10 +52,10 @@ class MannyClient extends AkairoClient {
   }
 
   async start () {
-    if (process.env.DB_URL) {
+    if (process.env.DATABASE_URL) {
       await Database.authenticate()
     } else {
-      log.warn('DB_URL not found, skipping database connection')
+      log.warn('DATABASE_URL not found, skipping database connection')
     }
 
     return this.login(process.env.BOT_TOKEN)

@@ -3,7 +3,7 @@ import log from '../utilities/logger'
 import path from 'path'
 import Sequelize from 'sequelize'
 
-const sequelize = new Sequelize(process.env.DB_URL, { logging: false })
+const sequelize = new Sequelize(process.env.DATABASE_URL, { logging: false })
 
 class Database {
   static get sequelize () {
