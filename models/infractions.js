@@ -1,7 +1,7 @@
 import Database from '../structures/Database'
 import Sequelize from 'sequelize'
 
-const InfractionHistory = Database.sequelize.define('infractions', {
+const InfractionHistory = Database.sequelize.define('Infractions', {
   user_id: {
     type: Sequelize.STRING,
     primaryKey: true,
