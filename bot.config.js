@@ -1,10 +1,22 @@
 export default {
   defaultPrefix: '!',
-  newToDiscordThreshold: 15,
-  serverShield: {
+  newAccountThreshold: 15,
+  shield: {
     joinDuration: 60000,
     joinCount: 20,
     alertChannel: '275091426038251540'
+  },
+  logs: {
+    memberLog: '495053365655633920',
+    modLog: '551658054849003540'
+  },
+  jobBoard: {
+    category: '692565207184048129',
+    permanentJobs: '692565224984805436',
+    contractJobs: '692565242374389820',
+    unpaidGigs: '692565261559136296',
+    hireFreelancer: '695155145306013697',
+    hireStudio: '695155159692738570'
   },
   embedColors: {
     red: [255, 107, 107],
@@ -20,17 +32,5 @@ export default {
     github: 'https://github.com/unreal-slackers',
     twitter: 'https://twitter.com/unrealslackers',
     website: 'https://unrealslackers.org'
-  },
-  logChannels: {
-    modLog: '551658054849003540',
-    userLog: '495053365655633920'
-  },
-  jobChannels: {
-    category: '692565207184048129',
-    permanentJobs: '692565224984805436',
-    contractJobs: '692565242374389820',
-    unpaidGigs: '692565261559136296',
-    hireFreelancer: '695155145306013697',
-    hireStudio: '695155159692738570'
   }
 }
