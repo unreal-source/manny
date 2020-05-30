@@ -10,6 +10,10 @@ class GuildMemberRemoveListener extends Listener {
   }
 
   exec (member) {
+    if (member.deleted) {
+      return
+    }
+
     const channel = this.client.channels.cache.get(config.logs.memberLog)
 
     if (member.user.bot) {
