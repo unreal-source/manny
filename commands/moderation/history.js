@@ -2,7 +2,6 @@ import { Command } from 'discord-akairo'
 import config from '../../bot.config'
 import { DateTime } from 'luxon'
 import InfractionHistory from '../../models/Infractions'
-import log from '../../utilities/logger'
 
 class UserHistoryCommand extends Command {
   constructor () {
@@ -37,7 +36,6 @@ class UserHistoryCommand extends Command {
     })
 
     if (history) {
-      log.debug(history.bans)
       const embed = this.client.util.embed()
         .setColor(config.embedColors.violet)
         .setThumbnail(user.displayAvatarURL())
