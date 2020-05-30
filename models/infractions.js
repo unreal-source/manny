@@ -8,13 +8,13 @@ const InfractionHistory = Database.sequelize.define('Infractions', {
     allowNull: false
   },
   mutes: {
-    type: Sequelize.ARRAY(Sequelize.JSONB)
+    type: Sequelize.ARRAY(Sequelize.STRING)
   },
   strikes: {
-    type: Sequelize.ARRAY(Sequelize.JSONB)
+    type: Sequelize.ARRAY(Sequelize.STRING)
   },
   bans: {
-    type: Sequelize.ARRAY(Sequelize.JSONB)
+    type: Sequelize.ARRAY(Sequelize.STRING)
   }
 })
 
