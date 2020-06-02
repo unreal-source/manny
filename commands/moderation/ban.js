@@ -1,6 +1,7 @@
 import { Command } from 'discord-akairo'
-import config from '../../quin.config.js'
-import log from '../../util/logger.js'
+import { DateTime } from 'luxon'
+import config from '../../bot.config'
+import InfractionHistory from '../../models/Infractions'
 
 class BanCommand extends Command {
   constructor () {
@@ -38,7 +39,6 @@ class BanCommand extends Command {
   }
 
   async exec (message, { user, reason }) {
-    // TODO: Integrate with mod log
     if (user.id === message.author.id) {
       return message.channel.send(':warning: Why would you ban yourself?')
     }
@@ -60,7 +60,43 @@ class BanCommand extends Command {
     }
 
     const banned = await message.guild.members.ban(user, { reason: reason })
-    return message.channel.send(`You banned ${banned} from the server.`)
+    message.channel.send(`You banned ${banned} from the server.`)
+
+    const now = DateTime.local().toISO()
+    const ban = {
+      date: now,
+      executor: message.author.tag,
+      reason: reason
+    }
+
+    const history = await InfractionHistory.findOne({
+      where: { user_id: user.id }
+    })
+
+    if (history) {
+      const bans = history.bans
+      bans.push(ban)
+      await InfractionHistory.update({
+        bans: bans
+      }, {
+        where: { user_id: user.id }
+      })
+    } else {
+      await InfractionHistory.create({
+        user_id: user.id,
+        mutes: [],
+        strikes: [],
+        bans: [ban]
+      })
+    }
+
+    const logChannel = this.client.channels.cache.get(config.logs.modLog)
+    const embed = this.client.util.embed()
+      .setColor(config.embedColors.red)
+      .setDescription(`:no_entry_sign: **${user.tag}** was banned by **${message.author.tag}**\n> Reason: ${reason}`)
+      .setFooter(DateTime.fromISO(now).toLocaleString(DateTime.DATETIME_FULL))
+
+    return logChannel.send({ embed })
   }
 }
 
