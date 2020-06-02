@@ -33,8 +33,10 @@ class GuildBanAddListener extends Listener {
     })
 
     if (history) {
+      const bans = history.bans
+      bans.push(ban)
       await InfractionHistory.update({
-        bans: history.bans.push(JSON.stringify(ban))
+        bans: bans
       }, {
         where: { user_id: user.id }
       })
@@ -43,7 +45,7 @@ class GuildBanAddListener extends Listener {
         user_id: user.id,
         mutes: [],
         strikes: [],
-        bans: [JSON.stringify(ban)]
+        bans: [ban]
       })
     }
 
