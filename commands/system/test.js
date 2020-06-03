@@ -77,6 +77,14 @@ class TestCommand extends Command {
           .setFooter(timestamp)
         break
       case 'history':
+        embed
+          .setColor(config.embedColors.violet)
+          .setTitle('Infraction History')
+          .setDescription(message.author.tag)
+          .setThumbnail(message.author.displayAvatarURL())
+          .addField('Mutes', `:clock2: **Muted for __1h__ by __pfist#9999__**\nReason: Being a jerk and disrupting conversations\n${timestamp}\n\n:arrow_right_hook: **Unmuted by __pfist#9999__**\nReason: Muted the wrong person\n${timestamp}`)
+          .addField('Strikes', `:triangular_flag_on_post: **Strike given by __pfist#9999__**\nReason: Spamming Discord invite links\n${timestamp}\n\n:arrow_right_hook: **Strike removed by __pfist#9999__**\nReason: Previous strike was a mistake\n${timestamp}`)
+          .addField('Bans', `:no_entry_sign: **Banned by __pfist#9999__**\nReason: Being a terrible person\n${timestamp}\n\n:arrow_right_hook: **Unbanned by __pfist#9999__**\nReason: Giving them a second chance\n${timestamp}`)
         break
       case 'join':
         embed
