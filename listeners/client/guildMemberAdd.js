@@ -18,14 +18,14 @@ class GuildMemberAddListener extends Listener {
 
     // Flag bots
     if (member.user.bot) {
-      return channel.send(`:robot: <@${member.user.id}> was added to the server.`)
+      return channel.send(`:robot: <@${member.user.id}> \`BOT\`was added to the server`)
     }
 
     // Flag new accounts
     if (accountAge.minutes <= config.newAccountThreshold) {
-      return channel.send(`:inbox_tray: <@${member.user.id}> joined the server. \`NEW TO DISCORD\``)
+      return channel.send(`:inbox_tray: <@${member.user.id}> \`NEW\` joined the server`)
     } else {
-      return channel.send(`:inbox_tray: <@${member.user.id}> joined the server.`)
+      return channel.send(`:inbox_tray: <@${member.user.id}> joined the server`)
     }
   }
 }
