@@ -64,6 +64,7 @@ class BanCommand extends Command {
 
     const now = DateTime.local().toISO()
     const ban = {
+      action: 'ban',
       date: now,
       executor: message.author.tag,
       reason: reason

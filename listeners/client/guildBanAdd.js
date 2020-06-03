@@ -23,6 +23,7 @@ class GuildBanAddListener extends Listener {
     }
 
     const ban = {
+      action: 'ban',
       date: entry.createdAt,
       executor: entry.executor.tag,
       reason: entry.reason
