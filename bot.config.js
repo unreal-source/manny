@@ -28,6 +28,16 @@ export default {
     violet: [151, 117, 250],
     pink: [250, 162, 193]
   },
+  emoji: {
+    mute: ':clock2:',
+    expired: ':alarm_clock:',
+    strike: ':triangular_flag_on_post:',
+    ban: ':no_entry_sign:',
+    undo: ':arrow_right_hook:',
+    join: ':inbox_tray:',
+    leave: ':outbox_tray:',
+    bot: ':robot:'
+  },
   links: {
     github: 'https://github.com/unreal-slackers',
     twitter: 'https://twitter.com/unrealslackers',
