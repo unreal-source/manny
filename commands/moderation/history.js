@@ -39,11 +39,63 @@ class UserHistoryCommand extends Command {
       const embed = this.client.util.embed()
         .setColor(config.embedColors.violet)
         .setThumbnail(user.displayAvatarURL())
-        .setTitle(user.username)
+        .setTitle('Infraction History')
         .setDescription(user.bot ? `${user.tag} \`BOT\`` : user.tag)
-        .addField('Mutes', 'None')
-        .addField('Strikes', 'None')
-        .addField('Bans', history.bans.length === 0 ? 'None' : history.bans.map(entry => `**${DateTime.fromISO(entry.date).toLocaleString(DateTime.DATETIME_FULL)}**\n> Banned by \`${entry.executor}\`\n> Reason: ${entry.reason}`).join('\n'))
+        .addField('Mutes', history.mutes.length === 0 ? 'None' : history.mutes.map((mute, index) => {
+          const timestamp = DateTime.fromISO(mute.date).toLocaleString(DateTime.DATETIME_FULL)
+          let content
+
+          switch (mute.action) {
+            case 'mute':
+              content += `${config.emoji.mute} **Muted for ${mute.duration} by __${mute.executor}__**\nReason: ${mute.reason}\n${timestamp}`
+              break
+            case 'unmute':
+              content += `${config.emoji.undo} **Unmuted by __${mute.executor}__**\nReason: ${mute.reason}\n${timestamp}`
+          }
+
+          if (index !== history.mutes.length - 1) {
+            content += '\n'
+          }
+
+          return content
+        }).join('\n'))
+        .addField('Strikes', history.strikes.length === 0 ? 'None' : history.strikes.map((strike, index) => {
+          const timestamp = DateTime.fromISO(strike.date).toLocaleString(DateTime.DATETIME_FULL)
+          let content
+
+          switch (strike.action) {
+            case 'strike':
+              content += `${config.emoji.strike} **Strike given by __${strike.executor}__**\nReason: ${strike.reason}\n${timestamp}`
+              break
+            case 'pardon':
+              content += `${config.emoji.undo} **Strike removed by __${strike.executor}__**\nReason: ${strike.reason}\n${timestamp}`
+          }
+
+          if (index !== history.strikes.length - 1) {
+            content += '\n'
+          }
+
+          return content
+        }).join('\n'))
+        .addField('Bans', history.bans.length === 0 ? 'None' : history.bans.map((ban, index) => {
+          const timestamp = DateTime.fromISO(ban.date).toLocaleString(DateTime.DATETIME_FULL)
+          let content
+
+          switch (ban.action) {
+            case 'ban':
+              content += `${config.emoji.ban} **Banned by __${ban.executor}__**\nReason: ${ban.reason}\n${timestamp}`
+              break
+            case 'unban':
+              content += `${config.emoji.undo} **Unbanned by __${ban.executor}__**\nReason: ${ban.reason}\n${timestamp}`
+              break
+          }
+
+          if (index !== history.bans.length - 1) {
+            content += '\n'
+          }
+
+          return content
+        }).join('\n'))
 
       return message.channel.send({ embed })
     }
