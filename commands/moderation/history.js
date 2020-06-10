@@ -2,6 +2,7 @@ import { Command } from 'discord-akairo'
 import config from '../../bot.config'
 import { DateTime } from 'luxon'
 import InfractionHistory from '../../models/Infractions'
+import log from '../../utilities/logger'
 
 class UserHistoryCommand extends Command {
   constructor () {
@@ -79,7 +80,7 @@ class UserHistoryCommand extends Command {
         }).join('\n'))
         .addField('Bans', history.bans.length === 0 ? 'None' : history.bans.map((ban, index) => {
           const timestamp = DateTime.fromISO(ban.date).toLocaleString(DateTime.DATETIME_FULL)
-          let content
+          let content = ''
 
           switch (ban.action) {
             case 'ban':
