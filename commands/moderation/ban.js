@@ -94,7 +94,8 @@ class BanCommand extends Command {
     const logChannel = this.client.channels.cache.get(config.logs.modLog)
     const embed = this.client.util.embed()
       .setColor(config.embedColors.red)
-      .setDescription(`:no_entry_sign: **${user.tag}** was banned by **${message.author.tag}**\n> Reason: ${reason}`)
+      .setTitle(`:no_entry_sign: **${user.tag}** was banned by **${message.author.tag}**`)
+      .setDescription(`Reason: ${reason}`)
       .setFooter(DateTime.fromISO(now).toLocaleString(DateTime.DATETIME_FULL))
 
     return logChannel.send({ embed })
