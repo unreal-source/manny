@@ -40,11 +40,11 @@ class BanCommand extends Command {
 
   async exec (message, { user, reason }) {
     if (user.id === message.author.id) {
-      return message.channel.send(':warning: Why would you ban yourself?')
+      return message.channel.send(`${config.emoji.warning} Why would you ban yourself?`)
     }
 
     if (user.id === this.client.user.id) {
-      return message.channel.send(':warning: Was it something I said?')
+      return message.channel.send(`${config.emoji.warning} Was it something I said?`)
     }
 
     if (message.guild.members.cache.some(member => member.user.id === user.id)) {

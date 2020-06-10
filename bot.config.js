@@ -29,14 +29,15 @@ export default {
     pink: [250, 162, 193]
   },
   emoji: {
-    mute: ':clock2:',
-    expired: ':alarm_clock:',
-    strike: ':triangular_flag_on_post:',
     ban: ':no_entry_sign:',
-    undo: ':arrow_right_hook:',
+    bot: ':robot:',
+    expired: ':alarm_clock:',
     join: ':inbox_tray:',
     leave: ':outbox_tray:',
-    bot: ':robot:'
+    mute: ':clock2:',
+    strike: ':triangular_flag_on_post:',
+    undo: ':arrow_right_hook:',
+    warning: ':warning:'
   },
   links: {
     github: 'https://github.com/unreal-slackers',
