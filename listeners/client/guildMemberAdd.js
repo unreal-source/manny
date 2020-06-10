@@ -23,7 +23,7 @@ class GuildMemberAddListener extends Listener {
 
     // Flag new accounts
     if (accountAge.minutes <= config.newAccountThreshold) {
-      return channel.send(`:inbox_tray: <@${member.user.id}> \`NEW\` joined the server`)
+      return channel.send(`:inbox_tray: <@${member.user.id}> \`NEW ACCOUNT\` joined the server`)
     } else {
       return channel.send(`:inbox_tray: <@${member.user.id}> joined the server`)
     }
