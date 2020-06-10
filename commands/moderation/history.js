@@ -44,7 +44,7 @@ class UserHistoryCommand extends Command {
         .setDescription(user.bot ? `${user.tag} \`BOT\`` : user.tag)
         .addField('Mutes', history.mutes.length === 0 ? 'None' : history.mutes.map((mute, index) => {
           const timestamp = DateTime.fromISO(mute.date).toLocaleString(DateTime.DATETIME_FULL)
-          let content
+          let content = ''
 
           switch (mute.action) {
             case 'mute':
@@ -62,7 +62,7 @@ class UserHistoryCommand extends Command {
         }).join('\n'))
         .addField('Strikes', history.strikes.length === 0 ? 'None' : history.strikes.map((strike, index) => {
           const timestamp = DateTime.fromISO(strike.date).toLocaleString(DateTime.DATETIME_FULL)
-          let content
+          let content = ''
 
           switch (strike.action) {
             case 'strike':
