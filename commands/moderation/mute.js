@@ -79,6 +79,7 @@ class MuteCommand extends Command {
     const mute = {
       action: 'mute',
       date: now,
+      duration: duration,
       executor: message.author.tag,
       reason: reason
     }
