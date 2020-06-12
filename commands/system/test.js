@@ -1,6 +1,7 @@
 import { Command } from 'discord-akairo'
 import config from '../../bot.config'
 import { DateTime } from 'luxon'
+import log from '../../utilities/logger'
 
 class TestCommand extends Command {
   constructor () {
@@ -106,6 +107,8 @@ class TestCommand extends Command {
           .setTitle(':outbox_tray: __motherflanker#6666__ left the server')
           .setFooter(timestamp)
         break
+      case 'mutes':
+        log.debug(this.client.mutes)
     }
 
     return message.channel.send({ embed })

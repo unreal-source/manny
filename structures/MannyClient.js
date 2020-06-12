@@ -1,4 +1,5 @@
 import { AkairoClient, CommandHandler, ListenerHandler } from 'discord-akairo'
+import { Collection } from 'discord.js'
 import Database from './Database'
 import log from '../utilities/logger'
 import ms from 'ms'
@@ -40,6 +41,8 @@ class MannyClient extends AkairoClient {
     this.listenerHandler = new ListenerHandler(this, {
       directory: './listeners/'
     })
+
+    this.mutes = new Collection()
 
     this.setup()
   }
