@@ -63,6 +63,7 @@ class MuteCommand extends Command {
     const role = await message.guild.roles.cache.find(role => role.name === 'Muted')
     const muted = await member.roles.add(role)
     const logChannel = this.client.channels.cache.get(config.logs.modLog)
+    const longDuration = ms(ms(duration), { long: true })
     const timer = setTimeout(() => {
       muted.roles.remove(role)
       const embed = this.client.util.embed()
@@ -73,13 +74,13 @@ class MuteCommand extends Command {
     }, ms(duration))
 
     this.client.mutes.set(member.id, timer)
-    message.channel.send(`You muted ${muted} for ${duration}.`)
+    message.channel.send(`You muted ${muted} for ${longDuration}.`)
 
     const now = DateTime.local().toISO()
     const mute = {
       action: 'mute',
       date: now,
-      duration: duration,
+      duration: longDuration,
       executor: message.author.tag,
       reason: reason
     }
@@ -107,7 +108,7 @@ class MuteCommand extends Command {
 
     const embed = this.client.util.embed()
       .setColor(config.embedColors.yellow)
-      .setTitle(`${config.emoji.mute} __${member.user.tag}__ was muted for ${duration} by __${message.author.tag}__`)
+      .setTitle(`${config.emoji.mute} __${member.user.tag}__ was muted for ${longDuration} by __${message.author.tag}__`)
       .setDescription(`Reason: ${reason}`)
       .setFooter(DateTime.fromISO(now).toLocaleString(DateTime.DATETIME_FULL))
 
