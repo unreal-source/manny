@@ -29,7 +29,6 @@ class MuteCommand extends Command {
     }
 
     const duration = yield {
-      default: '10m',
       prompt: {
         start: 'How long should the mute last?',
         retry: 'Please enter a mute duration.'
