@@ -16,7 +16,7 @@ class GuildBanAddListener extends Listener {
     const entry = auditLogs.entries.first()
 
     // If the user was banned with a bot command, logging via this event will show the bot as the executor.
-    // We always want the executor to be the moderator who took the action, so if a command was used, we skip logging here
+    // Since we always want the executor to be the moderator who took the action, we skip logging here
     // and let the command handle it.
     if (entry.executor.id === this.client.user.id) {
       return
