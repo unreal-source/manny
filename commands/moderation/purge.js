@@ -39,7 +39,7 @@ class PurgeCommand extends Command {
   }
 
   async exec (message, { count, member }) {
-    const logChannel = this.client.channels.cache.get(config.logChannels.modLog)
+    const logChannel = this.client.channels.cache.get(config.logs.modLog)
 
     // Delete the message containing the command
     await message.delete()
