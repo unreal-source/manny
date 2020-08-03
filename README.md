@@ -1,4 +1,4 @@
 # Manny
 Everyone's favorite mannequin.
 
-:warning: **Work in progress!** :warning:
+> :warning: _Work in progress_
