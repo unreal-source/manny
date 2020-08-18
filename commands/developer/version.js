@@ -4,12 +4,12 @@ import pkg from '../../package.json'
 class VersionCommand extends Command {
   constructor () {
     super('version', {
-      aliases: ['version'],
-      category: 'System',
+      aliases: ['version', 'v'],
+      category: 'Developer',
       description: {
-        name: 'Bot Version',
-        content: 'Get the bot\'s current version number.',
-        usage: '!version'
+        name: 'Version',
+        content: 'Get the bot\'s version number.',
+        usage: '!version, !v'
       },
       channel: 'guild',
       userPermissions: ['MANAGE_GUILD'],
