@@ -19,6 +19,7 @@ export default {
     hireStudio: '695155159692738570'
   },
   embedColors: {
+    gray: [20, 20, 20],
     red: [255, 107, 107],
     orange: [255, 169, 77],
     yellow: [255, 224, 102],
