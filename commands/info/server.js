@@ -19,7 +19,6 @@ class ServerInfoCommand extends Command {
   }
 
   async exec (message) {
-    const guild = await message.guild.fetch()
     const creationDate = DateTime.fromISO(message.guild.createdAt.toISOString())
     const totalMembers = commalize(message.guild.memberCount.toString())
     const onlineMembers = commalize(message.guild.members.cache.filter(member => member.presence.status === 'online').size.toString())
@@ -44,7 +43,7 @@ class ServerInfoCommand extends Command {
       .addField('Members', totalMembers, true)
       .addField('Online', onlineMembers, true)
       .addField('Server Boost', `${premiumTier[message.guild.premiumTier]} • ${message.guild.premiumSubscriptionCount} Boosts • ${premiumThreshold[message.guild.premiumTier + 1] - message.guild.premiumSubscriptionCount} boosts until ${premiumTier[message.guild.premiumTier + 1]}`)
-      .addField('Created On', creationDate.toLocaleString(DateTime.DATE_FULL))
+      .addField('Created On', creationDate.toLocaleString(DateTime.DATETIME_FULL))
       .addField('Links', `[Website](${config.links.website}) • [Twitter](${config.links.twitter}) • [GitHub](${config.links.github})`)
     
       if (message.guild.vanityURLCode) {
