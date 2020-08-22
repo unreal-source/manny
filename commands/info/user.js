@@ -42,16 +42,24 @@ class UserInfoCommand extends Command {
       offline: ':black_circle: Offline'
     }
 
+    /*
+      Display name, avatar
+      Username, Bot or not
+      Presence, ID
+      Roles
+      Boost status
+      Server join, Discord join
+    */
     const embed = this.client.util.embed()
-      .setColor(config.embedColors.violet)
+      .setColor(config.embedColors.gray)
       .setThumbnail(member.user.displayAvatarURL())
       .setTitle(member.displayName)
       .setDescription(member.user.bot ? `${member.user.tag} \`BOT\`` : member.user.tag)
-      .addField('Status', status[member.presence.status])
-      .addField('ID', member.id)
+      .addField('Status', status[member.presence.status], true)
+      .addField('ID', member.id, true)
       .addField('Roles', member.roles.cache.map(role => `\`${role.name}\``).join(' '))
-      .addField('Joined Server', guildJoinDate.toLocaleString(DateTime.DATE_FULL))
-      .addField('Joined Discord', discordJoinDate.toLocaleString(DateTime.DATE_FULL))
+      .addField('Joined Server', guildJoinDate.toLocaleString(DateTime.DATETIME_FULL))
+      .addField('Joined Discord', discordJoinDate.toLocaleString(DateTime.DATETIME_FULL))
     return message.util.send({ embed })
   }
 }
