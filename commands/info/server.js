@@ -19,9 +19,9 @@ class ServerInfoCommand extends Command {
 
   async exec (message) {
     const guild = await message.guild.fetch()
-    const creationDate = DateTime.fromISO(guild.createdAt.toISOString())
-    const totalMembers = guild.memberCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    const onlineMembers = guild.members.cache.filter(member => member.presence.status === 'online').size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    const creationDate = DateTime.fromISO(message.guild.createdAt.toISOString())
+    const totalMembers = message.guild.memberCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    const onlineMembers = message.guild.members.cache.filter(member => member.presence.status === 'online').size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
     const premiumTier = {
       0: 'No Level',
@@ -37,17 +37,19 @@ class ServerInfoCommand extends Command {
     }
 
     const embed = this.client.util.embed()
-      .setColor(config.embedColors.violet)
-      .setTitle(guild.name)
-      .setDescription(guild.description ? message.guild.description : '')
-      .setThumbnail(guild.iconURL())
+      .setColor(config.embedColors.gray)
+      .setTitle(message.guild.name)
+      .setDescription(message.guild.description ? message.guild.description : 'Guild description goes here')
+      .setThumbnail(message.guild.iconURL())
       .addField('Members', totalMembers, true)
       .addField('Online', onlineMembers, true)
-      .addField('Server Boost', `${premiumTier[guild.premiumTier]} • ${guild.premiumSubscriptionCount} Boosts • ${premiumThreshold[guild.premiumTier + 1] - guild.premiumSubscriptionCount} boosts until ${premiumTier[guild.premiumTier + 1]}`)
+      .addField('Server Boost', `${premiumTier[message.guild.premiumTier]} • ${message.guild.premiumSubscriptionCount} Boosts • ${premiumThreshold[message.guild.premiumTier + 1] - message.guild.premiumSubscriptionCount} boosts until ${premiumTier[message.guild.premiumTier + 1]}`)
       .addField('Created On', creationDate.toLocaleString(DateTime.DATE_FULL))
-      .addField('Website', config.links.website)
-      .addField('GitHub', config.links.github)
-      .addField('Twitter', config.links.twitter)
+      .addField('Links', `[Website](${config.links.website}) • [Twitter](${config.links.twitter}) • [GitHub](${config.links.github})`)
+    
+      if (message.guild.vanityURLCode) {
+        embed.addField('Invite', `[discord.gg/${message.guild.vanityURLCode}](https://discord.gg/${message.guild.vanityURLCode})`)
+      }
 
     return message.util.send({ embed })
   }
