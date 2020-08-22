@@ -1,6 +1,7 @@
 import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
 import config from '../../bot.config'
+import commalize from '../../utilities/commalize'
 
 class ServerInfoCommand extends Command {
   constructor () {
@@ -20,9 +21,8 @@ class ServerInfoCommand extends Command {
   async exec (message) {
     const guild = await message.guild.fetch()
     const creationDate = DateTime.fromISO(message.guild.createdAt.toISOString())
-    const totalMembers = message.guild.memberCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    const onlineMembers = message.guild.members.cache.filter(member => member.presence.status === 'online').size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-
+    const totalMembers = commalize(message.guild.memberCount.toString())
+    const onlineMembers = commalize(message.guild.members.cache.filter(member => member.presence.status === 'online').size.toString())
     const premiumTier = {
       0: 'No Level',
       1: 'Level 1',
