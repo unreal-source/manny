@@ -53,7 +53,7 @@ class UserInfoCommand extends Command {
     const embed = this.client.util.embed()
       .setColor(config.embedColors.gray)
       .setThumbnail(member.user.displayAvatarURL())
-      .setTitle(member.displayName)
+      .setTitle('User Info')
       .setDescription(member.user.bot ? `${member.user.tag} \`BOT\`` : member.user.tag)
       .addField('Status', status[member.presence.status], true)
       .addField('ID', member.id, true)
