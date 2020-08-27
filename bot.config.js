@@ -19,15 +19,15 @@ export default {
     hireStudio: '695155159692738570'
   },
   embedColors: {
-    gray: [20, 20, 20],
-    red: [255, 107, 107],
-    orange: [255, 169, 77],
-    yellow: [255, 224, 102],
-    green: [105, 219, 124],
-    cyan: [102, 217, 232],
-    blue: [77, 171, 247],
-    violet: [151, 117, 250],
-    pink: [250, 162, 193]
+    gray: '#141414',
+    red: '#ff6b6b',
+    orange: '#ffa94d',
+    yellow: '#ffe066',
+    green: '#69db7c',
+    cyan: '#66d9e8',
+    blue: '#4dabf7',
+    violet: '#9775fa',
+    pink: '#faa2c1'
   },
   emoji: {
     ban: ':no_entry_sign:',
