@@ -34,6 +34,7 @@ class HelpCommand extends Command {
     const embed = this.client.util.embed()
       .setColor(config.embedColors.violet)
       .setTitle('Command List')
+      .setDescription(`Say \`${config.defaultPrefix}help [command]\` to learn more about a command. Example: \`${config.defaultPrefix}help ping\``)
 
     // !help
     if (!command) {
@@ -48,8 +49,6 @@ class HelpCommand extends Command {
           embed.addField(`${category.id} Commands`, commandList)
         }
       }
-
-      embed.setFooter(`Say ${config.defaultPrefix}help [command] to learn more about a command. Example: ${config.defaultPrefix}help ping`)
     }
 
     // !help [command]
