@@ -1,6 +1,5 @@
 import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
-import config from '../../bot.config'
 
 class RoleInfoCommand extends Command {
   constructor () {
@@ -29,7 +28,7 @@ class RoleInfoCommand extends Command {
     return { role }
   }
 
-  async exec (message, { role }) {
+  exec (message, { role }) {
     const embed = this.client.util.embed()
       .setColor(role.hexColor)
       .setTitle('Role Info')
