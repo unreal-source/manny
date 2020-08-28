@@ -1,8 +1,7 @@
 import { Command } from 'discord-akairo'
 import config from '../../bot.config'
-import { DateTime } from 'luxon'
 import InfractionHistory from '../../models/Infractions'
-import log from '../../utilities/logger'
+import formatDate from '../../utilities/formatDate'
 
 class UserHistoryCommand extends Command {
   constructor () {
@@ -43,7 +42,7 @@ class UserHistoryCommand extends Command {
         .setTitle('Infraction History')
         .setDescription(user.bot ? `${user.tag} \`BOT\`` : user.tag)
         .addField('Mutes', history.mutes.length === 0 ? 'None' : history.mutes.map((mute, index) => {
-          const timestamp = DateTime.fromISO(mute.date).toLocaleString(DateTime.DATETIME_FULL)
+          const timestamp = formatDate(mute.date)
           let content = ''
 
           switch (mute.action) {
@@ -61,7 +60,7 @@ class UserHistoryCommand extends Command {
           return content
         }).join('\n'))
         .addField('Strikes', history.strikes.length === 0 ? 'None' : history.strikes.map((strike, index) => {
-          const timestamp = DateTime.fromISO(strike.date).toLocaleString(DateTime.DATETIME_FULL)
+          const timestamp = formatDate(strike.date)
           let content = ''
 
           switch (strike.action) {
@@ -79,7 +78,7 @@ class UserHistoryCommand extends Command {
           return content
         }).join('\n'))
         .addField('Bans', history.bans.length === 0 ? 'None' : history.bans.map((ban, index) => {
-          const timestamp = DateTime.fromISO(ban.date).toLocaleString(DateTime.DATETIME_FULL)
+          const timestamp = formatDate(ban.date)
           let content = ''
 
           switch (ban.action) {

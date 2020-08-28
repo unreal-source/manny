@@ -1,7 +1,7 @@
 import { Command } from 'discord-akairo'
-import { DateTime } from 'luxon'
 import config from '../../bot.config'
 import commalize from '../../utilities/commalize'
+import formatDate from '../../utilities/formatDate'
 
 class ServerInfoCommand extends Command {
   constructor () {
@@ -19,7 +19,6 @@ class ServerInfoCommand extends Command {
   }
 
   async exec (message) {
-    const creationDate = DateTime.fromISO(message.guild.createdAt.toISOString())
     const totalMembers = commalize(message.guild.memberCount.toString())
     const onlineMembers = commalize(message.guild.members.cache.filter(member => member.presence.status === 'online').size.toString())
     const premiumTier = {
@@ -43,7 +42,7 @@ class ServerInfoCommand extends Command {
       .addField('Members', totalMembers, true)
       .addField('Online', onlineMembers, true)
       .addField('Server Boost', `${premiumTier[message.guild.premiumTier]} • ${message.guild.premiumSubscriptionCount} Boosts • ${premiumThreshold[message.guild.premiumTier + 1] - message.guild.premiumSubscriptionCount} boosts until ${premiumTier[message.guild.premiumTier + 1]}`)
-      .addField('Created', creationDate.toLocaleString(DateTime.DATETIME_FULL))
+      .addField('Created', formatDate(message.guild.createdAt))
       .addField('Links', `[Website](${config.links.website}) • [Twitter](${config.links.twitter}) • [GitHub](${config.links.github})`)
 
     if (message.guild.vanityURLCode) {

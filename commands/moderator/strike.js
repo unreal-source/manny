@@ -1,6 +1,7 @@
 import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
 import config from '../../bot.config'
+import formatDate from '../../utilities/formatDate'
 import InfractionHistory from '../../models/Infractions'
 import ms from 'ms'
 
@@ -81,7 +82,7 @@ class StrikeCommand extends Command {
           const muteExpiredLog = this.client.util.embed()
             .setColor(config.embedColors.yellow)
             .setTitle(`${config.emoji.expired} Mute expired on __${member.user.tag}__`)
-            .setFooter(DateTime.fromISO(now).toLocaleString(DateTime.DATETIME_FULL))
+            .setFooter(formatDate(now))
 
           logChannel.send({ embed: muteExpiredLog })
         }, muteDuration)
@@ -92,7 +93,7 @@ class StrikeCommand extends Command {
           .setColor(config.embedColors.orange)
           .setTitle(`${config.emoji.strike} __${member.user.tag}__ received their 1st strike from __${message.author.tag}__`)
           .setDescription(`Reason: ${reason}\n\`\`\`User muted for ${ms(muteDuration, { long: true })}\`\`\``)
-          .setFooter(DateTime.fromISO(now).toLocaleString(DateTime.DATETIME_FULL))
+          .setFooter(formatDate(now))
 
         return logChannel.send({ embed: strikeLog })
       }
@@ -108,7 +109,7 @@ class StrikeCommand extends Command {
           const muteExpiredLog = this.client.util.embed()
             .setColor(config.embedColors.yellow)
             .setTitle(`${config.emoji.expired} Mute expired on __${member.user.tag}__`)
-            .setFooter(DateTime.fromISO(now).toLocaleString(DateTime.DATETIME_FULL))
+            .setFooter(formatDate(now))
 
           logChannel.send({ embed: muteExpiredLog })
         }, muteDuration)
@@ -119,7 +120,7 @@ class StrikeCommand extends Command {
           .setColor(config.embedColors.orange)
           .setTitle(`${config.emoji.strike} __${member.user.tag}__ received their 2nd strike from __${message.author.tag}__`)
           .setDescription(`Reason: ${reason}\n\`\`\`User muted for ${ms(muteDuration, { long: true })}\`\`\``)
-          .setFooter(DateTime.fromISO(now).toLocaleString(DateTime.DATETIME_FULL))
+          .setFooter(formatDate(now))
 
         return logChannel.send({ embed: strikeLog })
       }
@@ -148,7 +149,7 @@ class StrikeCommand extends Command {
           .setColor(config.embedColors.orange)
           .setTitle(`${config.emoji.strike} __${member.user.tag}__ received their 3rd strike from __${message.author.tag}__`)
           .setDescription(`Reason: ${reason}\n\`\`\`User banned from the server\`\`\``)
-          .setFooter(DateTime.fromISO(now).toLocaleString(DateTime.DATETIME_FULL))
+          .setFooter(formatDate(now))
 
         return logChannel.send({ embed: strikeLog })
       }
@@ -171,7 +172,7 @@ class StrikeCommand extends Command {
       const muteExpiredLog = this.client.util.embed()
         .setColor(config.embedColors.yellow)
         .setTitle(`${config.emoji.expired} Mute expired on __${member.user.tag}__`)
-        .setFooter(DateTime.fromISO(now).toLocaleString(DateTime.DATETIME_FULL))
+        .setFooter(formatDate(now))
 
       logChannel.send({ embed: muteExpiredLog })
     }, muteDuration)
@@ -182,7 +183,7 @@ class StrikeCommand extends Command {
       .setColor(config.embedColors.orange)
       .setTitle(`${config.emoji.strike} __${member.user.tag}__ received their 1st strike from __${message.author.tag}__`)
       .setDescription(`Reason: ${reason}\n\`\`\`User muted for ${ms(muteDuration, { long: true })}\`\`\``)
-      .setFooter(DateTime.fromISO(now).toLocaleString(DateTime.DATETIME_FULL))
+      .setFooter(formatDate(now))
 
     return logChannel.send({ embed: strikeLog })
   }

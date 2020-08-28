@@ -1,5 +1,5 @@
 import { Command } from 'discord-akairo'
-import { DateTime } from 'luxon'
+import formatDate from '../../utilities/formatDate'
 
 class RoleInfoCommand extends Command {
   constructor () {
@@ -37,7 +37,7 @@ class RoleInfoCommand extends Command {
       .addField('ID', role.id, true)
       .addField('Members', role.members.size)
       .addField('Mentionable', role.mentionable)
-      .addField('Created', role.createdAt.toLocaleString(DateTime.DATETIME_FULL))
+      .addField('Created', formatDate(role.createdAt))
 
     return message.util.send({ embed })
   }

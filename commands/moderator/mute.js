@@ -1,6 +1,7 @@
 import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
 import config from '../../bot.config'
+import formatDate from '../../utilities/formatDate'
 import InfractionHistory from '../../models/Infractions'
 import ms from 'ms'
 
@@ -68,7 +69,7 @@ class MuteCommand extends Command {
       const embed = this.client.util.embed()
         .setColor(config.embedColors.yellow)
         .setTitle(`${config.emoji.expired} Mute expired on __${member.user.tag}__`)
-        .setFooter(DateTime.fromISO(now).toLocaleString(DateTime.DATETIME_FULL))
+        .setFooter(formatDate(now))
       logChannel.send({ embed })
     }, ms(duration))
 
@@ -109,7 +110,7 @@ class MuteCommand extends Command {
       .setColor(config.embedColors.yellow)
       .setTitle(`${config.emoji.mute} __${member.user.tag}__ was muted for ${longDuration} by __${message.author.tag}__`)
       .setDescription(`Reason: ${reason}`)
-      .setFooter(DateTime.fromISO(now).toLocaleString(DateTime.DATETIME_FULL))
+      .setFooter(formatDate(now))
 
     return logChannel.send({ embed })
   }

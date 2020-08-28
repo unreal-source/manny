@@ -1,6 +1,7 @@
 import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
 import config from '../../bot.config'
+import formatDate from '../../utilities/formatDate'
 import InfractionHistory from '../../models/Infractions'
 
 class BanCommand extends Command {
@@ -96,7 +97,7 @@ class BanCommand extends Command {
       .setColor(config.embedColors.red)
       .setTitle(`:no_entry_sign: **${user.tag}** was banned by **${message.author.tag}**`)
       .setDescription(`Reason: ${reason}`)
-      .setFooter(DateTime.fromISO(now).toLocaleString(DateTime.DATETIME_FULL))
+      .setFooter(formatDate(now))
 
     return logChannel.send({ embed })
   }

@@ -1,6 +1,7 @@
 import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
 import config from '../../bot.config'
+import formatDate from '../../utilities/formatDate'
 import InfractionHistory from '../../models/Infractions'
 
 class UnbanCommand extends Command {
@@ -79,7 +80,7 @@ class UnbanCommand extends Command {
       .setColor(config.embedColors.red)
       .setTitle(`${config.emoji.undo} __${user.tag}__ was unbanned by __${message.author.tag}__`)
       .setDescription(`Reason: ${reason}`)
-      .setFooter(DateTime.fromISO(now).toLocaleString(DateTime.DATETIME_FULL))
+      .setFooter(formatDate(now))
 
     return logChannel.send({ embed })
   }

@@ -1,6 +1,7 @@
 import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
 import config from '../../bot.config'
+import formatDate from '../../utilities/formatDate'
 import InfractionHistory from '../../models/Infractions'
 
 class UnmuteCommand extends Command {
@@ -93,7 +94,7 @@ class UnmuteCommand extends Command {
       .setColor(config.embedColors.yellow)
       .setTitle(`${config.emoji.undo} __${member.user.tag}__ was unmuted by __${message.author.tag}__`)
       .setDescription(`Reason: ${reason}`)
-      .setFooter(DateTime.fromISO(now).toLocaleString(DateTime.DATETIME_FULL))
+      .setFooter(formatDate(now))
 
     return logChannel.send({ embed })
   }

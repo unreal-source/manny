@@ -1,6 +1,6 @@
 import { Command } from 'discord-akairo'
-import { DateTime } from 'luxon'
 import config from '../../bot.config'
+import formatDate from '../../utilities/formatDate'
 
 class UserInfoCommand extends Command {
   constructor () {
@@ -32,9 +32,6 @@ class UserInfoCommand extends Command {
   }
 
   async exec (message, { member }) {
-    const discordJoinDate = DateTime.fromISO(member.user.createdAt.toISOString())
-    const guildJoinDate = DateTime.fromISO(member.joinedAt.toISOString())
-
     const status = {
       online: ':green_circle: Online',
       idle: ':orange_circle: Idle',
@@ -42,14 +39,6 @@ class UserInfoCommand extends Command {
       offline: ':black_circle: Offline'
     }
 
-    /*
-      Display name, avatar
-      Username, Bot or not
-      Presence, ID
-      Roles
-      Boost status
-      Server join, Discord join
-    */
     const embed = this.client.util.embed()
       .setColor(config.embedColors.gray)
       .setThumbnail(member.user.displayAvatarURL())
@@ -58,8 +47,8 @@ class UserInfoCommand extends Command {
       .addField('Status', status[member.presence.status], true)
       .addField('ID', member.id, true)
       .addField('Roles', member.roles.cache.map(role => `\`${role.name}\``).join(' '))
-      .addField('Joined Server', guildJoinDate.toLocaleString(DateTime.DATETIME_FULL))
-      .addField('Joined Discord', discordJoinDate.toLocaleString(DateTime.DATETIME_FULL))
+      .addField('Joined Server', formatDate(member.joinedAt))
+      .addField('Joined Discord', formatDate(member.user.createdAt))
     return message.util.send({ embed })
   }
 }
