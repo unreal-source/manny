@@ -35,7 +35,6 @@ class ChannelInfoCommand extends Command {
 
   exec (message, { channel }) {
     const embed = this.client.util.embed()
-      .setColor(config.embedColors.gray)
       .setTitle('Channel Info')
       .addField('Type', capitalize(channel.type), true)
       .addField('ID', channel.id, true)

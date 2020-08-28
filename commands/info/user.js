@@ -40,7 +40,6 @@ class UserInfoCommand extends Command {
     }
 
     const embed = this.client.util.embed()
-      .setColor(config.embedColors.gray)
       .setThumbnail(member.user.displayAvatarURL())
       .setTitle('User Info')
       .setDescription(member.user.bot ? `${member.user.tag} \`BOT\`` : member.user.tag)

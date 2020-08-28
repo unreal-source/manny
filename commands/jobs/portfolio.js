@@ -54,7 +54,6 @@ class PortfolioCommand extends Command {
     }
 
     const embed = this.client.util.embed()
-      .setColor(config.embedColors.violet)
       .setTitle(name)
       .setDescription(url)
       .addField('Services', services)

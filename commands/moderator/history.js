@@ -37,7 +37,6 @@ class UserHistoryCommand extends Command {
 
     if (history) {
       const embed = this.client.util.embed()
-        .setColor(config.embedColors.violet)
         .setThumbnail(user.displayAvatarURL())
         .setTitle('Infraction History')
         .setDescription(user.bot ? `${user.tag} \`BOT\`` : user.tag)

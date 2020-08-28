@@ -35,7 +35,6 @@ class ServerInfoCommand extends Command {
     }
 
     const embed = this.client.util.embed()
-      .setColor(config.embedColors.gray)
       .setTitle(message.guild.name)
       .setDescription(message.guild.description ? message.guild.description : 'Guild description goes here')
       .setThumbnail(message.guild.iconURL())

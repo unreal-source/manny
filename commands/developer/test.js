@@ -80,7 +80,6 @@ class TestCommand extends Command {
         break
       case 'history':
         embed
-          .setColor(config.embedColors.violet)
           .setTitle('Infraction History')
           .setDescription(message.author.tag)
           .setThumbnail(message.author.displayAvatarURL())

@@ -32,7 +32,6 @@ class HelpCommand extends Command {
   exec (message, { command }) {
     const member = this.client.guilds.cache.first().member(message.author)
     const embed = this.client.util.embed()
-      .setColor(config.embedColors.violet)
       .setTitle('Command List')
       .setDescription(`Say \`${config.defaultPrefix}help [command]\` to learn more about a command. Example: \`${config.defaultPrefix}help ping\``)
 

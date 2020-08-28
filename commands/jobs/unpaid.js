@@ -40,7 +40,6 @@ class UnpaidCommand extends Command {
     }
 
     const embed = this.client.util.embed()
-      .setColor(config.embedColors.violet)
       .setTitle(title)
       .setDescription(description)
       .addField('Contact', contact)
