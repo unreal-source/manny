@@ -43,12 +43,12 @@ class ServerInfoCommand extends Command {
       .addField('Members', totalMembers, true)
       .addField('Online', onlineMembers, true)
       .addField('Server Boost', `${premiumTier[message.guild.premiumTier]} • ${message.guild.premiumSubscriptionCount} Boosts • ${premiumThreshold[message.guild.premiumTier + 1] - message.guild.premiumSubscriptionCount} boosts until ${premiumTier[message.guild.premiumTier + 1]}`)
-      .addField('Created On', creationDate.toLocaleString(DateTime.DATETIME_FULL))
+      .addField('Created', creationDate.toLocaleString(DateTime.DATETIME_FULL))
       .addField('Links', `[Website](${config.links.website}) • [Twitter](${config.links.twitter}) • [GitHub](${config.links.github})`)
-    
-      if (message.guild.vanityURLCode) {
-        embed.addField('Invite', `[discord.gg/${message.guild.vanityURLCode}](https://discord.gg/${message.guild.vanityURLCode})`)
-      }
+
+    if (message.guild.vanityURLCode) {
+      embed.addField('Invite', `[discord.gg/${message.guild.vanityURLCode}](https://discord.gg/${message.guild.vanityURLCode})`)
+    }
 
     return message.util.send({ embed })
   }
