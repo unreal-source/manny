@@ -1,6 +1,6 @@
 import { Listener } from 'discord-akairo'
 import { DateTime } from 'luxon'
-import config from '../../bot.config'
+import config from '../../config'
 
 class GuildMemberAddListener extends Listener {
   constructor () {

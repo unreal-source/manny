@@ -1,5 +1,5 @@
 import { Command } from 'discord-akairo'
-import config from '../../bot.config'
+import config from '../../config'
 import InfractionHistory from '../../models/Infractions'
 import formatDate from '../../utilities/formatDate'
 

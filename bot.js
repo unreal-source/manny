@@ -1,5 +1,5 @@
 import MannyClient from './structures/MannyClient'
-import config from './bot.config'
+import config from './config'
 import log from './utilities/logger'
 import * as Sentry from '@sentry/node'
 

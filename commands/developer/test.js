@@ -1,5 +1,5 @@
 import { Command } from 'discord-akairo'
-import config from '../../bot.config'
+import config from '../../config'
 import { DateTime } from 'luxon'
 import log from '../../utilities/logger'
 

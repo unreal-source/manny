@@ -1,5 +1,5 @@
 import { Listener } from 'discord-akairo'
-import config from '../../bot.config'
+import config from '../../config'
 import log from '../../utilities/logger'
 
 class ReadyListener extends Listener {

@@ -1,5 +1,5 @@
 import { Command, Argument, Flag } from 'discord-akairo'
-import config from '../../bot.config'
+import config from '../../config'
 
 class PortfolioCommand extends Command {
   constructor () {

@@ -1,6 +1,6 @@
 import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
-import config from '../../bot.config'
+import config from '../../config'
 import formatDate from '../../utilities/formatDate'
 import InfractionHistory from '../../models/Infractions'
 
