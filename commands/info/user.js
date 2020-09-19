@@ -1,5 +1,4 @@
 import { Command } from 'discord-akairo'
-import config from '../../config'
 import formatDate from '../../utilities/formatDate'
 
 class UserInfoCommand extends Command {

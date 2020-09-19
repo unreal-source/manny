@@ -1,5 +1,4 @@
 import { Command } from 'discord-akairo'
-import log from '../../utilities/logger'
 
 class UnlockChannelCommand extends Command {
   constructor () {
