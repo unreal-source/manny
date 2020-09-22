@@ -26,7 +26,7 @@ class MannyClient extends AkairoClient {
       allowMention: true,
       commandUtil: true,
       handleEdits: true,
-      prefix: config.defaultPrefix,
+      prefix: config.commands.defaultPrefix,
       argumentDefaults: {
         prompt: {
           cancel: 'OK. The command was cancelled.',

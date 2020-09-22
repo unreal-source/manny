@@ -42,7 +42,7 @@ class ServerInfoCommand extends Command {
       .addField('Online', onlineMembers, true)
       .addField('Server Boost', `${premiumTier[message.guild.premiumTier]} • ${message.guild.premiumSubscriptionCount} Boosts • ${premiumThreshold[message.guild.premiumTier + 1] - message.guild.premiumSubscriptionCount} boosts until ${premiumTier[message.guild.premiumTier + 1]}`)
       .addField('Created', formatDate(message.guild.createdAt))
-      .addField('Links', `[Website](${config.links.website}) • [Twitter](${config.links.twitter}) • [GitHub](${config.links.github})`)
+      .addField('Links', `[Website](${config.meta.links.website}) • [Twitter](${config.meta.links.twitter}) • [GitHub](${config.meta.links.github})`)
 
     if (message.guild.vanityURLCode) {
       embed.addField('Invite', `[discord.gg/${message.guild.vanityURLCode}](https://discord.gg/${message.guild.vanityURLCode})`)

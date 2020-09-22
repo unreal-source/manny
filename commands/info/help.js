@@ -33,7 +33,7 @@ class HelpCommand extends Command {
     const member = this.client.guilds.cache.first().member(message.author)
     const embed = this.client.util.embed()
       .setTitle('Command List')
-      .setDescription(`Say \`${config.defaultPrefix}help [command]\` to learn more about a command. Example: \`${config.defaultPrefix}help ping\``)
+      .setDescription(`Say \`${config.commands.defaultPrefix}help [command]\` to learn more about a command. Example: \`${config.commands.defaultPrefix}help ping\``)
 
     // !help
     if (!command) {
@@ -43,7 +43,7 @@ class HelpCommand extends Command {
         const availableCommands = category.filter(cmd => member.permissions.has(cmd.userPermissions))
 
         if (availableCommands.size !== 0) {
-          const commandList = availableCommands.map(cmd => `**${cmd.prefix ? cmd.prefix : config.defaultPrefix}${cmd.aliases[0]}** - ${cmd.description.content}`).join('\n')
+          const commandList = availableCommands.map(cmd => `**${cmd.prefix ? cmd.prefix : config.commands.defaultPrefix}${cmd.aliases[0]}** - ${cmd.description.content}`).join('\n')
 
           embed.addField(`${category.id} Commands`, commandList)
         }

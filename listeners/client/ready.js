@@ -1,5 +1,6 @@
 import { Listener } from 'discord-akairo'
 import config from '../../config'
+import ms from 'ms'
 
 class ReadyListener extends Listener {
   constructor () {
@@ -21,14 +22,14 @@ class ReadyListener extends Listener {
     setInterval(() => {
       const newMemberCount = this.client.guilds.cache.first().memberCount
       const difference = newMemberCount - oldMemberCount
-      const channel = this.client.channels.cache.get(config.shield.alertChannel)
+      const channel = this.client.channels.cache.get(config.automod.notifChannel)
 
-      if (difference >= config.shield.joinCount) {
+      if (difference >= config.automod.joinCount) {
         channel.send(`Unusual activity detected. ${difference} new ${difference < 2 ? 'member' : 'members'} joined the server in the last 10 seconds.`)
       }
 
       oldMemberCount = newMemberCount
-    }, config.shield.joinDuration)
+    }, ms(config.automod.joinInterval))
   }
 }
 
