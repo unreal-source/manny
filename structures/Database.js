@@ -25,13 +25,19 @@ class Database {
   }
 
   static async loadModels (models) {
-    const files = await fs.promises.readdir(models)
+    try {
+      const files = await fs.promises.readdir(models)
 
-    for (const file of files) {
-      await require(path.join(models, file))
+      for (const file of files) {
+        await require(path.join(models, file))
+        log.info(`Model loaded: ${file}`)
+      }
+
+      await sequelize.sync()
+      log.success('Models synchronized')
+    } catch (err) {
+      log.error(err)
     }
-
-    sequelize.sync()
   }
 }
 
