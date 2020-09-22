@@ -43,21 +43,23 @@ class MannyClient extends AkairoClient {
     })
 
     this.mutes = new Collection()
-
-    this.setup()
     this.log = new Signale({
       scope: 'Client'
     })
   }
 
-  setup () {
+  init () {
     this.commandHandler.useListenerHandler(this.listenerHandler)
 
     this.commandHandler.loadAll()
+    this.log.info('Commands loaded')
     this.listenerHandler.loadAll()
+    this.log.info('Listeners loaded')
   }
 
   async start () {
+    await this.init()
+
     if (process.env.DATABASE_URL) {
       await Database.authenticate()
     } else {
