@@ -11,7 +11,7 @@ class TestCommand extends Command {
   constructor () {
     super('test', {
       aliases: ['test', 't'],
-      category: 'System',
+      category: 'Developer',
       description: {
         name: 'Test',
         content: 'A private command for testing embed designs and other things.',
