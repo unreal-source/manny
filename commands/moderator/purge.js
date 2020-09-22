@@ -1,6 +1,5 @@
 import { Command, Argument } from 'discord-akairo'
 import config from '../../config'
-import log from '../../utilities/logger'
 
 class PurgeCommand extends Command {
   constructor () {
@@ -54,7 +53,7 @@ class PurgeCommand extends Command {
 
         return logChannel.send(`:broom: **${message.author.tag}** deleted **${count} ${count > 1 ? 'messages' : 'message'}** from **${member.user.tag}** in **#${message.channel.name}**.`)
       } catch (error) {
-        log.error(error)
+        this.client.log.error(error)
 
         return message.author.send('Failed to delete messages. Check the logs for more details.')
       }

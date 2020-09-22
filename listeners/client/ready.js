@@ -1,6 +1,5 @@
 import { Listener } from 'discord-akairo'
 import config from '../../config'
-import log from '../../utilities/logger'
 
 class ReadyListener extends Listener {
   constructor () {
@@ -11,11 +10,11 @@ class ReadyListener extends Listener {
   }
 
   exec () {
+    this.client.guilds.cache.each(guild => this.client.log.success(`${this.client.user.username} successfully connected to ${guild.name}`))
+
     this.client.user.setActivity('the server • !help', {
       type: 'WATCHING'
     })
-
-    log.success(`${this.client.user.username} successfully connected to ${this.client.guilds.cache.first().name}. All systems operational.`)
 
     let oldMemberCount = this.client.guilds.cache.first().memberCount
 

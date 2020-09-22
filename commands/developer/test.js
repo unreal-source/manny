@@ -1,7 +1,11 @@
 import { Command } from 'discord-akairo'
 import config from '../../config'
 import { DateTime } from 'luxon'
-import log from '../../utilities/logger'
+import { Signale } from 'signale'
+
+const log = new Signale({
+  scope: 'Test'
+})
 
 class TestCommand extends Command {
   constructor () {

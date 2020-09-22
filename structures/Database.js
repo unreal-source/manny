@@ -1,9 +1,12 @@
 import fs from 'fs'
-import log from '../utilities/logger'
 import path from 'path'
 import Sequelize from 'sequelize'
+import { Signale } from 'signale'
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, { logging: false })
+const log = new Signale({
+  scope: 'Database'
+})
 
 class Database {
   static get sequelize () {

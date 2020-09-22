@@ -1,8 +1,8 @@
 import { AkairoClient, CommandHandler, ListenerHandler } from 'discord-akairo'
 import { Collection } from 'discord.js'
 import Database from './Database'
-import log from '../utilities/logger'
 import ms from 'ms'
+import { Signale } from 'signale'
 
 class MannyClient extends AkairoClient {
   constructor (config) {
@@ -45,6 +45,9 @@ class MannyClient extends AkairoClient {
     this.mutes = new Collection()
 
     this.setup()
+    this.log = new Signale({
+      scope: 'Client'
+    })
   }
 
   setup () {
@@ -58,7 +61,7 @@ class MannyClient extends AkairoClient {
     if (process.env.DATABASE_URL) {
       await Database.authenticate()
     } else {
-      log.warn('DATABASE_URL not found, skipping database connection')
+      this.log.warn('DATABASE_URL not found, skipping database connection')
     }
 
     return this.login(process.env.BOT_TOKEN)
