@@ -11,19 +11,19 @@ class GuildMemberAddListener extends Listener {
   }
 
   exec (member) {
-    const channel = this.client.channels.cache.get(config.logs.memberLog)
+    const channel = this.client.channels.cache.get(config.logs.channels.memberLog)
     const now = DateTime.local()
     const accountCreated = DateTime.fromJSDate(member.user.createdAt)
     const accountAge = now.diff(accountCreated, 'minutes').toObject()
 
     // Flag bots
     if (member.user.bot) {
-      return channel.send(`:robot: <@${member.user.id}> \`BOT\`was added to the server`)
+      return channel.send(`:robot: <@${member.user.id}> was added to the server \`BOT\``)
     }
 
     // Flag new accounts
-    if (accountAge.minutes <= config.newAccountThreshold) {
-      return channel.send(`:inbox_tray: <@${member.user.id}> \`NEW ACCOUNT\` joined the server`)
+    if (accountAge.minutes <= config.automod.newAccountAge) {
+      return channel.send(`:inbox_tray: <@${member.user.id}> joined the server \`NEW\` `)
     } else {
       return channel.send(`:inbox_tray: <@${member.user.id}> joined the server`)
     }
