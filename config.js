@@ -1,8 +1,12 @@
 const config = {
+  commands: {
+    defaultPrefix: '!'
+  },
   automod: {
     newAccountAge: '30m',
     joinCount: 10,
     joinInterval: '1m',
+    notifChannel: '',
     ignoredChannels: []
   },
   infractions: {
