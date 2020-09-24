@@ -33,6 +33,7 @@ const config = {
     }
   },
   prefixes: {
+    archive: ':card_box:',
     ban: ':no_entry_sign:',
     bot: ':robot:',
     expired: ':alarm_clock:',
