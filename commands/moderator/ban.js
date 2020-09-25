@@ -2,7 +2,7 @@ import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
 import config from '../../config'
 import formatDate from '../../utilities/formatDate'
-import InfractionHistory from '../../models/Infractions'
+import Case from '../../models/cases'
 
 class BanCommand extends Command {
   constructor () {
@@ -11,7 +11,7 @@ class BanCommand extends Command {
       category: 'Moderator',
       description: {
         name: 'Ban User',
-        content: 'Ban a user from the server.',
+        content: 'Ban a user from the server',
         usage: '!ban <user> <reason>'
       },
       channel: 'guild',
@@ -45,9 +45,10 @@ class BanCommand extends Command {
     }
 
     if (user.id === this.client.user.id) {
-      return message.channel.send(`${config.emoji.warning} Was it something I said?`)
+      return message.channel.send(`${config.emoji.warning} Nice try, human.`)
     }
 
+    // If user is a guild member, make sure we have permission to ban them
     if (message.guild.members.cache.some(member => member.user.id === user.id)) {
       const member = await message.guild.members.fetch(user)
 
@@ -60,46 +61,39 @@ class BanCommand extends Command {
       }
     }
 
-    const banned = await message.guild.members.ban(user, { reason: reason })
-    message.channel.send(`You banned ${banned} from the server.`)
+    // Send receipt
+    const receipt = this.client.util.embed()
+      .setAuthor(message.guild.name, message.guild.iconURL())
+      .setTitle(`${config.prefixes.ban} You were banned from the server`)
+      .addField('Reason', reason)
+      .addField('Appeals', 'If you would like to appeal this decision, [fill out this form]() and we will get back to you as soon as possible.')
+    // TODO: Add link to appeals form
+    await user.send({ embed: receipt })
 
-    const now = DateTime.local().toISO()
-    const ban = {
+    await message.guild.members.ban(user, { reason: reason })
+
+    // Record case
+    const now = DateTime.local()
+
+    await Case.create({
       action: 'ban',
-      date: now,
-      executor: message.author.tag,
-      reason: reason
-    }
-
-    const history = await InfractionHistory.findOne({
-      where: { user_id: user.id }
+      user: user.id,
+      moderator: message.author.id,
+      reason: reason,
+      timestamp: now
     })
 
-    if (history) {
-      const bans = history.bans
-      bans.push(ban)
-      await InfractionHistory.update({
-        bans: bans
-      }, {
-        where: { user_id: user.id }
-      })
-    } else {
-      await InfractionHistory.create({
-        user_id: user.id,
-        mutes: [],
-        strikes: [],
-        bans: [ban]
-      })
-    }
-
-    const logChannel = this.client.channels.cache.get(config.logs.modLog)
-    const embed = this.client.util.embed()
-      .setColor(config.embedColors.red)
-      .setTitle(`:no_entry_sign: **${user.tag}** was banned by **${message.author.tag}**`)
-      .setDescription(`Reason: ${reason}`)
+    // Send mod log
+    const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+    const logEntry = this.client.util.embed()
+      .setColor(config.embeds.colors.red)
+      .setAuthor(message.author.tag, message.author.displayAvatarURL())
+      .setThumbnail(user.displayAvatarURL())
+      .setTitle(`${config.prefixes.ban} Banned ${user.tag}`)
+      .setDescription(`**Reason:** ${reason}`)
       .setFooter(formatDate(now))
 
-    return logChannel.send({ embed })
+    return logChannel.send({ embed: logEntry })
   }
 }
 
