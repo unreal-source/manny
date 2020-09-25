@@ -1,5 +1,7 @@
 import { Command, Argument } from 'discord-akairo'
 import config from '../../config'
+import { DateTime } from 'luxon'
+import formatDate from '../../utilities/formatDate'
 
 class PurgeCommand extends Command {
   constructor () {
@@ -25,7 +27,7 @@ class PurgeCommand extends Command {
       }
     }
 
-    const member = yield {
+    const author = yield {
       type: 'member',
       prompt: {
         start: 'Enter the @username or ID of the member.',
@@ -34,24 +36,30 @@ class PurgeCommand extends Command {
       }
     }
 
-    return { count, member }
+    return { count, author }
   }
 
-  async exec (message, { count, member }) {
-    const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+  async exec (message, { count, author }) {
+    const now = DateTime.local()
+    const logChannel = await this.client.channels.cache.get(config.logs.channels.modLog)
+    const logEntry = this.client.util.embed()
+      .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL())
+      .setTitle(`${config.prefixes.purge} Deleted ${count} ${count > 1 ? 'messages' : 'message'}`)
+      .setDescription(`**Channel:** #${message.channel.name}`)
+      .setFooter(formatDate(now))
 
-    // Delete the message containing the command
     await message.delete()
 
-    // If member is provided, only delete messages from that member
-    if (member) {
+    if (author) {
       try {
         const messages = await message.channel.messages.fetch()
-        const filteredMessages = await messages.filter(message => message.author.id === member.id).first(count)
+        const filteredMessages = await messages.filter(message => message.author.id === author.id).first(count)
 
         await message.channel.bulkDelete(filteredMessages)
 
-        return logChannel.send(`:broom: **${message.author.tag}** deleted **${count} ${count > 1 ? 'messages' : 'message'}** from **${member.user.tag}** in **#${message.channel.name}**.`)
+        logEntry.setTitle(`${config.prefixes.purge} Deleted ${count} ${count > 1 ? 'messages' : 'message'} by ${author.user.tag}`)
+
+        return logChannel.send({ embed: logEntry })
       } catch (error) {
         this.client.log.error(error)
 
@@ -61,7 +69,9 @@ class PurgeCommand extends Command {
 
     await message.channel.bulkDelete(count)
 
-    return logChannel.send(`:broom: **${message.author.tag}** deleted **${count} ${count > 1 ? 'messages' : 'message'}** in **#${message.channel.name}**.`)
+    logEntry.setTitle(`${config.prefixes.purge} Deleted ${count} ${count > 1 ? 'messages' : 'message'}`)
+
+    return logChannel.send({ embed: logEntry })
   }
 }
 
