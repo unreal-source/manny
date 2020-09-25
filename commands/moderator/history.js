@@ -7,7 +7,7 @@ class UserHistoryCommand extends Command {
   constructor () {
     super('history', {
       aliases: ['history'],
-      category: 'Moderation',
+      category: 'Moderator',
       description: {
         name: 'User History',
         content: 'Check a user\'s infraction history.',

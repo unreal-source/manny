@@ -5,7 +5,7 @@ class PurgeCommand extends Command {
   constructor () {
     super('purge', {
       aliases: ['purge'],
-      category: 'Moderation',
+      category: 'Moderator',
       description: {
         name: 'Purge Messages',
         content: 'Delete messages in bulk and optionally filter by author.',
@@ -38,7 +38,7 @@ class PurgeCommand extends Command {
   }
 
   async exec (message, { count, member }) {
-    const logChannel = this.client.channels.cache.get(config.logs.modLog)
+    const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
 
     // Delete the message containing the command
     await message.delete()

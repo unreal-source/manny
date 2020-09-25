@@ -8,7 +8,7 @@ class BanCommand extends Command {
   constructor () {
     super('ban', {
       aliases: ['ban'],
-      category: 'Moderation',
+      category: 'Moderator',
       description: {
         name: 'Ban User',
         content: 'Ban a user from the server.',

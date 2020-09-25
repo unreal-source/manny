@@ -8,7 +8,7 @@ class UnbanCommand extends Command {
   constructor () {
     super('unban', {
       aliases: ['unban'],
-      category: 'Moderation',
+      category: 'Moderator',
       description: {
         name: 'Unban User',
         content: 'Unban a user from the server.',

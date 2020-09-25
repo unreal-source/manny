@@ -9,7 +9,7 @@ class MuteCommand extends Command {
   constructor () {
     super('mute', {
       aliases: ['mute'],
-      category: 'Moderation',
+      category: 'Moderator',
       description: {
         name: 'Mute User',
         content: 'Mute a user, removing their ability to send messages.',

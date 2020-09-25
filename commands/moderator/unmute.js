@@ -8,7 +8,7 @@ class UnmuteCommand extends Command {
   constructor () {
     super('unmute', {
       aliases: ['unmute'],
-      category: 'Moderation',
+      category: 'Moderator',
       description: {
         name: 'Unmute User',
         content: 'Unmute a user, restoring their ability to send messages.',

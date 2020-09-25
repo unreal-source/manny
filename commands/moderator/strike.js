@@ -9,7 +9,7 @@ class StrikeCommand extends Command {
   constructor () {
     super('strike', {
       aliases: ['strike'],
-      category: 'Moderation',
+      category: 'Moderator',
       description: {
         name: 'Give Strike',
         content: 'Give a user a strike.',
