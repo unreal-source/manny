@@ -22,8 +22,8 @@ const config = {
   },
   embeds: {
     colors: {
-      red: '#ff6b6b',
-      orange: '#ffa94d',
+      red: '#f03e3e',
+      orange: '#fd7e14',
       yellow: '#ffe066',
       green: '#69db7c',
       cyan: '#66d9e8',
@@ -41,6 +41,7 @@ const config = {
     leave: ':outbox_tray:',
     lock: ':lock:',
     mute: ':clock2:',
+    purge: ':broom:',
     strike: ':triangular_flag_on_post:',
     undo: ':arrow_right_hook:',
     unlock: ':unlock:',
