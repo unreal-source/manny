@@ -54,6 +54,9 @@ const config = {
       hireStudio: '695155159692738570'
     }
   },
+  archive: {
+    category: '758833108727365652'
+  },
   meta: {
     links: {
       github: 'https://github.com/unreal-slackers',
