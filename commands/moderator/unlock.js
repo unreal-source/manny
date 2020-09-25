@@ -1,4 +1,5 @@
 import { Command } from 'discord-akairo'
+import config from '../../config'
 
 class UnlockChannelCommand extends Command {
   constructor () {
@@ -40,10 +41,10 @@ class UnlockChannelCommand extends Command {
       })
 
       if (message.channel !== channel) {
-        message.util.send(`:unlock: ${channel} is now unlocked.`)
+        message.util.send(`${config.prefixes.unlock} ${channel} is now unlocked.`)
       }
 
-      return channel.send(':unlock: **Channel unlocked**')
+      return channel.send(`${config.prefixes.unlock} **Channel unlocked**`)
     } else {
       return message.util.send(`${message.channel === channel ? 'This channel' : channel} is already unlocked.`)
     }

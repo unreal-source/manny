@@ -1,4 +1,5 @@
 import { Command } from 'discord-akairo'
+import config from '../../config'
 
 class LockChannelCommand extends Command {
   constructor () {
@@ -40,10 +41,10 @@ class LockChannelCommand extends Command {
       })
 
       if (message.channel !== channel) {
-        message.util.send(`:lock: ${channel} is now locked.`)
+        message.util.send(`${config.prefixes.lock} ${channel} is now locked.`)
       }
 
-      return channel.send(':lock: **Channel locked**')
+      return channel.send(`${config.prefixes.lock} **Channel locked**`)
     } else {
       return message.util.send(`${message.channel === channel ? 'This channel' : channel} is already locked.`)
     }

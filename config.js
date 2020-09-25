@@ -39,9 +39,11 @@ const config = {
     expired: ':alarm_clock:',
     join: ':inbox_tray:',
     leave: ':outbox_tray:',
+    lock: ':lock:',
     mute: ':clock2:',
     strike: ':triangular_flag_on_post:',
     undo: ':arrow_right_hook:',
+    unlock: ':unlock:',
     warning: ':warning:'
   },
   jobs: {
