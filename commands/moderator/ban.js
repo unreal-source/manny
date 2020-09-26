@@ -61,7 +61,7 @@ class BanCommand extends Command {
       }
     }
 
-    // Send receipt
+    // Send receipt (This must be done first here because we can't send a DM after they're banned)
     const receipt = this.client.util.embed()
       .setAuthor(message.guild.name, message.guild.iconURL())
       .setTitle(`${config.prefixes.ban} You were banned from the server`)
