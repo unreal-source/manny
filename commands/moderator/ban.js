@@ -70,6 +70,7 @@ class BanCommand extends Command {
     // TODO: Add link to appeals form
     await user.send({ embed: receipt })
 
+    // Take action
     await message.guild.members.ban(user, { reason: reason })
 
     // Record case
