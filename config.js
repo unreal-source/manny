@@ -36,6 +36,7 @@ const config = {
     archive: ':card_box:',
     ban: ':no_entry_sign:',
     bot: ':robot:',
+    edit: ':pencil:',
     expired: ':alarm_clock:',
     join: ':inbox_tray:',
     leave: ':outbox_tray:',
