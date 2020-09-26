@@ -78,8 +78,8 @@ class BanCommand extends Command {
 
     await Case.create({
       action: 'ban',
-      user: user.id,
-      moderator: message.author.id,
+      user: user.tag,
+      moderator: message.author.tag,
       reason: reason,
       timestamp: now
     })

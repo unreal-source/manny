@@ -57,8 +57,8 @@ class UnbanCommand extends Command {
 
       await Case.create({
         action: 'unban',
-        user: user.id,
-        moderator: message.author.id,
+        user: user.tag,
+        moderator: message.author.tag,
         reason: reason,
         timestamp: now
       })
