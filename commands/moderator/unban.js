@@ -2,7 +2,7 @@ import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
 import config from '../../config'
 import formatDate from '../../utilities/formatDate'
-import InfractionHistory from '../../models/Infractions'
+import Case from '../../models/cases'
 
 class UnbanCommand extends Command {
   constructor () {
@@ -49,40 +49,32 @@ class UnbanCommand extends Command {
     }
 
     if (message.guild.fetchBan(user.id)) {
+      // Take action
       await message.guild.members.unban(user, reason)
-      message.channel.send(`You unbanned ${user} from the server.`)
-    }
 
-    const now = DateTime.local().toISO()
-    const unban = {
-      action: 'unban',
-      date: now,
-      executor: message.author.tag,
-      reason: reason
-    }
+      // Record case
+      const now = DateTime.local()
 
-    const history = await InfractionHistory.findOne({
-      where: { user_id: user.id }
-    })
-
-    if (history) {
-      const bans = history.bans
-      bans.push(unban)
-      await InfractionHistory.update({
-        bans: bans
-      }, {
-        where: { user_id: user.id }
+      await Case.create({
+        action: 'unban',
+        user: user.id,
+        moderator: message.author.id,
+        reason: reason,
+        timestamp: now
       })
+
+      // Send mod log
+      const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+      const logEntry = this.client.util.embed()
+        .setColor(config.embeds.colors.blue)
+        .setAuthor(message.author.tag, message.author.displayAvatarURL())
+        .setThumbnail(user.displayAvatarURL())
+        .setTitle(`${config.prefixes.undo} Unbanned ${user.tag}`)
+        .setDescription(`**Reason:** ${reason}`)
+        .setFooter(formatDate(now))
+
+      return logChannel.send({ embed: logEntry })
     }
-
-    const logChannel = this.client.channels.cache.get(config.logs.modLog)
-    const embed = this.client.util.embed()
-      .setColor(config.embedColors.red)
-      .setTitle(`${config.emoji.undo} __${user.tag}__ was unbanned by __${message.author.tag}__`)
-      .setDescription(`Reason: ${reason}`)
-      .setFooter(formatDate(now))
-
-    return logChannel.send({ embed })
   }
 }
 
