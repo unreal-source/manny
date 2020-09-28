@@ -46,7 +46,7 @@ class ReasonCommand extends Command {
         .setAuthor(record.moderator)
         .setTitle(title[record.action])
         .addField('Reason', record.reason)
-        .setFooter(`#${infraction} • ${formatDate(record.timestamp, { sql: true })}`)
+        .setFooter(`#${infraction} • ${formatDate(record.timestamp)}`)
 
       await message.channel.send(embed)
     } else {
@@ -79,7 +79,7 @@ class ReasonCommand extends Command {
     const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
     const logEntry = this.client.util.embed()
       .setAuthor(message.author.tag, message.author.displayAvatarURL())
-      .setTitle(`${config.prefixes.edit} Edited reason for #${infraction}`)
+      .setTitle(`${config.prefixes.edit} Edited reason for case #${infraction}`)
       .addField('Old Reason', record.reason)
       .addField('New Reason', reason)
       .setFooter(formatDate(now))
