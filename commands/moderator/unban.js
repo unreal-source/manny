@@ -70,7 +70,7 @@ class UnbanCommand extends Command {
         .setAuthor(message.author.tag, message.author.displayAvatarURL())
         .setThumbnail(user.displayAvatarURL())
         .setTitle(`${config.prefixes.undo} Unbanned ${user.tag}`)
-        .setDescription(`**Reason:** ${reason}`)
+        .addField('Reason', reason)
         .setFooter(formatDate(now))
 
       return logChannel.send({ embed: logEntry })
