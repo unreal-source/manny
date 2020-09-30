@@ -1,4 +1,5 @@
 import { Command } from 'discord-akairo'
+import config from '../../config'
 import formatDate from '../../utilities/formatDate'
 
 class UserInfoCommand extends Command {
@@ -40,7 +41,7 @@ class UserInfoCommand extends Command {
 
     const embed = this.client.util.embed()
       .setThumbnail(member.user.displayAvatarURL())
-      .setTitle('User Info')
+      .setTitle(`${config.prefixes.info} User Info`)
       .setDescription(member.user.bot ? `${member.user.tag} \`BOT\`` : member.user.tag)
       .addField('Status', status[member.presence.status], true)
       .addField('ID', member.id, true)
