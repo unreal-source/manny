@@ -118,14 +118,14 @@ class TestCommand extends Command {
       case 'history':
         embed
           .setAuthor(message.author.tag)
-          .setTitle('Infraction History')
+          .setTitle(`${config.prefixes.info} Infraction History`)
           .setDescription('1 Mute • 2 Strikes • 0 Bans')
           .setThumbnail(message.author.displayAvatarURL())
         break
       case 'history-more':
         embed
           .setAuthor(message.author.tag)
-          .setTitle('Infraction History')
+          .setTitle(`${config.prefixes.info} Infraction History`)
           .setDescription('1 Mute • 2 Strikes • 0 Bans')
           .setThumbnail(message.author.displayAvatarURL())
           .addField('Mutes', `${config.prefixes.mute} **Muted for 10m by Cedric 'eXi' Neukirchen#4538**\nReason: Arguing and shouting\n${timestamp}`)
