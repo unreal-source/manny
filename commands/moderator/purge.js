@@ -40,38 +40,40 @@ class PurgeCommand extends Command {
   }
 
   async exec (message, { count, author }) {
-    const now = DateTime.local()
-    const logChannel = await this.client.channels.cache.get(config.logs.channels.modLog)
-    const logEntry = this.client.util.embed()
-      .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL())
-      .setTitle(`${config.prefixes.purge} Deleted ${count} ${count > 1 ? 'messages' : 'message'}`)
-      .setDescription(`**Channel:** #${message.channel.name}`)
-      .setFooter(formatDate(now))
+    try {
+      const now = DateTime.local()
+      const logChannel = await this.client.channels.cache.get(config.logs.channels.modLog)
+      const logEntry = this.client.util.embed()
+        .setTitle(`${config.prefixes.purge} ${count} ${count > 1 ? 'messages' : 'message'} deleted`)
+        .setDescription(`by ${message.author.tag}`)
+        .addField('Channel', `#${message.channel.name}`)
+        .setTimestamp()
 
-    await message.delete()
+      await message.delete()
 
-    if (author) {
-      try {
-        const messages = await message.channel.messages.fetch()
-        const filteredMessages = await messages.filter(message => message.author.id === author.id).first(count)
+      if (author) {
+        try {
+          const messages = await message.channel.messages.fetch()
+          const filteredMessages = await messages.filter(message => message.author.id === author.id).first(count)
 
-        await message.channel.bulkDelete(filteredMessages)
+          await message.channel.bulkDelete(filteredMessages)
 
-        logEntry.setTitle(`${config.prefixes.purge} Deleted ${count} ${count > 1 ? 'messages' : 'message'} by ${author.user.tag}`)
+          logEntry.addField('Author', author.user.tag)
 
-        return logChannel.send({ embed: logEntry })
-      } catch (error) {
-        this.client.log.error(error)
+          return logChannel.send({ embed: logEntry })
+        } catch (error) {
+          this.client.log.error(error)
 
-        return message.author.send('Failed to delete messages. Check the logs for more details.')
+          return message.author.send('Failed to delete messages. Check the logs for more details.')
+        }
       }
+
+      await message.channel.bulkDelete(count)
+
+      return logChannel.send({ embed: logEntry })
+    } catch (err) {
+      return this.client.log.error(err)
     }
-
-    await message.channel.bulkDelete(count)
-
-    logEntry.setTitle(`${config.prefixes.purge} Deleted ${count} ${count > 1 ? 'messages' : 'message'}`)
-
-    return logChannel.send({ embed: logEntry })
   }
 }
 
