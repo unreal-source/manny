@@ -1,4 +1,5 @@
 import { Command } from 'discord-akairo'
+import config from '../../config'
 import formatDate from '../../utilities/formatDate'
 
 class RoleInfoCommand extends Command {
@@ -31,7 +32,7 @@ class RoleInfoCommand extends Command {
   exec (message, { role }) {
     const embed = this.client.util.embed()
       .setColor(role.hexColor)
-      .setTitle('Role Info')
+      .setTitle(`${config.prefixes.info} Role Info`)
       .setDescription(role.name)
       .addField('Color', role.hexColor, true)
       .addField('ID', role.id, true)
