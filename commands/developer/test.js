@@ -115,6 +115,15 @@ class TestCommand extends Command {
           .addField('Author', message.author.tag)
           .setTimestamp()
         break
+      case 'reason':
+        embed
+          .setColor(config.embeds.colors.blue)
+          .setTitle(`${config.prefixes.edit} Reason edited for case #1457`)
+          .setDescription('by Cedric \'eXi\' Neukirchen#4538')
+          .addField('Old Reason', '`No reason given`')
+          .addField('New Reason', 'Advertising')
+          .setTimestamp()
+        break
       case 'history':
         embed
           .setAuthor(message.author.tag)
