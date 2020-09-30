@@ -1,7 +1,6 @@
 import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
 import config from '../../config'
-import formatDate from '../../utilities/formatDate'
 import Case from '../../models/cases'
 
 class BanCommand extends Command {
@@ -40,61 +39,66 @@ class BanCommand extends Command {
   }
 
   async exec (message, { user, reason }) {
-    if (user.id === message.author.id) {
-      return message.channel.send(`${config.emoji.warning} Why would you ban yourself?`)
-    }
-
-    if (user.id === this.client.user.id) {
-      return message.channel.send(`${config.emoji.warning} Nice try, human.`)
-    }
-
-    // If user is a guild member, make sure we have permission to ban them
-    if (message.guild.members.cache.some(member => member.user.id === user.id)) {
-      const member = await message.guild.members.fetch(user)
-
-      if (member.roles.highest.position >= message.member.roles.highest.position) {
-        return message.channel.send('You cannot ban this user.')
+    try {
+      if (user.id === message.author.id) {
+        return message.channel.send(`${config.emoji.warning} Why would you ban yourself?`)
       }
 
-      if (!member.bannable) {
-        return message.channel.send('I am unable to ban this user.')
+      if (user.id === this.client.user.id) {
+        return message.channel.send(`${config.emoji.warning} Nice try, human.`)
       }
+
+      // If user is a guild member, make sure we have permission to ban them
+      if (message.guild.members.cache.some(member => member.user.id === user.id)) {
+        const member = await message.guild.members.fetch(user)
+
+        if (member.roles.highest.position >= message.member.roles.highest.position) {
+          return message.channel.send('You cannot ban this user.')
+        }
+
+        if (!member.bannable) {
+          return message.channel.send('I am unable to ban this user.')
+        }
+      }
+
+      // Send receipt (This must be done first here because we can't send a DM after they're banned)
+      const receipt = this.client.util.embed()
+        .setAuthor(message.guild.name, message.guild.iconURL())
+        .setTitle(`${config.prefixes.ban} You were banned from the server`)
+        .addField('Reason', reason)
+        .addField('Appeals', 'If you would like to appeal this decision, [fill out this form]() and we will get back to you as soon as possible.')
+      // TODO: Add link to appeals form
+      await user.send({ embed: receipt })
+
+      // Take action
+      await message.guild.members.ban(user, { reason: reason })
+
+      // Record case
+      const now = DateTime.local()
+
+      const record = await Case.create({
+        action: 'ban',
+        user: user.tag,
+        moderator: message.author.tag,
+        reason: reason,
+        timestamp: now
+      })
+
+      // Send mod log
+      const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+      const logEntry = this.client.util.embed()
+        .setColor(config.embeds.colors.red)
+        .setAuthor(user.tag, user.displayAvatarURL())
+        .setTitle(`${config.prefixes.ban} Member banned`)
+        .setDescription(`by ${message.author.tag}`)
+        .addField('Reason', reason)
+        .setFooter(`#${record.id}`)
+        .setTimestamp()
+
+      return logChannel.send({ embed: logEntry })
+    } catch (err) {
+      return this.client.log.error(err)
     }
-
-    // Send receipt (This must be done first here because we can't send a DM after they're banned)
-    const receipt = this.client.util.embed()
-      .setAuthor(message.guild.name, message.guild.iconURL())
-      .setTitle(`${config.prefixes.ban} You were banned from the server`)
-      .addField('Reason', reason)
-      .addField('Appeals', 'If you would like to appeal this decision, [fill out this form]() and we will get back to you as soon as possible.')
-    // TODO: Add link to appeals form
-    await user.send({ embed: receipt })
-
-    // Take action
-    await message.guild.members.ban(user, { reason: reason })
-
-    // Record case
-    const now = DateTime.local()
-
-    await Case.create({
-      action: 'ban',
-      user: user.tag,
-      moderator: message.author.tag,
-      reason: reason,
-      timestamp: now
-    })
-
-    // Send mod log
-    const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
-    const logEntry = this.client.util.embed()
-      .setColor(config.embeds.colors.red)
-      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-      .setThumbnail(user.displayAvatarURL())
-      .setTitle(`${config.prefixes.ban} Banned ${user.tag}`)
-      .addField('Reason', reason)
-      .setFooter(formatDate(now))
-
-    return logChannel.send({ embed: logEntry })
   }
 }
 
