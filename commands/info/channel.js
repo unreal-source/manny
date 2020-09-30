@@ -1,4 +1,5 @@
 import { Command } from 'discord-akairo'
+import config from '../../config'
 import capitalize from '../../utilities/capitalize'
 import formatDate from '../../utilities/formatDate'
 
@@ -34,7 +35,7 @@ class ChannelInfoCommand extends Command {
 
   exec (message, { channel }) {
     const embed = this.client.util.embed()
-      .setTitle('Channel Info')
+      .setTitle(`${config.prefixes.info} Channel Info`)
       .addField('Type', capitalize(channel.type), true)
       .addField('ID', channel.id, true)
 
