@@ -38,6 +38,7 @@ const config = {
     bot: ':robot:',
     edit: ':pencil:',
     expired: ':alarm_clock:',
+    info: ':mag_right:',
     join: ':inbox_tray:',
     leave: ':outbox_tray:',
     lock: ':lock:',
