@@ -73,14 +73,12 @@ class BanCommand extends Command {
       await message.guild.members.ban(user, { reason: reason })
 
       // Record case
-      const now = DateTime.local()
-
       const record = await Case.create({
         action: 'ban',
         user: user.tag,
         moderator: message.author.tag,
         reason: reason,
-        timestamp: now
+        timestamp: DateTime.local()
       })
 
       // Send mod log
