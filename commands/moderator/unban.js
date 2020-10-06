@@ -1,7 +1,6 @@
 import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
 import config from '../../config'
-import formatDate from '../../utilities/formatDate'
 import Case from '../../models/cases'
 
 class UnbanCommand extends Command {
@@ -41,40 +40,43 @@ class UnbanCommand extends Command {
 
   async exec (message, { user, reason }) {
     if (user.id === message.author.id) {
-      return message.channel.send(':warning: You can\'t unban yourself.')
+      return message.channel.send(':warning: You cannot unban yourself.')
     }
 
     if (user.id === this.client.user.id) {
-      return message.channel.send(':warning: How could I unban myself?')
+      return message.channel.send(':warning: Nice try, human.')
     }
 
-    if (message.guild.fetchBan(user.id)) {
-      // Take action
-      await message.guild.members.unban(user, reason)
+    const bans = await message.guild.fetchBans()
 
-      // Record case
-      const now = DateTime.local()
-
-      await Case.create({
-        action: 'unban',
-        user: user.tag,
-        moderator: message.author.tag,
-        reason: reason,
-        timestamp: now
-      })
-
-      // Send mod log
-      const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
-      const logEntry = this.client.util.embed()
-        .setColor(config.embeds.colors.blue)
-        .setAuthor(message.author.tag, message.author.displayAvatarURL())
-        .setThumbnail(user.displayAvatarURL())
-        .setTitle(`${config.prefixes.undo} Unbanned ${user.tag}`)
-        .addField('Reason', reason)
-        .setFooter(formatDate(now))
-
-      return logChannel.send({ embed: logEntry })
+    if (!bans.some(ban => ban.user === user)) {
+      return message.channel.send(`${user.tag} is not banned.`)
     }
+
+    // Take action
+    await message.guild.members.unban(user, reason)
+
+    // Record case
+    const record = await Case.create({
+      action: 'unban',
+      user: user.tag,
+      moderator: message.author.tag,
+      reason: reason,
+      timestamp: DateTime.local()
+    })
+
+    // Send mod log
+    const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+    const logEntry = this.client.util.embed()
+      .setColor(config.embeds.colors.blue)
+      .setAuthor(user.tag, user.displayAvatarURL())
+      .setTitle(`${config.prefixes.undo} Member unbanned`)
+      .setDescription(`by ${message.author.tag}`)
+      .addField('Reason', reason)
+      .setFooter(`#${record.id}`)
+      .setTimestamp()
+
+    return logChannel.send({ embed: logEntry })
   }
 }
 
