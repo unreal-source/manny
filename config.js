@@ -66,7 +66,8 @@ const config = {
     links: {
       github: 'https://github.com/unreal-slackers',
       twitter: 'https://twitter.com/unrealslackers',
-      website: 'https://unrealslackers.org'
+      website: 'https://unrealslackers.org',
+      appeals: 'https://appeals.unrealslackers.org'
     }
   }
 }

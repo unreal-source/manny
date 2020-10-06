@@ -66,8 +66,7 @@ class BanCommand extends Command {
         .setAuthor(message.guild.name, message.guild.iconURL())
         .setTitle(`${config.prefixes.ban} You were banned from the server`)
         .addField('Reason', reason)
-        .addField('Appeals', 'If you would like to appeal this decision, [fill out this form]() and we will get back to you as soon as possible.')
-      // TODO: Add link to appeals form
+        .addField('Appeals', `If you would like to appeal this decision, [fill out this form](${config.meta.links.appeals}) and we will get back to you as soon as possible.`)
       await user.send({ embed: receipt })
 
       // Take action
