@@ -35,18 +35,28 @@ class ReasonCommand extends Command {
       const title = {
         ban: `${config.prefixes.ban} Banned ${record.user}`,
         unban: `${config.prefixes.undo} Unbanned ${record.user}`,
-        mute: `Muted ${record.user} for ${record.duration}`,
-        unmute: `Unmuted ${record.user}`,
-        strike: `Gave ${record.user} a strike`,
-        pardon: `Removed a strike from ${record.user}`
+        mute: `${config.prefixes.mute} Muted ${record.user} for ${record.duration}`,
+        unmute: `${config.prefixes.undo} Unmuted ${record.user}`,
+        strike: `${config.prefixes.strike} Gave ${record.user} a strike`,
+        pardon: `${config.prefixes.undo} Removed a strike from ${record.user}`
       }
 
-      // TODO: Fetch images if they're available
+      const border = {
+        mute: config.embeds.colors.yellow,
+        unmute: config.embeds.colors.yellow,
+        strike: config.embeds.colors.orange,
+        pardon: config.embeds.colors.orange,
+        ban: config.embeds.colors.red,
+        unban: config.embeds.colors.red
+      }
+
       const embed = this.client.util.embed()
-        .setAuthor(record.moderator)
+        .setColor(border[record.action])
+        .setAuthor(record.user)
         .setTitle(title[record.action])
+        .setDescription(`by ${record.moderator}`)
         .addField('Reason', record.reason)
-        .setFooter(`#${infraction} • ${formatDate(record.timestamp)}`)
+        .setFooter(`#${record.id} • ${formatDate(record.timestamp)}`)
 
       await message.channel.send(embed)
     } else {
@@ -75,14 +85,14 @@ class ReasonCommand extends Command {
     await message.channel.send(`Reason for Infraction #${infraction} updated.`)
 
     // Send mod log
-    const now = DateTime.local()
     const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
     const logEntry = this.client.util.embed()
-      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-      .setTitle(`${config.prefixes.edit} Edited reason for case #${infraction}`)
+      .setColor(config.embeds.colors.blue)
+      .setTitle(`${config.prefixes.edit} Reason edited for case #${infraction}`)
+      .setDescription(`by ${message.author.tag}`)
       .addField('Old Reason', record.reason)
       .addField('New Reason', reason)
-      .setFooter(formatDate(now))
+      .setTimestamp()
 
     return logChannel.send({ embed: logEntry })
   }
