@@ -1,7 +1,5 @@
 import { Command, Argument } from 'discord-akairo'
 import config from '../../config'
-import { DateTime } from 'luxon'
-import formatDate from '../../utilities/formatDate'
 
 class PurgeCommand extends Command {
   constructor () {
@@ -41,7 +39,6 @@ class PurgeCommand extends Command {
 
   async exec (message, { count, author }) {
     try {
-      const now = DateTime.local()
       const logChannel = await this.client.channels.cache.get(config.logs.channels.modLog)
       const logEntry = this.client.util.embed()
         .setTitle(`${config.prefixes.purge} ${count} ${count > 1 ? 'messages' : 'message'} deleted`)
