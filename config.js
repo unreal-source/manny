@@ -5,13 +5,10 @@ const config = {
   automod: {
     newAccountAge: '30m',
     joinCount: 10,
-    joinInterval: '1m',
-    notifChannel: '',
-    ignoredChannels: []
+    notifChannel: ''
   },
   infractions: {
-    modRole: '',
-    mutedRole: ''
+    mutedRole: '720439694784987239'
   },
   logs: {
     category: '',
