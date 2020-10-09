@@ -22,7 +22,7 @@ const Case = Database.sequelize.define('Cases', {
   },
   reason: {
     type: DataTypes.STRING,
-    defaultValue: ''
+    defaultValue: null
   },
   duration: {
     type: DataTypes.STRING,
