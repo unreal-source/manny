@@ -2,7 +2,6 @@ import { Command, Flag } from 'discord-akairo'
 import Case from '../../models/cases'
 import config from '../../config'
 import { DateTime } from 'luxon'
-import formatDate from '../../utilities/formatDate'
 
 class ReasonCommand extends Command {
   constructor () {
@@ -33,12 +32,12 @@ class ReasonCommand extends Command {
 
     if (record) {
       const title = {
-        ban: `${config.prefixes.ban} Banned ${record.user}`,
-        unban: `${config.prefixes.undo} Unbanned ${record.user}`,
-        mute: `${config.prefixes.mute} Muted ${record.user} for ${record.duration}`,
-        unmute: `${config.prefixes.undo} Unmuted ${record.user}`,
-        strike: `${config.prefixes.strike} Gave ${record.user} a strike`,
-        pardon: `${config.prefixes.undo} Removed a strike from ${record.user}`
+        ban: `${config.prefixes.ban} Member banned`,
+        unban: `${config.prefixes.undo} Member unbanned`,
+        mute: `${config.prefixes.mute} Member muted for ${record.duration}`,
+        unmute: `${config.prefixes.undo} Member unmuted`,
+        strike: `${config.prefixes.strike} Strike added`,
+        pardon: `${config.prefixes.undo} Strike removed`
       }
 
       const border = {
@@ -56,7 +55,7 @@ class ReasonCommand extends Command {
         .setTitle(title[record.action])
         .setDescription(`by ${record.moderator}`)
         .addField('Reason', record.reason)
-        .setFooter(`#${record.id} • ${formatDate(record.timestamp)}`)
+        .setFooter(`#${record.id} • ${record.timestamp.toLocaleString(DateTime.DATETIME_FULL)}`)
 
       await message.channel.send(embed)
     } else {
