@@ -1,8 +1,8 @@
 import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
 import config from '../../config'
-import formatDate from '../../utilities/formatDate'
-import InfractionHistory from '../../models/Infractions'
+import Case from '../../models/cases'
+import Mute from '../../models/mutes'
 import ms from 'ms'
 
 class MuteCommand extends Command {
@@ -49,70 +49,62 @@ class MuteCommand extends Command {
 
   async exec (message, { member, duration, reason }) {
     if (member.id === message.author.id) {
-      return message.channel.send(`${config.emoji.warning} You cannot mute yourself.`)
+      return message.channel.send(`${config.emoji.warning} You can't mute yourself.`)
     }
 
     if (member.id === this.client.user.id) {
-      return message.channel.send(`${config.emoji.warning} You cannot mute me.`)
+      return message.channel.send(`${config.emoji.warning} Nice try, human.`)
     }
 
     if (member.roles.cache.some(role => role.name === 'Muted')) {
       return message.channel.send(`${config.emoji.warning} That user is already muted.`)
     }
 
-    const role = await message.guild.roles.cache.find(role => role.name === 'Muted')
-    const muted = await member.roles.add(role)
-    const logChannel = this.client.channels.cache.get(config.logs.modLog)
+    const mutedRole = await message.guild.roles.fetch(config.infractions.mutedRole)
     const longDuration = ms(ms(duration), { long: true })
-    const timer = setTimeout(() => {
-      muted.roles.remove(role)
-      const embed = this.client.util.embed()
-        .setColor(config.embedColors.yellow)
-        .setTitle(`${config.emoji.expired} Mute expired on __${member.user.tag}__`)
-        .setFooter(formatDate(now))
-      logChannel.send({ embed })
-    }, ms(duration))
 
-    this.client.mutes.set(member.id, timer)
-    message.channel.send(`You muted ${muted} for ${longDuration}.`)
+    // Take action
+    await member.roles.add(mutedRole)
 
-    const now = DateTime.local().toISO()
-    const mute = {
+    // Record case
+    const record = await Case.create({
       action: 'mute',
-      date: now,
+      user: member.user.tag,
+      moderator: message.author.tag,
+      reason: reason,
       duration: longDuration,
-      executor: message.author.tag,
-      reason: reason
-    }
-
-    const history = await InfractionHistory.findOne({
-      where: { user_id: member.id }
+      timestamp: DateTime.local()
     })
 
-    if (history) {
-      const mutes = history.mutes
-      mutes.push(mute)
-      await InfractionHistory.update({
-        mutes: mutes
-      }, {
-        where: { user_id: member.id }
-      })
-    } else {
-      await InfractionHistory.create({
-        user_id: member.id,
-        mutes: [mute],
-        strikes: [],
-        bans: []
-      })
-    }
+    // Add to mute schedule
+    await Mute.create({
+      id: member.id,
+      expiration: DateTime.fromMillis(DateTime.local() + ms(duration))
+    })
 
-    const embed = this.client.util.embed()
-      .setColor(config.embedColors.yellow)
-      .setTitle(`${config.emoji.mute} __${member.user.tag}__ was muted for ${longDuration} by __${message.author.tag}__`)
-      .setDescription(`Reason: ${reason}`)
-      .setFooter(formatDate(now))
+    // Send mod log
+    const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+    const logEntry = this.client.util.embed()
+      .setColor(config.embeds.colors.yellow)
+      .setAuthor(member.user.tag, member.user.displayAvatarURL())
+      .setTitle(`${config.prefixes.mute} Member muted for ${longDuration}`)
+      .setDescription(`by ${message.author.tag}`)
+      .addField('Reason', reason)
+      .setFooter(`#${record.id}`)
+      .setTimestamp()
 
-    return logChannel.send({ embed })
+    await logChannel.send({ embed: logEntry })
+
+    // Send receipt
+    const receipt = this.client.util.embed()
+      .setColor(config.embeds.colors.yellow)
+      .setAuthor(message.guild.name, message.guild.iconURL())
+      .setTitle(`${config.prefixes.mute} You were muted for ${longDuration}`)
+      .addField('Reason', reason)
+      .setFooter(`#${record.id}`)
+      .setTimestamp()
+
+    return member.send({ embed: receipt })
   }
 }
 

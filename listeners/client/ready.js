@@ -1,6 +1,8 @@
 import { Listener } from 'discord-akairo'
 import config from '../../config'
-import ms from 'ms'
+import { CronJob } from 'cron'
+import { DateTime } from 'luxon'
+import Mute from '../../models/mutes'
 
 class ReadyListener extends Listener {
   constructor () {
@@ -17,19 +19,46 @@ class ReadyListener extends Listener {
       type: 'WATCHING'
     })
 
-    let oldMemberCount = this.client.guilds.cache.first().memberCount
+    const job = new CronJob('0 */1 * * * *', async () => {
+      const now = DateTime.local()
+      const mutes = await Mute.findAll()
 
-    setInterval(() => {
-      const newMemberCount = this.client.guilds.cache.first().memberCount
-      const difference = newMemberCount - oldMemberCount
-      const channel = this.client.channels.cache.get(config.automod.notifChannel)
-
-      if (difference >= config.automod.joinCount) {
-        channel.send(`Unusual activity detected. ${difference} new ${difference < 2 ? 'member' : 'members'} joined the server in the last 10 seconds.`)
+      if (mutes.length === 0) {
+        return this.client.log.info('No mutes scheduled')
       }
 
-      oldMemberCount = newMemberCount
-    }, ms(config.automod.joinInterval))
+      for (const mute of mutes) {
+        this.client.log.info(`Mute scheduled to expire at ${mute.expiration.toLocaleString(DateTime.DATETIME_FULL)}`)
+      }
+
+      const expired = mutes.filter(mute => mute.expiration <= now)
+      this.client.log.debug(`${expired.length} have expired`)
+
+      for (const mute of expired) {
+        const guild = this.client.guilds.cache.first()
+        const member = await guild.member(mute.id)
+
+        // Unmute user
+        await member.roles.remove(config.infractions.mutedRole)
+
+        // Remove mute from schedule
+        await Mute.destroy({
+          where: { id: mute.id }
+        })
+
+        // Send receipt
+        const receipt = this.client.util.embed()
+          .setColor(config.embeds.colors.yellow)
+          .setAuthor(guild.name, guild.iconURL())
+          .setTitle(`${config.prefixes.expired} Your mute expired`)
+          .setDescription('You may now send messages in the server again.')
+          .setTimestamp()
+
+        member.send({ embed: receipt })
+      }
+    }, null, null, null, null, true)
+
+    job.start()
   }
 }
 
