@@ -16,7 +16,15 @@ const Case = Database.sequelize.define('Cases', {
     type: DataTypes.STRING,
     allowNull: false
   },
+  userID: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   moderator: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  moderatorID: {
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -31,6 +39,10 @@ const Case = Database.sequelize.define('Cases', {
   timestamp: {
     type: DataTypes.DATE,
     allowNull: false
+  },
+  active: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: null
   }
 }, {
   timestamps: false

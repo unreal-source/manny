@@ -1,8 +1,9 @@
 import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
 import config from '../../config'
-import formatDate from '../../utilities/formatDate'
-import InfractionHistory from '../../models/Infractions'
+import Case from '../../models/cases'
+import Mute from '../../models/mutes'
+import Strike from '../../models/strikes'
 import ms from 'ms'
 
 class StrikeCommand extends Command {
@@ -46,146 +47,96 @@ class StrikeCommand extends Command {
     }
 
     if (member.id === this.client.user.id) {
-      return message.channel.send(`${config.emoji.warning} You can't give me a strike.`)
+      return message.channel.send(`${config.emoji.warning} Nice try, human.`)
     }
 
-    const logChannel = this.client.channels.cache.get(config.logs.modLog)
-    const now = DateTime.local().toISO()
-    const strike = {
-      action: 'strike',
-      date: now,
-      executor: message.author.tag,
-      reason: reason
+    if (member.deleted) {
+      return message.channel.send(`${config.emoji.warning} ${member.user.tag} is no longer a member of this server.`)
     }
 
-    const history = await InfractionHistory.findOne({
-      where: { user_id: member.id }
-    })
-
-    if (history) {
-      const strikes = history.strikes
-      strikes.push(strike)
-      await InfractionHistory.update({
-        strikes: strikes
-      }, {
-        where: { user_id: member.id }
+    try {
+      const record = await Case.create({
+        action: 'strike',
+        user: member.user.tag,
+        userID: member.id,
+        moderator: message.author.tag,
+        moderatorID: message.author.id,
+        reason: reason,
+        active: true,
+        timestamp: DateTime.local()
       })
 
-      // Strike 1
-      if (strikes.length === 1) {
-        const muteDuration = ms('10s')
-        const muteRole = await message.guild.roles.cache.find(role => role.name === 'Muted')
-        const mutedMember = await member.roles.add(muteRole)
-        const timer = setTimeout(() => {
-          mutedMember.roles.remove(muteRole)
+      const strikeCount = await Case.count({
+        where: {
+          action: 'strike',
+          userID: member.id,
+          active: true
+        }
+      })
 
-          const muteExpiredLog = this.client.util.embed()
-            .setColor(config.embedColors.yellow)
-            .setTitle(`${config.emoji.expired} Mute expired on __${member.user.tag}__`)
-            .setFooter(formatDate(now))
+      const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+      const logEntry = this.client.util.embed()
+        .setColor(config.embeds.colors.orange)
+        .setAuthor(member.user.tag, member.user.displayAvatarURL())
+        .setTitle(`${config.prefixes.strike} Strike added`)
+        .setDescription(`by ${message.author.tag}`)
+        .addField('Reason', reason)
+        .setFooter(`#${record.id}`)
+        .setTimestamp()
 
-          logChannel.send({ embed: muteExpiredLog })
-        }, muteDuration)
+      const receipt = this.client.util.embed()
+        .setColor(config.embeds.colors.orange)
+        .setAuthor(message.guild.name, message.guild.iconURL())
+        .setTitle(`${config.prefixes.strike} You received a strike`)
+        .addField('Reason', reason)
+        .setFooter(`#${record.id}`)
+        .setTimestamp()
 
-        this.client.mutes.set(member.id, timer)
+      if (strikeCount === 1 || strikeCount === 2) {
+        if (member.roles.cache.some(role => role.id === config.infractions.muteRole)) {
+          await Mute.update({
+            expiration: DateTime.fromMillis(DateTime.local() + ms(config.infractions.muteLevels[strikeCount]))
+          }, {
+            where: {
+              id: member.id
+            }
+          })
+        } else {
+          const muteRole = await message.guild.roles.fetch(config.infractions.muteRole)
+          await member.roles.add(muteRole)
 
-        const strikeLog = this.client.util.embed()
-          .setColor(config.embedColors.orange)
-          .setTitle(`${config.emoji.strike} __${member.user.tag}__ received their 1st strike from __${message.author.tag}__`)
-          .setDescription(`Reason: ${reason}\n\`\`\`User muted for ${ms(muteDuration, { long: true })}\`\`\``)
-          .setFooter(formatDate(now))
-
-        return logChannel.send({ embed: strikeLog })
-      }
-
-      // Strike 2
-      if (strikes.length === 2) {
-        const muteDuration = ms('20s')
-        const muteRole = await message.guild.roles.cache.find(role => role.name === 'Muted')
-        const mutedMember = await member.roles.add(muteRole)
-        const timer = setTimeout(() => {
-          mutedMember.roles.remove(muteRole)
-
-          const muteExpiredLog = this.client.util.embed()
-            .setColor(config.embedColors.yellow)
-            .setTitle(`${config.emoji.expired} Mute expired on __${member.user.tag}__`)
-            .setFooter(formatDate(now))
-
-          logChannel.send({ embed: muteExpiredLog })
-        }, muteDuration)
-
-        this.client.mutes.set(member.id, timer)
-
-        const strikeLog = this.client.util.embed()
-          .setColor(config.embedColors.orange)
-          .setTitle(`${config.emoji.strike} __${member.user.tag}__ received their 2nd strike from __${message.author.tag}__`)
-          .setDescription(`Reason: ${reason}\n\`\`\`User muted for ${ms(muteDuration, { long: true })}\`\`\``)
-          .setFooter(formatDate(now))
-
-        return logChannel.send({ embed: strikeLog })
-      }
-
-      // Strike 3
-      if (strikes.length === 3) {
-        const bannedMember = await message.guild.members.ban(member, { reason: reason })
-        const ban = {
-          action: 'ban',
-          date: now,
-          executor: message.author.tag,
-          reason: 'Received 3 strikes'
+          await Mute.create({
+            id: member.id,
+            expiration: DateTime.fromMillis(DateTime.local() + ms(config.infractions.muteLevels[strikeCount]))
+          })
         }
 
-        const bans = history.bans
-        bans.push(ban)
-        await InfractionHistory.update({
-          bans: bans
-        }, {
-          where: { user_id: member.id }
+        await Strike.create({
+          id: record.id,
+          userID: '',
+          expiration: DateTime.local().plus({ days: 30 })
         })
 
-        message.channel.send(`${bannedMember} was banned from the server.`)
+        logEntry.addField('Punishment', `Muted for ${ms(ms(config.infractions.muteLevels[strikeCount]), { long: true })}`)
+        await logChannel.send({ embed: logEntry })
 
-        const strikeLog = this.client.util.embed()
-          .setColor(config.embedColors.orange)
-          .setTitle(`${config.emoji.strike} __${member.user.tag}__ received their 3rd strike from __${message.author.tag}__`)
-          .setDescription(`Reason: ${reason}\n\`\`\`User banned from the server\`\`\``)
-          .setFooter(formatDate(now))
-
-        return logChannel.send({ embed: strikeLog })
+        receipt.setDescription(`As a result, you have been muted for ${ms(ms(config.infractions.muteLevels[strikeCount]), { long: true })}.`)
+        return member.send({ embed: receipt })
       }
+
+      if (strikeCount === 3) {
+        // Send receipt first since we can't DM the member after they're banned
+        receipt.setDescription('As a result, you have been banned from the server.')
+        await member.send({ embed: receipt })
+
+        await message.guild.members.ban(member, { reason: reason })
+
+        logEntry.addField('Punishment', 'Banned from the server')
+        return logChannel.send({ embed: logEntry })
+      }
+    } catch (e) {
+      this.client.log.error(e)
     }
-
-    await InfractionHistory.create({
-      user_id: member.id,
-      mutes: [],
-      strikes: [strike],
-      bans: []
-    })
-
-    // Strike 1 with no history
-    const muteDuration = ms('10s')
-    const muteRole = await message.guild.roles.cache.find(role => role.name === 'Muted')
-    const mutedMember = await member.roles.add(muteRole)
-    const timer = setTimeout(() => {
-      mutedMember.roles.remove(muteRole)
-
-      const muteExpiredLog = this.client.util.embed()
-        .setColor(config.embedColors.yellow)
-        .setTitle(`${config.emoji.expired} Mute expired on __${member.user.tag}__`)
-        .setFooter(formatDate(now))
-
-      logChannel.send({ embed: muteExpiredLog })
-    }, muteDuration)
-
-    this.client.mutes.set(member.id, timer)
-
-    const strikeLog = this.client.util.embed()
-      .setColor(config.embedColors.orange)
-      .setTitle(`${config.emoji.strike} __${member.user.tag}__ received their 1st strike from __${message.author.tag}__`)
-      .setDescription(`Reason: ${reason}\n\`\`\`User muted for ${ms(muteDuration, { long: true })}\`\`\``)
-      .setFooter(formatDate(now))
-
-    return logChannel.send({ embed: strikeLog })
   }
 }
 
