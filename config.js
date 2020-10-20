@@ -8,7 +8,11 @@ const config = {
     notifChannel: ''
   },
   infractions: {
-    mutedRole: '720439694784987239'
+    muteRole: '720439694784987239',
+    muteLevels: {
+      1: '10m',
+      2: '1h'
+    }
   },
   logs: {
     category: '',

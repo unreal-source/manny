@@ -60,11 +60,11 @@ class MuteCommand extends Command {
       return message.channel.send(`${config.emoji.warning} That user is already muted.`)
     }
 
-    const mutedRole = await message.guild.roles.fetch(config.infractions.mutedRole)
+    // const mutedRole = await message.guild.roles.fetch(config.infractions.mutedRole)
     const longDuration = ms(ms(duration), { long: true })
 
     // Take action
-    await member.roles.add(mutedRole)
+    await member.roles.add(config.infractions.mutedRole)
 
     // Record case
     const record = await Case.create({
