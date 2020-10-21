@@ -93,12 +93,12 @@ class ReadyListener extends Listener {
             where: { id: strike.id }
           })
 
-          const member = await guild.member(strike.userID)
+          const member = await guild.member(record.userID)
 
           if (member) {
             const activeStrikes = await Case.count({
               where: {
-                userID: strike.userID,
+                userID: member.id,
                 active: true
               }
             })

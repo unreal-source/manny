@@ -7,10 +7,6 @@ const Strike = Database.sequelize.define('Strikes', {
     allowNull: false,
     primaryKey: true
   },
-  userID: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
   expiration: {
     type: DataTypes.DATE,
     allowNull: false
