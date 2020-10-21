@@ -25,10 +25,7 @@ class ReadyListener extends Listener {
 
   exec () {
     this.client.guilds.cache.each(guild => this.client.log.success(`${this.client.user.username} successfully connected to ${guild.name}`))
-
-    this.client.user.setActivity('the server • !help', {
-      type: 'WATCHING'
-    })
+    this.client.user.setActivity('the server • !help', { type: 'WATCHING' })
 
     const job = new CronJob('0 */1 * * * *', async () => {
       const guild = this.client.guilds.cache.first()
@@ -92,15 +89,13 @@ class ReadyListener extends Listener {
             where: { id: strike.id }
           })
 
-          await Case.update({
-            active: false
-          }, {
+          const record = await Case.update({ active: false }, {
             where: { id: strike.id }
           })
 
-          const strikeUser = await guild.member(strike.userID)
+          const member = await guild.member(strike.userID)
 
-          if (strikeUser) {
+          if (member) {
             const activeStrikes = await Case.count({
               where: {
                 userID: strike.userID,
@@ -115,7 +110,7 @@ class ReadyListener extends Listener {
               .setDescription(activeStrikes === 0 ? 'No active strikes' : `${activeStrikes} strikes remaining`)
               .setTimestamp()
 
-            strikeUser.send({ embed: receipt })
+            member.send({ embed: receipt })
           }
         }
       } catch (e) {

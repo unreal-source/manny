@@ -11,8 +11,6 @@ const Mute = Database.sequelize.define('Mutes', {
     type: DataTypes.DATE,
     allowNull: false
   }
-}, {
-  timestamps: false
-})
+}, { timestamps: false })
 
 export default Mute

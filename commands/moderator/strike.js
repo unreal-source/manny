@@ -93,13 +93,14 @@ class StrikeCommand extends Command {
         .setTimestamp()
 
       if (strikeCount === 1 || strikeCount === 2) {
+        const muteDuration = ms(config.infractions.muteLevels[strikeCount])
+        const muteDurationLong = ms(muteDuration, { long: true })
+
         if (member.roles.cache.some(role => role.id === config.infractions.muteRole)) {
           await Mute.update({
-            expiration: DateTime.fromMillis(DateTime.local() + ms(config.infractions.muteLevels[strikeCount]))
+            expiration: DateTime.fromMillis(DateTime.local() + muteDuration)
           }, {
-            where: {
-              id: member.id
-            }
+            where: { id: member.id }
           })
         } else {
           const muteRole = await message.guild.roles.fetch(config.infractions.muteRole)
@@ -107,20 +108,19 @@ class StrikeCommand extends Command {
 
           await Mute.create({
             id: member.id,
-            expiration: DateTime.fromMillis(DateTime.local() + ms(config.infractions.muteLevels[strikeCount]))
+            expiration: DateTime.fromMillis(DateTime.local() + muteDuration)
           })
         }
 
         await Strike.create({
           id: record.id,
-          userID: '',
           expiration: DateTime.local().plus({ days: 30 })
         })
 
-        logEntry.addField('Punishment', `Muted for ${ms(ms(config.infractions.muteLevels[strikeCount]), { long: true })}`)
+        logEntry.addField('Punishment', `Muted for ${muteDurationLong}`)
         await logChannel.send({ embed: logEntry })
 
-        receipt.setDescription(`As a result, you have been muted for ${ms(ms(config.infractions.muteLevels[strikeCount]), { long: true })}.`)
+        receipt.setDescription(`As a result, you have been muted for ${muteDurationLong}.`)
         return member.send({ embed: receipt })
       }
 

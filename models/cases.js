@@ -44,8 +44,6 @@ const Case = Database.sequelize.define('Cases', {
     type: DataTypes.BOOLEAN,
     defaultValue: null
   }
-}, {
-  timestamps: false
-})
+}, { timestamps: false })
 
 export default Case

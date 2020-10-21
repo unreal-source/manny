@@ -15,6 +15,6 @@ const Strike = Database.sequelize.define('Strikes', {
     type: DataTypes.DATE,
     allowNull: false
   }
-})
+}, { timestamps: false })
 
 export default Strike
