@@ -23,7 +23,7 @@
   "devDependencies": {
     "dotenv": "^8.2.0",
     "snazzy": "^8.0.0",
-    "standard": "^14.3.4"
+    "standard": "^15.0.0"
   },
   "scripts": {
     "start": "node -r esm bot",
