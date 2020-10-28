@@ -1,4 +1,5 @@
 import { Command } from 'discord-akairo'
+import Case from '../../models/cases'
 import config from '../../config'
 
 class UserHistoryCommand extends Command {
@@ -12,7 +13,8 @@ class UserHistoryCommand extends Command {
         usage: '`!history <user>'
       },
       channel: 'guild',
-      memberPermissions: ['BAN_MEMBERS']
+      memberPermissions: ['BAN_MEMBERS'],
+      flags: ['--logs', '-l']
     })
   }
 
@@ -34,10 +36,41 @@ class UserHistoryCommand extends Command {
   }
 
   async exec (message, { user, logs }) {
-    // Fetch all cases for this user
-    // Filter and separate the mutes, strikes, active strikes, and bans
-    // Build embed (show logs if flag is found)
-    // Send embed
+    const history = await Case.findAll({
+      where: { userID: user.id }
+    })
+
+    if (history.length !== 0) {
+      const mutes = history.filter(infraction => infraction.action === 'mute')
+      const strikes = history.filter(infraction => infraction.action === 'strike')
+      const activeStrikes = strikes.filter(strike => strike.active === true)
+      const bans = history.filter(infraction => infraction.action === 'ban')
+
+      const reply = this.client.util.embed()
+        .setAuthor('Infraction History for')
+        .setTitle(`**${user.tag}**`)
+        .setThumbnail(user.displayAvatarURL())
+        .setDescription(`${mutes.length} Mutes • ${strikes.length} Strikes (${activeStrikes.length} Active) • ${bans.length} Bans`)
+
+      console.log(`Logs = ${logs}`)
+
+      if (logs) {
+        reply
+          .addField(`${config.prefixes.mute} Mutes`, mutes.length === 0 ? 'None' : mutes.map((mute, index) => {
+            return `**Muted for ${mute.duration} by ${mute.moderator}**\nReason: ${mute.reason}\n${mute.timestamp}${index !== mutes.length - 1 ? '\n' : ''}`
+          }))
+          .addField(`${config.prefixes.strike} Strikes`, strikes.length === 0 ? 'None' : strikes.map((strike, index) => {
+            return `**Strike added by ${strike.moderator}**\nReason: ${strike.reason}\n${strike.timestamp}${index !== strikes.length - 1 ? '\n' : ''}`
+          }))
+          .addField(`${config.prefixes.ban} Bans`, bans.length === 0 ? 'None' : bans.map((ban, index) => {
+            return `**Banned by ${ban.moderator}**\nReason: ${ban.reason}\n${ban.timestamp}${index !== bans.length - 1 ? '\n' : ''}`
+          }))
+      }
+
+      return message.channel.send({ embed: reply })
+    }
+
+    return message.channel.send(`${user.tag} has no infraction history`)
   }
 }
 
