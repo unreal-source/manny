@@ -35,7 +35,7 @@ class ServerInfoCommand extends Command {
     }
 
     const embed = this.client.util.embed()
-      .setTitle(message.guild.name)
+      .setTitle(`**${message.guild.name}**`)
       .setDescription(message.guild.description ? message.guild.description : 'Guild description goes here')
       .setThumbnail(message.guild.iconURL())
       .addField('Members', totalMembers, true)

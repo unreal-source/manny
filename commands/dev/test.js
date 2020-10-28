@@ -126,9 +126,9 @@ class TestCommand extends Command {
         break
       case 'history':
         embed
-          .setAuthor(message.author.tag)
-          .setTitle(`${config.prefixes.info} Infraction History`)
-          .setDescription('1 Mute • 2 Strikes • 0 Bans')
+          .setAuthor('Infraction History')
+          .setTitle('**Cedric \'eXi\' Neukirchen#4538**')
+          .setDescription('1 Mute • 2 Strikes (1 Active) • 0 Bans')
           .setThumbnail(message.author.displayAvatarURL())
         break
       case 'history-more':

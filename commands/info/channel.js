@@ -35,7 +35,6 @@ class ChannelInfoCommand extends Command {
 
   exec (message, { channel }) {
     const embed = this.client.util.embed()
-      .setTitle(`${config.prefixes.info} Channel Info`)
       .addField('Type', capitalize(channel.type), true)
       .addField('ID', channel.id, true)
 
@@ -46,7 +45,7 @@ class ChannelInfoCommand extends Command {
     switch (channel.type) {
       case 'text':
         embed
-          .setDescription(`#${channel.name}`)
+          .setTitle(`**#${channel.name}**`)
           .addField('Topic', channel.topic ? channel.topic : 'None')
           .addField('Created', formatDate(channel.createdAt))
 
@@ -56,14 +55,14 @@ class ChannelInfoCommand extends Command {
         break
       case 'voice':
         embed
-          .setDescription(channel.name)
+          .setTitle(`**${channel.name}**`)
           .addField('Bitrate', `${channel.bitrate / 1000}kbps`)
           .addField('Users', channel.userLimit > 0 ? `${channel.members.size} / ${channel.userLimit}` : channel.members.size)
           .addField('Created', formatDate(channel.createdAt))
         break
       default:
         embed
-          .setDescription(channel.name)
+          .setTitle(`**${channel.name}**`)
           .addField('Created', formatDate(channel.createdAt))
         break
     }

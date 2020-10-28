@@ -32,8 +32,7 @@ class RoleInfoCommand extends Command {
   exec (message, { role }) {
     const embed = this.client.util.embed()
       .setColor(role.hexColor)
-      .setTitle(`${config.prefixes.info} Role Info`)
-      .setDescription(role.name)
+      .setTitle(`**${role.name}**`)
       .addField('Color', role.hexColor, true)
       .addField('ID', role.id, true)
       .addField('Members', role.members.size)

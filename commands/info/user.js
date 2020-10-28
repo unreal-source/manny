@@ -40,9 +40,8 @@ class UserInfoCommand extends Command {
     }
 
     const embed = this.client.util.embed()
+      .setTitle(member.user.bot ? `**${member.user.tag}** \`BOT\`` : `**${member.user.tag}**`)
       .setThumbnail(member.user.displayAvatarURL())
-      .setTitle(`${config.prefixes.info} User Info`)
-      .setDescription(member.user.bot ? `${member.user.tag} \`BOT\`` : member.user.tag)
       .addField('Status', status[member.presence.status], true)
       .addField('ID', member.id, true)
       .addField('Roles', member.roles.cache.map(role => `\`${role.name}\``).join(' '))
