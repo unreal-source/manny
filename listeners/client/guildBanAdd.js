@@ -1,7 +1,7 @@
 import { Listener } from 'discord-akairo'
 import config from '../../config'
 import Case from '../../models/cases'
-import formatDate from '../../utilities/formatDate'
+import _ from '../../utilities/Util'
 
 class GuildBanAddListener extends Listener {
   constructor () {
@@ -40,7 +40,7 @@ class GuildBanAddListener extends Listener {
         .setThumbnail(user.displayAvatarURL())
         .setTitle(`${config.prefixes.ban} Banned ${user.tag}`)
         .setDescription(`**Reason:** ${entry.reason}`)
-        .setFooter(formatDate(entry.createdAt))
+        .setFooter(_.prettyDate(entry.createdAt))
 
       return logChannel.send({ embed: logEntry })
     } catch (err) {

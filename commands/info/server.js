@@ -1,7 +1,6 @@
 import { Command } from 'discord-akairo'
 import config from '../../config'
-import commalize from '../../utilities/commalize'
-import formatDate from '../../utilities/formatDate'
+import _ from '../../utilities/Util'
 
 class ServerInfoCommand extends Command {
   constructor () {
@@ -19,8 +18,8 @@ class ServerInfoCommand extends Command {
   }
 
   async exec (message) {
-    const totalMembers = commalize(message.guild.memberCount.toString())
-    const onlineMembers = commalize(message.guild.members.cache.filter(member => member.presence.status === 'online').size.toString())
+    const totalMembers = _.thousands(message.guild.memberCount)
+    const onlineMembers = _.thousands(message.guild.members.cache.filter(member => member.presence.status === 'online').size)
     const premiumTier = {
       0: 'No Level',
       1: 'Level 1',
@@ -41,7 +40,7 @@ class ServerInfoCommand extends Command {
       .addField('Members', totalMembers, true)
       .addField('Online', onlineMembers, true)
       .addField('Server Boost', `${premiumTier[message.guild.premiumTier]} • ${message.guild.premiumSubscriptionCount} Boosts • ${premiumThreshold[message.guild.premiumTier + 1] - message.guild.premiumSubscriptionCount} boosts until ${premiumTier[message.guild.premiumTier + 1]}`)
-      .addField('Created', formatDate(message.guild.createdAt))
+      .addField('Created', _.prettyDate(message.guild.createdAt))
       .addField('Links', `[Website](${config.meta.links.website}) • [Twitter](${config.meta.links.twitter}) • [GitHub](${config.meta.links.github})`)
 
     if (message.guild.vanityURLCode) {

@@ -1,5 +1,5 @@
 import { Command } from 'discord-akairo'
-import commalize from '../../utilities/commalize'
+import _ from '../../utilities/Util'
 
 class CapsCommand extends Command {
   constructor () {
@@ -20,8 +20,8 @@ class CapsCommand extends Command {
     const guild = await message.guild.fetch()
     const embed = this.client.util.embed()
       .setTitle('Server Caps')
-      .addField('Max Members', commalize(guild.maximumMembers.toString()))
-      .addField('Max Online Members', commalize(guild.maximumPresences.toString()))
+      .addField('Max Members', _.thousands(guild.maximumMembers))
+      .addField('Max Online Members', _.thousands(guild.maximumPresences))
 
     return message.util.send({ embed })
   }

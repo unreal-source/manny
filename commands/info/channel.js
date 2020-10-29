@@ -1,7 +1,6 @@
 import { Command } from 'discord-akairo'
 import config from '../../config'
-import capitalize from '../../utilities/capitalize'
-import formatDate from '../../utilities/formatDate'
+import _ from '../../utilities/Util'
 
 class ChannelInfoCommand extends Command {
   constructor () {
@@ -35,11 +34,11 @@ class ChannelInfoCommand extends Command {
 
   exec (message, { channel }) {
     const embed = this.client.util.embed()
-      .addField('Type', capitalize(channel.type), true)
+      .addField('Type', _.capitalize(channel.type), true)
       .addField('ID', channel.id, true)
 
     if (channel.parent) {
-      embed.addField('Category', capitalize(channel.parent.name))
+      embed.addField('Category', _.capitalize(channel.parent.name))
     }
 
     switch (channel.type) {
@@ -47,10 +46,10 @@ class ChannelInfoCommand extends Command {
         embed
           .setTitle(`**#${channel.name}**`)
           .addField('Topic', channel.topic ? channel.topic : 'None')
-          .addField('Created', formatDate(channel.createdAt))
+          .addField('Created', _.prettyDate(channel.createdAt))
 
         if (channel.lastMessage) {
-          embed.addField('Last Activity', formatDate(channel.lastMessage.editedAt || channel.lastMessage.createdAt))
+          embed.addField('Last Activity', _.prettyDate(channel.lastMessage.editedAt || channel.lastMessage.createdAt))
         }
         break
       case 'voice':
@@ -58,12 +57,12 @@ class ChannelInfoCommand extends Command {
           .setTitle(`**${channel.name}**`)
           .addField('Bitrate', `${channel.bitrate / 1000}kbps`)
           .addField('Users', channel.userLimit > 0 ? `${channel.members.size} / ${channel.userLimit}` : channel.members.size)
-          .addField('Created', formatDate(channel.createdAt))
+          .addField('Created', _.prettyDate(channel.createdAt))
         break
       default:
         embed
           .setTitle(`**${channel.name}**`)
-          .addField('Created', formatDate(channel.createdAt))
+          .addField('Created', _.prettyDate(channel.createdAt))
         break
     }
 

@@ -1,6 +1,6 @@
 import { Command } from 'discord-akairo'
 import config from '../../config'
-import formatDate from '../../utilities/formatDate'
+import _ from '../../utilities/Util'
 
 class RoleInfoCommand extends Command {
   constructor () {
@@ -37,7 +37,7 @@ class RoleInfoCommand extends Command {
       .addField('ID', role.id, true)
       .addField('Members', role.members.size)
       .addField('Mentionable', role.mentionable)
-      .addField('Created', formatDate(role.createdAt))
+      .addField('Created', _.prettyDate(role.createdAt))
 
     return message.util.send({ embed })
   }

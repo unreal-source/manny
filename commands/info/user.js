@@ -1,6 +1,6 @@
 import { Command } from 'discord-akairo'
 import config from '../../config'
-import formatDate from '../../utilities/formatDate'
+import _ from '../../utilities/Util'
 
 class UserInfoCommand extends Command {
   constructor () {
@@ -45,8 +45,8 @@ class UserInfoCommand extends Command {
       .addField('Status', status[member.presence.status], true)
       .addField('ID', member.id, true)
       .addField('Roles', member.roles.cache.map(role => `\`${role.name}\``).join(' '))
-      .addField('Joined Server', formatDate(member.joinedAt))
-      .addField('Joined Discord', formatDate(member.user.createdAt))
+      .addField('Joined Server', _.prettyDate(member.joinedAt))
+      .addField('Joined Discord', _.prettyDate(member.user.createdAt))
     return message.util.send({ embed })
   }
 }
