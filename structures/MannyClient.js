@@ -45,6 +45,11 @@ class MannyClient extends AkairoClient {
         if (phrase.match(/^(?:yes|y|no|n)$/gi)) return phrase
         return null
       },
+      dice: (message, phrase) => {
+        if (!phrase) return null
+        if (phrase.match(/^d(2|3|4|5|6|8|10|12|20|100)$/)) return phrase
+        return null
+      },
       duration: (message, phrase) => {
         if (!phrase) return null
         if (ms(phrase) !== undefined) return ms(phrase)

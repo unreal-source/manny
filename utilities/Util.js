@@ -9,8 +9,12 @@ class Util {
     return DateTime.fromObject(date).toLocaleString(DateTime.DATETIME_FULL)
   }
 
-  static random (array) {
+  static randomElement (array) {
     return array[Math.floor(Math.random() * array.length)]
+  }
+
+  static randomInt (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
   }
 
   static thousands (num) {
