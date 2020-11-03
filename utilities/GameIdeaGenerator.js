@@ -628,11 +628,30 @@ const person = [
 ]
 
 const animal = [
+  { singular: 'a bear', plural: 'bears' },
+  { singular: 'a bird', plural: 'birds' },
   { singular: 'a cat', plural: 'cats' },
+  { singular: 'a chicken', plural: 'chickens' },
+  { singular: 'a cow', plural: 'cows' },
+  { singular: 'a deer', plural: 'deer' },
   { singular: 'a dinosaur', plural: 'dinosaurs' },
   { singular: 'a dog', plural: 'dogs' },
+  { singular: 'a duck', plural: 'ducks' },
+  { singular: 'an eagle', plural: 'eagles' },
+  { singular: 'an elephant', plural: 'elephants' },
+  { singular: 'a falcon', plural: 'falcons' },
+  { singular: 'a fish', plural: 'fish' },
+  { singular: 'a horse', plural: 'horses' },
   { singular: 'a kitten', plural: 'kittens' },
-  { singular: 'a puppy', plural: 'puppies' }
+  { singular: 'a lion', plural: 'lions' },
+  { singular: 'a monkey', plural: 'monkeys' },
+  { singular: 'a pig', plural: 'pigs' },
+  { singular: 'a puppy', plural: 'puppies' },
+  { singular: 'a rabbit', plural: 'rabbits' },
+  { singular: 'a sharks', plural: 'sharks' },
+  { singular: 'a snake', plural: 'snakes' },
+  { singular: 'a tiger', plural: 'tigers' },
+  { singular: 'a wolf', plural: 'wolves' }
 ]
 
 const supernatural = [
