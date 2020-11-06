@@ -34,14 +34,14 @@ class GameIdeaCommand extends Command {
       'A game where {person:plural} compete with {supernatural:plural} in {setting:in}. The twist: {diversifier}.',
       'A game about {animal:singular} with {object:plural} that will stop at nothing to {goal}.',
       'A game about {animal:singular} with {object:plural} that will stop at nothing to {goal}. On top of that, {diversifier}.',
-      'A game about {person:singular} searching {setting:in} for their lost {object:singular}.',
-      'A game about {person:singular} searching {setting:in} for their lost {object:singular}. The twist: {diversifier}.',
+      'A game about {person:singular} searching {setting:in} for {object:plural}.',
+      'A game about {person:singular} searching {setting:in} for {object:plural}. The twist: {diversifier}.',
       'You are {person:singular} in {setting:in}. Armed only with {object:singular} and your wits, you must {goal}.',
       'You are {person:singular} in {setting:in}. Armed only with {object:singular} and your wits, you must {goal}. To make matters worse, {diversifier}.',
-      'An {style:an} {genre:an} that takes places in {setting:in}.',
-      'An {style:an} {genre:an} that takes places in {setting:in}. The twist: {diversifier}.',
+      'An {style:an} {genre:a} that takes place in {setting:in}.',
+      'An {style:an} {genre:an} that takes place in {setting:in}. The twist: {diversifier}.',
       'A {style:a} {genre:a} where you {verb} {supernatural:singular} in {setting:in}.',
-      'A {style:a} {genre:a} where you {verb} {supernatural:singular} in {setting:in}, but {diversifier}.'
+      'A {style:a} {genre:an} where you {verb} {supernatural:singular} in {setting:in}, but {diversifier}.'
     ]
 
     return message.channel.send(generate(_.randomElement(templates)))
