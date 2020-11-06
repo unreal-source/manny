@@ -94,6 +94,11 @@ class MannyClient extends AkairoClient {
   init () {
     this.commandHandler.useListenerHandler(this.listenerHandler)
 
+    this.listenerHandler.setEmitters({
+      commandHandler: this.commandHandler,
+      listenerHandler: this.listenerHandler
+    })
+
     this.commandHandler.loadAll()
     this.log.info('Commands loaded')
     this.listenerHandler.loadAll()
