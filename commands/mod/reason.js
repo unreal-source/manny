@@ -2,6 +2,7 @@ import { Command, Flag } from 'discord-akairo'
 import Case from '../../models/cases'
 import config from '../../config'
 import { DateTime } from 'luxon'
+import _ from '../../utilities/Util'
 
 class ReasonCommand extends Command {
   constructor () {
@@ -56,7 +57,7 @@ class ReasonCommand extends Command {
         .setTitle(title[record.action])
         .setDescription(`by ${record.moderator}`)
         .addField('Reason', record.reason)
-        .setFooter(`#${record.id} • ${record.timestamp.toLocaleString(DateTime.DATETIME_FULL)}`)
+        .setFooter(`#${record.id} • ${_.prettyDate(record.timestamp, true)}`)
 
       await message.channel.send(embed)
     } else {

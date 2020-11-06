@@ -5,8 +5,8 @@ class Util {
     return `${str.charAt(0).toUpperCase()}${str.slice(1)}`
   }
 
-  static prettyDate (date) {
-    return DateTime.fromObject(date).toLocaleString(DateTime.DATETIME_FULL)
+  static prettyDate (date, short = false) {
+    return DateTime.fromJSDate(date).toLocaleString(short ? DateTime.DATE_SHORT : DateTime.DATETIME_FULL)
   }
 
   static randomElement (array) {
