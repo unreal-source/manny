@@ -12,7 +12,7 @@ class PortfolioCommand extends Command {
         content: 'Post your portfolio on the job board',
         usage: '$portfolio'
       },
-      channelRestriction: 'dm',
+      channel: 'dm',
       clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']
     })
   }
