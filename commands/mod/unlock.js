@@ -12,7 +12,8 @@ class UnlockChannelCommand extends Command {
         usage: '!unlock [channel]'
       },
       channel: 'guild',
-      userPermissions: ['BAN_MEMBERS']
+      clientPermissions: ['MANAGE_CHANNELS', 'SEND_MESSAGES'],
+      userPermissions: ['MANAGE_CHANNELS']
     })
   }
 

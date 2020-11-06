@@ -12,7 +12,8 @@ class CapsCommand extends Command {
         usage: '!caps'
       },
       channel: 'guild',
-      userPermissions: ['SEND_MESSAGES']
+      clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],
+      userPermissions: ['BAN_MEMBERS']
     })
   }
 

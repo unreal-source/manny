@@ -11,7 +11,8 @@ class DiceCommand extends Command {
         content: 'Roll the dice',
         usage: '!dice <count> <die>'
       },
-      channel: 'guild'
+      channel: 'guild',
+      clientPermissions: ['SEND_MESSAGES']
     })
   }
 

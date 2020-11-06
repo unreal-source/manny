@@ -13,7 +13,8 @@ class UserHistoryCommand extends Command {
         usage: '`!history <user>'
       },
       channel: 'guild',
-      memberPermissions: ['BAN_MEMBERS'],
+      clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],
+      userPermissions: ['BAN_MEMBERS'],
       flags: ['--logs', '-l']
     })
   }

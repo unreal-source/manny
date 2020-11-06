@@ -14,7 +14,8 @@ class BanCommand extends Command {
         usage: '!ban <user> <reason>'
       },
       channel: 'guild',
-      memberPermissions: ['BAN_MEMBERS']
+      clientPermissions: ['BAN_MEMBERS', 'EMBED_LINKS', 'SEND_MESSAGES'],
+      userPermissions: ['BAN_MEMBERS']
     })
   }
 

@@ -12,7 +12,8 @@ class GameIdeaCommand extends Command {
         content: 'Generate a random game idea',
         usage: '!gameidea'
       },
-      channel: 'guild'
+      channel: 'guild',
+      clientPermissions: ['SEND_MESSAGES']
     })
   }
 

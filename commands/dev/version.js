@@ -12,8 +12,8 @@ class VersionCommand extends Command {
         usage: '!version, !v'
       },
       channel: 'guild',
-      userPermissions: ['MANAGE_GUILD'],
-      protected: true
+      clientPermissions: ['SEND_MESSAGES'],
+      userPermissions: ['BAN_MEMBERS']
     })
   }
 

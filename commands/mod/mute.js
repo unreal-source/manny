@@ -16,7 +16,8 @@ class MuteCommand extends Command {
         usage: '!mute <user> <duration> <reason>'
       },
       channel: 'guild',
-      memberPermissions: ['BAN_MEMBERS']
+      clientPermissions: ['MANAGE_ROLES', 'EMBED_LINKS', 'SEND_MESSAGES'],
+      userPermissions: ['BAN_MEMBERS']
     })
   }
 

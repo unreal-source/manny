@@ -12,7 +12,8 @@ class RemoveCommand extends Command {
         content: 'Remove your post from the job board',
         usage: '$remove <post ID>'
       },
-      channelRestriction: 'dm'
+      channelRestriction: 'dm',
+      clientPermissions: ['MANAGE_MESSAGES', 'EMBED_LINKS', 'SEND_MESSAGES']
     })
   }
 

@@ -12,7 +12,8 @@ class UnpaidCommand extends Command {
         content: 'Post an unpaid gig on the job board.',
         usage: '$unpaid'
       },
-      channelRestriction: 'dm'
+      channelRestriction: 'dm',
+      clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']
     })
   }
 

@@ -11,7 +11,8 @@ class CoinFlipCommand extends Command {
         content: 'Flip a coin',
         usage: '!coin'
       },
-      channel: 'guild'
+      channel: 'guild',
+      clientPermissions: ['SEND_MESSAGES']
     })
   }
 

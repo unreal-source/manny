@@ -13,7 +13,7 @@ class ServerInfoCommand extends Command {
         usage: '!server'
       },
       channel: 'guild',
-      userPermissions: ['SEND_MESSAGES']
+      clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']
     })
   }
 

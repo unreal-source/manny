@@ -17,7 +17,8 @@ class StrikeCommand extends Command {
         usage: '!strike <user> <reason>'
       },
       channel: 'guild',
-      memberPermissions: ['BAN_MEMBERS']
+      clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],
+      userPermissions: ['BAN_MEMBERS']
     })
   }
 

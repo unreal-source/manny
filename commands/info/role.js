@@ -13,7 +13,7 @@ class RoleInfoCommand extends Command {
         usage: '!role <@role or ID>'
       },
       channel: 'guild',
-      userPermissions: ['SEND_MESSAGES']
+      clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']
     })
   }
 

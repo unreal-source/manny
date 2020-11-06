@@ -12,7 +12,8 @@ class JobCommand extends Command {
         content: 'Post a paid job opportunity on the job board',
         usage: '$job'
       },
-      channelRestriction: 'dm'
+      channelRestriction: 'dm',
+      clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']
     })
   }
 

@@ -15,7 +15,8 @@ class UnmuteCommand extends Command {
         usage: '!unmute <user> <reason>'
       },
       channel: 'guild',
-      memberPermissions: ['BAN_MEMBERS']
+      clientPermissions: ['MANAGE_ROLES', 'EMBED_LINKS', 'SEND_MESSAGES'],
+      userPermissions: ['BAN_MEMBERS']
     })
   }
 

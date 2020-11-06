@@ -16,7 +16,8 @@ class PardonCommand extends Command {
         usage: '!pardon <case number> <reason>'
       },
       channel: 'guild',
-      memberPermissions: ['BAN_MEMBERS']
+      clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],
+      userPermissions: ['BAN_MEMBERS']
     })
   }
 

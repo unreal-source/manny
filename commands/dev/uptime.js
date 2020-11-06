@@ -12,8 +12,8 @@ class UptimeCommand extends Command {
         usage: '!uptime'
       },
       channel: 'guild',
-      userPermissions: ['MANAGE_GUILD'],
-      protected: true
+      clientPermissions: ['SEND_MESSAGES'],
+      userPermissions: ['BAN_MEMBERS']
     })
   }
 

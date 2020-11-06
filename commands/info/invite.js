@@ -11,7 +11,7 @@ class InviteCommand extends Command {
         usage: '!invite'
       },
       channel: 'guild',
-      userPermissions: ['SEND_MESSAGES']
+      clientPermissions: ['SEND_MESSAGES']
     })
   }
 

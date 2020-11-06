@@ -12,7 +12,8 @@ class ArchiveChannelCommand extends Command {
         usage: '!archive [channel]'
       },
       channel: 'guild',
-      userPermissions: ['BAN_MEMBERS']
+      clientPermissions: ['MANAGE_CHANNELS', 'SEND_MESSAGES'],
+      userPermissions: ['MANAGE_CHANNELS']
     })
   }
 

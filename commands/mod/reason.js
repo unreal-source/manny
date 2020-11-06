@@ -14,6 +14,7 @@ class ReasonCommand extends Command {
         usage: '!reason <infraction> <new reason>'
       },
       channel: 'guild',
+      clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],
       userPermissions: ['BAN_MEMBERS']
     })
   }

@@ -13,7 +13,7 @@ class UserInfoCommand extends Command {
         usage: '!user [@username or ID]'
       },
       channel: 'guild',
-      userPermissions: ['SEND_MESSAGES']
+      clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']
     })
   }
 

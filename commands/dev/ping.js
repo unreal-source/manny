@@ -11,8 +11,8 @@ class PingCommand extends Command {
         usage: '!ping'
       },
       channel: 'guild',
-      userPermissions: ['MANAGE_GUILD'],
-      protected: true
+      clientPermissions: ['SEND_MESSAGES'],
+      userPermissions: ['BAN_MEMBERS']
     })
   }
 

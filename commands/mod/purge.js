@@ -12,7 +12,8 @@ class PurgeCommand extends Command {
         usage: '!purge <amount> [author]'
       },
       channel: 'guild',
-      memberPermissions: ['BAN_MEMBERS']
+      clientPermissions: ['MANAGE_MESSAGES', 'EMBED_LINKS', 'SEND_MESSAGES'],
+      userPermissions: ['MANAGE_MESSAGES']
     })
   }
 
