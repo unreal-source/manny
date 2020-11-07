@@ -53,10 +53,10 @@ class UnmuteCommand extends Command {
       return message.channel.send(`${config.emoji.warning} That user is not muted.`)
     }
 
-    const mutedRole = await message.guild.roles.fetch(config.infractions.mutedRole)
+    const muteRole = await message.guild.roles.fetch(config.infractions.muteRole)
 
     // Take action
-    await member.roles.remove(mutedRole)
+    await member.roles.remove(muteRole)
 
     // Record case
     const record = await Case.create({

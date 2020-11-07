@@ -65,7 +65,7 @@ class MuteCommand extends Command {
     const longDuration = ms(ms(duration), { long: true })
 
     // Take action
-    await member.roles.add(config.infractions.mutedRole)
+    await member.roles.add(config.infractions.muteRole)
 
     // Record case
     const record = await Case.create({
