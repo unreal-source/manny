@@ -35,8 +35,10 @@ class StrikeCommand extends Command {
       match: 'rest',
       prompt: {
         start: 'Why are you giving this user a strike?',
-        retry: 'Please add a reason for this strike.'
-      }
+        retry: 'Please add a reason for this strike.',
+        optional: true
+      },
+      default: '`No reason given`'
     }
 
     return { member, reason }

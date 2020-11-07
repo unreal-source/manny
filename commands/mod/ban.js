@@ -32,8 +32,10 @@ class BanCommand extends Command {
       match: 'rest',
       prompt: {
         start: 'Why are you banning this user?',
-        retry: 'Please add a reason for this ban.'
-      }
+        retry: 'Please add a reason for this ban.',
+        optional: true
+      },
+      default: '`No reason given`'
     }
 
     return { user, reason }

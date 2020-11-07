@@ -41,8 +41,10 @@ class MuteCommand extends Command {
       match: 'rest',
       prompt: {
         start: 'Why are you muting this user?',
-        retry: 'Please add a reason for this mute.'
-      }
+        retry: 'Please add a reason for this mute.',
+        optional: true
+      },
+      default: '`No reason given`'
     }
 
     return { member, duration, reason }
