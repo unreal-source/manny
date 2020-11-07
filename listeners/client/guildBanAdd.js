@@ -1,6 +1,8 @@
 import { Listener } from 'discord-akairo'
 import config from '../../config'
 import Case from '../../models/cases'
+import Mute from '../../models/mutes'
+import Strike from '../../models/strikes'
 import _ from '../../utilities/Util'
 
 class GuildBanAddListener extends Listener {
@@ -13,6 +15,15 @@ class GuildBanAddListener extends Listener {
 
   async exec (guild, user) {
     try {
+      // Remove this user from the mute and strike schedules
+      await Mute.destroy({
+        where: { id: user.id }
+      })
+
+      await Strike.destroy({
+        where: { userID: user.id }
+      })
+
       const auditLogs = await guild.fetchAuditLogs({ type: 'MEMBER_BAN_ADD' })
       const entry = auditLogs.entries.first()
 
@@ -26,8 +37,10 @@ class GuildBanAddListener extends Listener {
       // Record case
       await Case.create({
         action: 'ban',
-        user: user.id,
-        moderator: entry.executor.id,
+        user: user.tag,
+        userID: user.id,
+        moderator: entry.executor.tag,
+        moderatorID: entry.executor.id,
         reason: entry.reason,
         timestamp: entry.createdAt
       })
