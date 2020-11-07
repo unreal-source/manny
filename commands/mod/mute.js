@@ -71,7 +71,9 @@ class MuteCommand extends Command {
     const record = await Case.create({
       action: 'mute',
       user: member.user.tag,
+      userID: member.id,
       moderator: message.author.tag,
+      moderatorID: message.author.id,
       reason: reason,
       duration: longDuration,
       timestamp: DateTime.local()

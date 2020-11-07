@@ -115,6 +115,7 @@ class StrikeCommand extends Command {
 
         await Strike.create({
           id: record.id,
+          userID: member.id,
           expiration: DateTime.local().plus({ days: 30 })
         })
 
