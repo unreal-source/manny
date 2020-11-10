@@ -25,8 +25,7 @@ class LockChannelCommand extends Command {
       type: 'channel',
       default: message => message.channel,
       prompt: {
-        start: 'Which channel do you want to lock?',
-        retry: 'Channel not found. Please enter a valid channel name, mention, or ID.',
+        retry: 'Channel not found. Please enter a channel name, mention, or ID.',
         optional: true
       }
     }

@@ -22,25 +22,10 @@ class RemoveCommand extends Command {
 
   async * args (message) {
     const post = yield {
-      type: async (message, phrase) => {
-        if (!phrase) return null
-
-        const guild = this.client.guilds.cache.first()
-        const category = guild.channels.cache.get(config.jobChannels.category)
-
-        for (const channel of category.children.values()) {
-          try {
-            return await channel.messages.fetch(phrase)
-          } catch (err) {
-            continue
-          }
-        }
-
-        return null
-      },
+      type: 'job',
       prompt: {
-        start: 'Enter the ID of the post you want to remove. You can find the ID in the footer of the post.',
-        retry: 'Post not found. Please try again.'
+        start: 'Enter the ID of the post you want to remove. You can find the ID at the bottom of your post.',
+        retry: 'Post not found. Please enter the ID for one of your posts.'
       }
     }
 

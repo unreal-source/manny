@@ -32,24 +32,20 @@ class MuteCommand extends Command {
       type: 'member',
       prompt: {
         start: 'Which user do you want to mute?',
-        retry: 'User not found. Please enter a valid @mention or ID.'
+        retry: 'User not found. Please enter a name, mention, or ID.'
       }
     }
 
     const duration = yield {
+      type: 'duration',
       prompt: {
-        start: 'How long should the mute last?',
-        retry: 'Please enter a mute duration.'
+        start: 'For how long?',
+        retry: 'Please enter a duration. Examples: 10m, 10 mins, 10 minutes'
       }
     }
 
     const reason = yield {
       match: 'rest',
-      prompt: {
-        start: 'Why are you muting this user?',
-        retry: 'Please add a reason for this mute.',
-        optional: true
-      },
       default: '`No reason given`'
     }
 
@@ -58,19 +54,19 @@ class MuteCommand extends Command {
 
   async exec (message, { member, duration, reason }) {
     if (member.id === message.author.id) {
-      return message.channel.send(`${config.emoji.warning} You can't mute yourself.`)
+      return message.channel.send(`${config.prefixes.warning} You can't mute yourself.`)
     }
 
     if (member.id === this.client.user.id) {
-      return message.channel.send(`${config.emoji.warning} Nice try, human.`)
+      return message.channel.send(`${config.prefixes.warning} Nice try, human.`)
     }
 
     if (member.roles.cache.some(role => role.name === 'Muted')) {
-      return message.channel.send(`${config.emoji.warning} That user is already muted.`)
+      return message.channel.send(`${config.prefixes.warning} That user is already muted.`)
     }
 
     // const mutedRole = await message.guild.roles.fetch(config.infractions.mutedRole)
-    const longDuration = ms(ms(duration), { long: true })
+    const longDuration = ms(duration, { long: true })
 
     // Take action
     await member.roles.add(config.infractions.muteRole)
@@ -90,7 +86,7 @@ class MuteCommand extends Command {
     // Add to mute schedule
     await Mute.create({
       id: member.id,
-      expiration: DateTime.fromMillis(DateTime.local() + ms(duration))
+      expiration: DateTime.fromMillis(DateTime.local() + duration)
     })
 
     // Send mod log

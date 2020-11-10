@@ -23,8 +23,8 @@ class RoleInfoCommand extends Command {
     const role = yield {
       type: 'role',
       prompt: {
-        start: 'Which role do you want to look up?',
-        retry: 'Role not found. Please enter a valid role name or ID.'
+        start: 'Which role do you want to learn about?',
+        retry: 'Role not found. Please enter a role name, mention, or ID.'
       }
     }
 

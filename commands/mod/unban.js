@@ -29,16 +29,13 @@ class UnbanCommand extends Command {
       type: 'user',
       prompt: {
         start: 'Which user do you want to unban?',
-        retry: 'User not found. Please enter a valid @mention or ID.'
+        retry: 'User not found. Please enter a name, mention, or ID.'
       }
     }
 
     const reason = yield {
       match: 'rest',
-      prompt: {
-        start: 'Why are you unbanning this user?',
-        retry: 'Please add a reason for unbanning this user.'
-      }
+      default: '`No reason given`'
     }
 
     return { user, reason }

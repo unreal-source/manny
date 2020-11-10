@@ -30,16 +30,13 @@ class UnmuteCommand extends Command {
       type: 'member',
       prompt: {
         start: 'Which user do you want to unmute?',
-        retry: 'User not found. Please enter a valid @mention or ID.'
+        retry: 'User not found. Please enter a name, mention, or ID.'
       }
     }
 
     const reason = yield {
       match: 'rest',
-      prompt: {
-        start: 'Why are you unmuting this user?',
-        retry: 'Please add a reason for unmuting this user.'
-      }
+      default: '`No reason given`'
     }
 
     return { member, reason }

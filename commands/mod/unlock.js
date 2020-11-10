@@ -25,7 +25,6 @@ class UnlockChannelCommand extends Command {
       type: 'channel',
       default: message => message.channel,
       prompt: {
-        start: 'Which channel do you want to unlock?',
         retry: 'Channel not found. Please enter a valid channel name, mention, or ID.',
         optional: true
       }

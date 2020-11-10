@@ -25,8 +25,7 @@ class ChannelInfoCommand extends Command {
       match: 'rest',
       default: message => message.channel,
       prompt: {
-        start: 'Which channel do you want to look up?',
-        retry: 'Channel not found. Please enter a valid channel name, mention, or ID.',
+        retry: 'Channel not found. Please enter a channel name, mention, or ID.',
         optional: true
       }
     }

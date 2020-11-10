@@ -30,16 +30,14 @@ class PardonCommand extends Command {
     const infraction = yield {
       type: 'infraction',
       prompt: {
-        start: 'Enter the case number for the strike you want to pardon.',
-        retry: 'Case not found. Please enter a valid case number.'
+        start: 'What\'s the case number for the strike you want to remove?',
+        retry: 'Case not found. Please enter the case number found at the bottom of the log entry.'
       }
     }
 
     const reason = yield {
       match: 'rest',
-      prompt: {
-        start: 'Why are you removing this strike?'
-      }
+      default: '`No reason given`'
     }
 
     return { infraction, reason }

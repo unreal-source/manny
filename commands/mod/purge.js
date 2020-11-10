@@ -34,8 +34,7 @@ class PurgeCommand extends Command {
     const author = yield {
       type: 'member',
       prompt: {
-        start: 'Enter the @username or ID of the member.',
-        retry: 'Please enter a valid membername or ID.',
+        retry: 'User not found. Please enter a name, mention, or ID.',
         optional: true
       }
     }

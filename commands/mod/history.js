@@ -28,8 +28,8 @@ class UserHistoryCommand extends Command {
     const user = yield {
       type: 'user',
       prompt: {
-        start: 'Who\'s infraction history do you want to check?',
-        retry: 'User not found. Please enter a valid @mention or ID.'
+        start: 'Which user\'s history do you want to look up?',
+        retry: 'User not found. Please enter a name, mention, or ID.'
       }
     }
 

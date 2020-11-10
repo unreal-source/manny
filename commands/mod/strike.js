@@ -38,11 +38,6 @@ class StrikeCommand extends Command {
 
     const reason = yield {
       match: 'rest',
-      prompt: {
-        start: 'Why are you giving this user a strike?',
-        retry: 'Please add a reason for this strike.',
-        optional: true
-      },
       default: '`No reason given`'
     }
 

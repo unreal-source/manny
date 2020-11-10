@@ -23,7 +23,7 @@ class EightBallCommand extends Command {
     const question = yield {
       match: 'rest',
       prompt: {
-        start: 'Ask the Magic 8-Ball a question.'
+        start: 'Ask the Magic 8-Ball a yes/no question.'
       }
     }
 

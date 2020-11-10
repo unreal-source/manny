@@ -29,17 +29,12 @@ class BanCommand extends Command {
       type: 'user',
       prompt: {
         start: 'Which user do you want to ban?',
-        retry: 'User not found. Please enter a valid @mention or ID.'
+        retry: 'User not found. Please enter a name, mention, or ID.'
       }
     }
 
     const reason = yield {
       match: 'rest',
-      prompt: {
-        start: 'Why are you banning this user?',
-        retry: 'Please add a reason for this ban.',
-        optional: true
-      },
       default: '`No reason given`'
     }
 

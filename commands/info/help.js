@@ -24,8 +24,7 @@ class HelpCommand extends Command {
       type: 'command',
       optional: true,
       prompt: {
-        start: 'Which command do you need help with?',
-        retry: 'That is not a valid command. Please try again.',
+        retry: 'Command not found. Please enter the name of a valid command.',
         optional: true
       }
     }

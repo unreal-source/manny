@@ -26,48 +26,40 @@ class ReasonCommand extends Command {
 
   async * args (message) {
     const infraction = yield {
-      type: 'integer',
+      type: 'infraction',
       prompt: {
-        start: 'Enter the case number for the infraction you want to edit.'
+        start: 'What\'s the case number for the infraction you want to update?',
+        retry: 'Case not found. Please enter the case number found at the bottom of the log entry.'
       }
     }
 
-    const record = await Case.findOne({
-      where: { id: infraction }
-    })
-
-    if (record) {
-      const title = {
-        ban: `${config.prefixes.ban} Member banned`,
-        unban: `${config.prefixes.undo} Member unbanned`,
-        mute: `${config.prefixes.mute} Member muted for ${record.duration}`,
-        unmute: `${config.prefixes.undo} Member unmuted`,
-        strike: `${config.prefixes.strike} Strike added`,
-        pardon: `${config.prefixes.undo} Strike removed`
-      }
-
-      const border = {
-        mute: config.embeds.colors.yellow,
-        unmute: config.embeds.colors.yellow,
-        strike: config.embeds.colors.orange,
-        pardon: config.embeds.colors.orange,
-        ban: config.embeds.colors.red,
-        unban: config.embeds.colors.red
-      }
-
-      const embed = this.client.util.embed()
-        .setColor(border[record.action])
-        .setAuthor(record.user)
-        .setTitle(title[record.action])
-        .setDescription(`by ${record.moderator}`)
-        .addField('Reason', record.reason)
-        .setFooter(`#${record.id} • ${_.prettyDate(record.timestamp, true)}`)
-
-      await message.channel.send(embed)
-    } else {
-      await message.channel.send('Case not found.')
-      return Flag.cancel()
+    const title = {
+      ban: `${config.prefixes.ban} Member banned`,
+      unban: `${config.prefixes.undo} Member unbanned`,
+      mute: `${config.prefixes.mute} Member muted for ${infraction.duration}`,
+      unmute: `${config.prefixes.undo} Member unmuted`,
+      strike: `${config.prefixes.strike} Strike added`,
+      pardon: `${config.prefixes.undo} Strike removed`
     }
+
+    const border = {
+      mute: config.embeds.colors.yellow,
+      unmute: config.embeds.colors.yellow,
+      strike: config.embeds.colors.orange,
+      pardon: config.embeds.colors.orange,
+      ban: config.embeds.colors.red,
+      unban: config.embeds.colors.red
+    }
+
+    const embed = this.client.util.embed()
+      .setColor(border[infraction.action])
+      .setAuthor(infraction.user)
+      .setTitle(title[infraction.action])
+      .setDescription(`by ${infraction.moderator}`)
+      .addField('Reason', infraction.reason)
+      .setFooter(`#${infraction.id} • ${_.prettyDate(infraction.timestamp, true)}`)
+
+    await message.channel.send(embed)
 
     const reason = yield {
       match: 'rest',
@@ -76,26 +68,26 @@ class ReasonCommand extends Command {
       }
     }
 
-    return { record, infraction, reason }
+    return { infraction, reason }
   }
 
-  async exec (message, { record, infraction, reason }) {
+  async exec (message, { infraction, reason }) {
     // Update record
     await Case.update({
       reason: reason
     }, {
-      where: { id: infraction }
+      where: { id: infraction.id }
     })
 
-    await message.channel.send(`Reason for Infraction #${infraction} updated.`)
+    await message.channel.send(`Reason for case #${infraction.id} updated.`)
 
     // Send mod log
     const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
     const logEntry = this.client.util.embed()
       .setColor(config.embeds.colors.blue)
-      .setTitle(`${config.prefixes.edit} Reason edited for case #${infraction}`)
+      .setTitle(`${config.prefixes.edit} Reason edited for case #${infraction.id}`)
       .setDescription(`by ${message.author.tag}`)
-      .addField('Old Reason', record.reason)
+      .addField('Old Reason', infraction.reason)
       .addField('New Reason', reason)
       .setTimestamp()
 

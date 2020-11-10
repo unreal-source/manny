@@ -24,8 +24,7 @@ class UserInfoCommand extends Command {
       type: 'member',
       default: message => message.member,
       prompt: {
-        start: 'Which user do you want to look up?',
-        retry: 'User not found. Please enter a valid username or ID.',
+        retry: 'User not found. Please enter a name, mention, or ID.',
         optional: true
       }
     }

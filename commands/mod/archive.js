@@ -26,17 +26,16 @@ class ArchiveChannelCommand extends Command {
       type: 'channel',
       default: message => message.channel,
       prompt: {
-        start: 'Which channel do you want to archive?',
-        retry: 'Channel not found. Please enter a valid channel name, mention, or ID.',
+        retry: 'Channel not found. Please enter a channel name, mention, or ID.',
         optional: true
       }
     }
 
     const confirm = yield {
-      type: ['yes', 'y'],
+      type: 'confirm',
       prompt: {
         start: `Are you sure you want to archive ${channel}?`,
-        retry: 'Say **yes** to archive the channel or **cancel** to do nothing.'
+        retry: 'Say **yes** to archive the channel or **no** to cancel.'
       }
     }
 
