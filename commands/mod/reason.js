@@ -1,7 +1,6 @@
 import { Command, Flag } from 'discord-akairo'
 import Case from '../../models/cases'
 import config from '../../config'
-import { DateTime } from 'luxon'
 import _ from '../../utilities/Util'
 
 class ReasonCommand extends Command {
@@ -11,8 +10,13 @@ class ReasonCommand extends Command {
       category: 'Moderator',
       description: {
         name: 'Edit Reason',
-        content: 'Edit the reason for an infraction',
-        usage: '!reason <infraction> <new reason>'
+        short: 'Edit the reason for an infraction.',
+        long: 'Edit the reason for an infraction. This action is recorded in the mod log.',
+        syntax: '!reason case reason',
+        args: {
+          case: 'The case number for the infraction you want to update.',
+          reason: 'The new reason you want to add.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],

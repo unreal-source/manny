@@ -8,8 +8,8 @@ class CoinFlipCommand extends Command {
       category: 'Fun',
       description: {
         name: 'Coin Flip',
-        content: 'Flip a coin',
-        usage: '!coin'
+        short: 'Flip a coin.',
+        syntax: '!coin'
       },
       channel: 'guild',
       clientPermissions: ['SEND_MESSAGES']

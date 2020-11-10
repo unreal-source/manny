@@ -9,8 +9,8 @@ class JobCommand extends Command {
       category: 'Job Board',
       description: {
         name: 'Post Job',
-        content: 'Post a paid job opportunity on the job board',
-        usage: '$job'
+        short: 'Post a paid job opportunity on the job board.',
+        syntax: '$job'
       },
       channel: 'dm',
       clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']

@@ -10,8 +10,12 @@ class UserHistoryCommand extends Command {
       category: 'Moderator',
       description: {
         name: 'User History',
-        content: 'Check a user\'s infraction history.',
-        usage: '`!history <user>'
+        short: 'Check a user\'s history of mutes, strikes, and bans.',
+        long: 'Check a user\'s history of mutes, strikes, and bans. Optionally show logs for each action.',
+        syntax: '`!history user',
+        args: {
+          user: 'The user you want to look up. Can be a name, mention, or ID.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],

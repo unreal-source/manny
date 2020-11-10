@@ -7,8 +7,8 @@ class InviteCommand extends Command {
       category: 'Info',
       description: {
         name: 'Invite',
-        content: 'Get the invite link for this server',
-        usage: '!invite'
+        short: 'Get the server\'s invite link.',
+        syntax: '!invite'
       },
       channel: 'guild',
       clientPermissions: ['SEND_MESSAGES']

@@ -1,15 +1,19 @@
 import { Command } from 'discord-akairo'
 import _ from '../../utilities/Util'
 
-class DiceCommand extends Command {
+class RollCommand extends Command {
   constructor () {
-    super('dice', {
-      aliases: ['dice', 'roll'],
+    super('roll', {
+      aliases: ['roll', 'dice'],
       category: 'Fun',
       description: {
         name: 'Roll Dice',
-        content: 'Roll the dice',
-        usage: '!dice <count> <die>'
+        short: 'Roll up to 7 gaming dice.',
+        syntax: '!roll count die',
+        args: {
+          count: 'The number of dice to roll, up to a maximum of 7.',
+          die: 'The type of dice to roll: d4, d6, d8, d10, d12, or d20.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['SEND_MESSAGES']
@@ -29,7 +33,7 @@ class DiceCommand extends Command {
       type: 'dice',
       prompt: {
         start: 'Which dice do you want to roll?',
-        retry: 'Please use one of the following dice: d2, d3, d4, d5, d6, d8, d10, d12, d20, d100'
+        retry: 'Please use one of the following dice: d4, d6, d8, d10, d12, d20'
       }
     }
 
@@ -44,4 +48,4 @@ class DiceCommand extends Command {
   }
 }
 
-export default DiceCommand
+export default RollCommand

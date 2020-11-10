@@ -12,8 +12,14 @@ class MuteCommand extends Command {
       category: 'Moderator',
       description: {
         name: 'Mute User',
-        content: 'Mute a user, removing their ability to send messages.',
-        usage: '!mute <user> <duration> <reason>'
+        short: 'Temporarily restrict a user\'s ability to send messages.',
+        long: 'Temporarily restrict a user\'s ability to send messages. This action is recorded in the mod log.',
+        syntax: '!mute user duration reason',
+        args: {
+          user: 'The user you want to mute. Can be a name, mention, or ID.',
+          duration: 'How long the mute should last.',
+          reason: 'The reason this user is being muted.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['MANAGE_ROLES', 'EMBED_LINKS', 'SEND_MESSAGES'],

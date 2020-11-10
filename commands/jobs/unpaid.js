@@ -9,8 +9,8 @@ class UnpaidCommand extends Command {
       category: 'Job Board',
       description: {
         name: 'Post Unpaid Gig',
-        content: 'Post an unpaid gig on the job board.',
-        usage: '$unpaid'
+        short: 'Post an unpaid gig on the job board.',
+        syntax: '$unpaid'
       },
       channel: 'dm',
       clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']

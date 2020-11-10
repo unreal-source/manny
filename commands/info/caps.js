@@ -8,8 +8,8 @@ class CapsCommand extends Command {
       category: 'Info',
       description: {
         name: 'Server Caps',
-        content: 'Get the member caps for this server',
-        usage: '!caps'
+        short: 'Get the server\'s member and presence caps.',
+        syntax: '!caps'
       },
       channel: 'guild',
       clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],

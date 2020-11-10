@@ -8,8 +8,11 @@ class UnlockChannelCommand extends Command {
       category: 'Moderator',
       description: {
         name: 'Unlock Channel',
-        content: 'Lift read-only restriction on a channel',
-        usage: '!unlock [channel]'
+        short: 'Unlock a channel so regular members can send messages again.',
+        syntax: '!unlock channel',
+        args: {
+          channel: 'The channel you want to unlock. Can be a name, mention, or ID.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['MANAGE_CHANNELS', 'SEND_MESSAGES'],

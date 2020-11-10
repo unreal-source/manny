@@ -9,8 +9,8 @@ class GameIdeaCommand extends Command {
       category: 'Fun',
       description: {
         name: 'Game Idea',
-        content: 'Generate a random game idea',
-        usage: '!gameidea'
+        short: 'Get a randomly-generated game idea.',
+        syntax: '!gameidea'
       },
       channel: 'guild',
       clientPermissions: ['SEND_MESSAGES']

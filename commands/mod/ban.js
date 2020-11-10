@@ -10,8 +10,13 @@ class BanCommand extends Command {
       category: 'Moderator',
       description: {
         name: 'Ban User',
-        content: 'Ban a user from the server',
-        usage: '!ban <user> <reason>'
+        short: 'Ban a user from the server.',
+        long: 'Ban a user from the server. This action is recorded in the mod log.',
+        syntax: '!ban user reason',
+        args: {
+          user: 'The user you want to ban. Can be a name, mention, or ID.',
+          reason: 'The reason this user is being banned.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['BAN_MEMBERS', 'EMBED_LINKS', 'SEND_MESSAGES'],

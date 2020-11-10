@@ -1,5 +1,4 @@
 import { Command } from 'discord-akairo'
-import config from '../../config'
 import _ from '../../utilities/Util'
 
 class UserInfoCommand extends Command {
@@ -9,8 +8,11 @@ class UserInfoCommand extends Command {
       category: 'Info',
       description: {
         name: 'User Info',
-        content: 'Get information about a user.',
-        usage: '!user [@username or ID]'
+        short: 'Get information about a user.',
+        syntax: '!user user',
+        args: {
+          user: 'The user you want to learn about. Can be a name, mention, or ID.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']

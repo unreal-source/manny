@@ -12,8 +12,13 @@ class PardonCommand extends Command {
       category: 'Moderator',
       description: {
         name: 'Pardon',
-        content: 'Remove a strike',
-        usage: '!pardon <case number> <reason>'
+        short: 'Remove a strike from a user.',
+        long: 'Remove a strike from a user. This action is recorded in the mod log.',
+        syntax: '!pardon case reason',
+        args: {
+          case: 'The case number for the strike you want to remove.',
+          reason: 'The reason this strike is being removed.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],

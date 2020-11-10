@@ -11,8 +11,13 @@ class UnmuteCommand extends Command {
       category: 'Moderator',
       description: {
         name: 'Unmute User',
-        content: 'Unmute a user, restoring their ability to send messages.',
-        usage: '!unmute <user> <reason>'
+        short: 'Restore a muted user\'s ability to send messages.',
+        long: 'Restore a muted user\'s ability to send messages. This action is recorded in the mod log.',
+        syntax: '!unmute user reason',
+        args: {
+          user: 'The user you want to unmute. Can be a name, mention, or ID.',
+          reason: 'The reason this user is being unmuted.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['MANAGE_ROLES', 'EMBED_LINKS', 'SEND_MESSAGES'],

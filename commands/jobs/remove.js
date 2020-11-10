@@ -9,8 +9,11 @@ class RemoveCommand extends Command {
       category: 'Job Board',
       description: {
         name: 'Remove Post',
-        content: 'Remove your post from the job board',
-        usage: '$remove <post ID>'
+        short: 'Remove a post from the job board.',
+        syntax: '$remove post',
+        args: {
+          post: 'The ID of the post you want to remove.'
+        }
       },
       channel: 'dm',
       clientPermissions: ['MANAGE_MESSAGES', 'EMBED_LINKS', 'SEND_MESSAGES']

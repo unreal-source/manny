@@ -8,8 +8,12 @@ class ArchiveChannelCommand extends Command {
       category: 'Moderator',
       description: {
         name: 'Archive Channel',
-        content: 'Send a channel to the Archive category',
-        usage: '!archive [channel]'
+        short: 'Send a channel to the Archives category.',
+        long: 'Send a channel to the Archives category. Using the command with no arguments will archive the current channel.',
+        syntax: '!archive channel',
+        args: {
+          channel: 'The channel you want to archive.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['MANAGE_CHANNELS', 'SEND_MESSAGES'],

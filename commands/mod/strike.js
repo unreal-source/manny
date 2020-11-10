@@ -12,9 +12,14 @@ class StrikeCommand extends Command {
       aliases: ['strike'],
       category: 'Moderator',
       description: {
-        name: 'Give Strike',
-        content: 'Give a user a strike.',
-        usage: '!strike <user> <reason>'
+        name: 'Strike',
+        short: 'Give a strike to a user.',
+        long: 'Give a strike to a user. This action is recorded in the mod log.',
+        syntax: '!strike user reason',
+        args: {
+          user: 'The user you want to give a strike to. Can be a name, mention, or ID.',
+          reason: 'The reason this user is getting a strike.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],

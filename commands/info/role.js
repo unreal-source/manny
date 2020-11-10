@@ -1,5 +1,4 @@
 import { Command } from 'discord-akairo'
-import config from '../../config'
 import _ from '../../utilities/Util'
 
 class RoleInfoCommand extends Command {
@@ -9,8 +8,11 @@ class RoleInfoCommand extends Command {
       category: 'Info',
       description: {
         name: 'Role Info',
-        content: 'Get information about a role',
-        usage: '!role <@role or ID>'
+        short: 'Get information about a role.',
+        syntax: '!role role',
+        args: {
+          role: 'The role you want to learn about. Can be a name, mention, or ID.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']

@@ -8,8 +8,11 @@ class EightBallCommand extends Command {
       category: 'Fun',
       description: {
         name: 'Magic 8-Ball',
-        content: 'Ask the Magic 8-Ball a question',
-        usage: '!8ball <question>'
+        short: 'Ask the Magic 8-Ball a yes/no question.',
+        syntax: '!8ball question',
+        args: {
+          question: 'A yes/no question.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['SEND_MESSAGES']

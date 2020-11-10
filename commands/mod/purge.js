@@ -8,8 +8,13 @@ class PurgeCommand extends Command {
       category: 'Moderator',
       description: {
         name: 'Purge Messages',
-        content: 'Delete messages in bulk and optionally filter by author.',
-        usage: '!purge <amount> [author]'
+        short: 'Bulk delete messages in the current channel.',
+        long: 'Bulk delete messages in the current channel. Optionally filter by author.',
+        syntax: '!purge count author',
+        args: {
+          count: 'The number of messages to delete.',
+          author: 'Only delete messages from this user. Can be a name, mention, or ID.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['MANAGE_MESSAGES', 'EMBED_LINKS', 'SEND_MESSAGES'],

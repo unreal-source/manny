@@ -10,8 +10,13 @@ class UnbanCommand extends Command {
       category: 'Moderator',
       description: {
         name: 'Unban User',
-        content: 'Unban a user from the server.',
-        usage: '!unban <user> <reason>'
+        short: 'Unban a user from the server.',
+        long: 'Unban a user from the server. This action is recorded in the mod log.',
+        syntax: '!unban user reason',
+        args: {
+          user: 'The user you want to unban. Can be a name, mention, or ID.',
+          reason: 'The reason this user is being unbanned.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['BAN_MEMBERS', 'EMBED_LINKS', 'SEND_MESSAGES'],

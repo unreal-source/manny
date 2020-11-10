@@ -9,8 +9,8 @@ class ServerInfoCommand extends Command {
       category: 'Info',
       description: {
         name: 'Server Info',
-        content: 'Get information about this Discord server.',
-        usage: '!server'
+        short: 'Get information about the server.',
+        syntax: '!server'
       },
       channel: 'guild',
       clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']

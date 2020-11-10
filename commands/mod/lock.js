@@ -8,8 +8,11 @@ class LockChannelCommand extends Command {
       category: 'Moderator',
       description: {
         name: 'Lock Channel',
-        content: 'Make a channel read-only for regular members',
-        usage: '!lock [channel]'
+        short: 'Lock a channel so regular members can\'t send messages.',
+        syntax: '!lock channel',
+        args: {
+          channel: 'The channel you want to lock. Can be a name, mention, or ID.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['MANAGE_CHANNELS', 'SEND_MESSAGES'],

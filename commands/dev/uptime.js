@@ -8,8 +8,8 @@ class UptimeCommand extends Command {
       category: 'Developer',
       description: {
         name: 'Uptime',
-        content: 'Get the elapsed time since the bot last logged in.',
-        usage: '!uptime'
+        short: 'Check how long it\'s been since the last time the bot logged in.',
+        syntax: '!uptime'
       },
       channel: 'guild',
       clientPermissions: ['SEND_MESSAGES'],

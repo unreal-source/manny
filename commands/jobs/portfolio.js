@@ -9,8 +9,8 @@ class PortfolioCommand extends Command {
       category: 'Job Board',
       description: {
         name: 'Post Portfolio',
-        content: 'Post your portfolio on the job board',
-        usage: '$portfolio'
+        short: 'Post your portfolio and availability on the job board.',
+        syntax: '$portfolio'
       },
       channel: 'dm',
       clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']

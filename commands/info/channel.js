@@ -1,5 +1,4 @@
 import { Command } from 'discord-akairo'
-import config from '../../config'
 import _ from '../../utilities/Util'
 
 class ChannelInfoCommand extends Command {
@@ -9,8 +8,11 @@ class ChannelInfoCommand extends Command {
       category: 'Info',
       description: {
         name: 'Channel Info',
-        content: 'Get information about a channel',
-        usage: '!channel [channel]'
+        short: 'Get information about a channel.',
+        syntax: '!channel channel',
+        args: {
+          channel: 'The channel you want to learn about. Can be a name, mention, or ID.'
+        }
       },
       channel: 'guild',
       clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']

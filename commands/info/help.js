@@ -8,10 +8,14 @@ class HelpCommand extends Command {
       category: 'Info',
       description: {
         name: 'Help',
-        content: 'Get a list of commands for the bot.',
-        usage: '!help [command]'
+        short: 'Get a list of available commands.',
+        long: 'Get a list of available commands. Optionally learn more about a command.',
+        syntax: '!help command',
+        args: {
+          command: 'The command you want to learn about.'
+        }
       },
-      clientPermissions: ['SEND_MESSAGES']
+      clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']
     })
   }
 
@@ -35,7 +39,6 @@ class HelpCommand extends Command {
       .setTitle('Command List')
       .setDescription(`Say \`${config.commands.defaultPrefix}help [command]\` to learn more about a command. Example: \`${config.commands.defaultPrefix}help ping\``)
 
-    // !help
     if (!command) {
       const categories = this.handler.categories.values()
 
@@ -43,19 +46,25 @@ class HelpCommand extends Command {
         const availableCommands = category.filter(cmd => member.permissions.has(cmd.userPermissions))
 
         if (availableCommands.size !== 0) {
-          const commandList = availableCommands.map(cmd => `**${cmd.prefix ? cmd.prefix : config.commands.defaultPrefix}${cmd.aliases[0]}** - ${cmd.description.content}`).join('\n')
+          const commandList = availableCommands.map(cmd => `**${cmd.prefix ? cmd.prefix : config.commands.defaultPrefix}${cmd.aliases[0]}** - ${cmd.description.short}`).join('\n')
 
           embed.addField(`${category.id} Commands`, commandList)
         }
       }
     }
 
-    // !help [command]
     if (command && member.permissions.has(command.userPermissions)) {
+      let argsList = ''
+
+      if (command.description.args) {
+        for (const [key, value] of Object.entries(command.description.args)) {
+          argsList += `**${key}** - ${value}\n`
+        }
+      }
+
       embed
         .setTitle(command.description.name)
-        .setDescription(command.description.content)
-        .addField('Usage', `\`\`\`${command.description.usage}\`\`\``)
+        .setDescription(`${command.description.long ? command.description.long : command.description.short}\n\`\`\`${command.description.syntax}\`\`\`\n${argsList}`)
     }
 
     // Always send the command list in a direct message
