@@ -34,44 +34,42 @@ class HelpCommand extends Command {
 
   exec (message, { command }) {
     const member = this.client.guilds.cache.first().member(message.author)
-    const embed = this.client.util.embed()
-      .setTitle('Command List')
-      .setDescription(`Say \`${config.commands.defaultPrefix}help [command]\` to learn more about a command. Example: \`${config.commands.defaultPrefix}help ping\``)
 
     if (!command) {
       const categories = this.handler.categories.values()
+      const help = this.client.util.embed()
+        .setTitle('Command List')
+        .setDescription(`Say \`${config.commands.defaultPrefix}help [command]\` to learn more about a command. Example: \`${config.commands.defaultPrefix}help ping\``)
 
       for (const category of categories) {
-        const availableCommands = category.filter(cmd => member.permissions.has(cmd.userPermissions))
+        const commands = category.filter(cmd => member.permissions.has(cmd.userPermissions))
 
-        if (availableCommands.size !== 0) {
-          const commandList = availableCommands.map(cmd => `**${cmd.prefix ? cmd.prefix : config.commands.defaultPrefix}${cmd.aliases[0]}** - ${cmd.description.short}`).join('\n')
+        if (commands.size !== 0) {
+          const commandList = commands.map(cmd => `**${cmd.prefix ? cmd.prefix : config.commands.defaultPrefix}${cmd.aliases[0]}** - ${cmd.description.short}`).join('\n')
 
-          embed.addField(`${category.id} Commands`, commandList)
+          help.addField(`${category.id} Commands`, commandList)
         }
+      }
+
+      message.author.send({ embed: help })
+
+      if (message.channel.type !== 'dm') {
+        return message.reply('Check your direct messages. :incoming_envelope:')
       }
     }
 
     if (command && member.permissions.has(command.userPermissions)) {
-      let argsList = ''
-
-      if (command.description.args) {
-        for (const [key, value] of Object.entries(command.description.args)) {
-          argsList += `**${key}** - ${value}\n`
-        }
-      }
-
-      embed
+      const argumentList = command.description.args ? Object.entries(command.description.args).map(([key, value]) => `**${key}** - ${value}`).join('\n') : ''
+      const help = this.client.util.embed()
         .setTitle(command.description.name)
-        .setDescription(`${command.description.long ? command.description.long : command.description.short}\n\`\`\`${command.description.syntax}\`\`\`\n${argsList}`)
-    }
+        .setDescription(`${command.description.long ? command.description.long : command.description.short}\n\`\`\`${command.description.syntax}\`\`\`\n${argumentList}`)
 
-    // Always send the command list in a direct message
-    if (message.channel.type !== 'dm') {
-      message.reply('I sent you a DM with more information.')
-    }
+      message.author.send({ embed: help })
 
-    return message.author.send({ embed })
+      if (message.channel.type !== 'dm') {
+        return message.reply('Check your direct messages. :incoming_envelope:')
+      }
+    }
   }
 }
 
