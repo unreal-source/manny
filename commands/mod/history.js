@@ -11,8 +11,8 @@ class UserHistoryCommand extends Command {
       description: {
         name: 'User History',
         short: 'Check a user\'s history of mutes, strikes, and bans.',
-        long: 'Check a user\'s history of mutes, strikes, and bans. Optionally show logs for each action.',
-        syntax: '`!history user',
+        long: 'Check a user\'s history of mutes, strikes, and bans. Add the `--logs` flag to show logs for each action.',
+        syntax: '!history user',
         args: {
           user: 'The user you want to look up. Can be a name, mention, or ID.'
         }
