@@ -44,61 +44,66 @@ class PardonCommand extends Command {
   }
 
   async exec (message, { infraction, reason }) {
-    // Record case
-    const record = await Case.create({
-      action: 'pardon',
-      user: infraction.user,
-      userID: infraction.userID,
-      moderator: message.author.tag,
-      moderatorID: message.author.id,
-      reason: reason,
-      timestamp: DateTime.local()
-    })
-
-    // Remove strike from schedule
-    await Strike.destroy({
-      where: { id: infraction.id }
-    })
-
-    await Case.update({ active: false }, {
-      where: { id: infraction.id }
-    })
-
-    // If member is muted, unmute and remove mute from schedule
-    const member = await message.guild.member(record.userID)
-
-    if (member.roles.cache.some(role => role.name === 'Muted')) {
-      const muteRole = await message.guild.roles.fetch(config.infractions.muteRole)
-      await member.roles.remove(muteRole)
-
-      await Mute.destroy({
-        where: { id: member.id }
+    try {
+      // Record case
+      const record = await Case.create({
+        action: 'pardon',
+        user: infraction.user,
+        userID: infraction.userID,
+        moderator: message.author.tag,
+        moderatorID: message.author.id,
+        reason: reason,
+        timestamp: DateTime.local()
       })
+
+      // Remove strike from schedule
+      await Strike.destroy({
+        where: { id: infraction.id }
+      })
+
+      await Case.update({ active: false }, {
+        where: { id: infraction.id }
+      })
+
+      // If member is muted, unmute and remove mute from schedule
+      const member = await message.guild.member(record.userID)
+
+      if (member.roles.cache.some(role => role.name === 'Muted')) {
+        const muteRole = await message.guild.roles.fetch(config.infractions.muteRole)
+        await member.roles.remove(muteRole)
+
+        await Mute.destroy({
+          where: { id: member.id }
+        })
+      }
+
+      // Send mod log
+      const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+      const logEntry = this.client.util.embed()
+        .setColor(config.embeds.colors.orange)
+        .setAuthor(member.user.tag, member.user.displayAvatarURL())
+        .setTitle(`${config.prefixes.undo} Strike removed`)
+        .setDescription(`by ${message.author.tag}`)
+        .addField('Reason', reason)
+        .setFooter(`#${record.id}`)
+        .setTimestamp()
+
+      await logChannel.send({ embed: logEntry })
+
+      // Send receipt
+      const receipt = this.client.util.embed()
+        .setColor(config.embeds.colors.orange)
+        .setAuthor(message.guild.name, message.guild.iconURL())
+        .setTitle(`${config.prefixes.undo} One of your strikes was removed`)
+        .addField('Reason', reason)
+        .setFooter(`#${record.id}`)
+        .setTimestamp()
+
+      return member.send({ embed: receipt })
+    } catch (e) {
+      await message.channel.send('Something went wrong. Check the logs for details.')
+      return this.client.log.error(e)
     }
-
-    // Send mod log
-    const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
-    const logEntry = this.client.util.embed()
-      .setColor(config.embeds.colors.orange)
-      .setAuthor(member.user.tag, member.user.displayAvatarURL())
-      .setTitle(`${config.prefixes.undo} Strike removed`)
-      .setDescription(`by ${message.author.tag}`)
-      .addField('Reason', reason)
-      .setFooter(`#${record.id}`)
-      .setTimestamp()
-
-    await logChannel.send({ embed: logEntry })
-
-    // Send receipt
-    const receipt = this.client.util.embed()
-      .setColor(config.embeds.colors.orange)
-      .setAuthor(message.guild.name, message.guild.iconURL())
-      .setTitle(`${config.prefixes.undo} One of your strikes was removed`)
-      .addField('Reason', reason)
-      .setFooter(`#${record.id}`)
-      .setTimestamp()
-
-    return member.send({ embed: receipt })
   }
 }
 

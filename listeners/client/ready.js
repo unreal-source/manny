@@ -5,15 +5,6 @@ import { DateTime } from 'luxon'
 import Case from '../../models/cases'
 import Mute from '../../models/mutes'
 import Strike from '../../models/strikes'
-import { Signale } from 'signale'
-
-const muteLog = new Signale({
-  scope: 'Mute Schedule'
-})
-
-const strikeLog = new Signale({
-  scope: 'Strike Schedule'
-})
 
 class ReadyListener extends Listener {
   constructor () {
@@ -36,11 +27,11 @@ class ReadyListener extends Listener {
         const mutes = await Mute.findAll()
 
         if (mutes.length === 0) {
-          muteLog.debug('No mutes scheduled')
+          this.client.log.debug('No mutes scheduled')
         }
 
         for (const mute of mutes) {
-          muteLog.debug(`Mute scheduled to expire at ${mute.expiration.toLocaleString(DateTime.DATETIME_FULL)}`)
+          this.client.log.debug(`Mute scheduled to expire at ${mute.expiration.toLocaleString(DateTime.DATETIME_FULL)}`)
         }
 
         const expiredMutes = mutes.filter(mute => mute.expiration <= now)
@@ -67,7 +58,7 @@ class ReadyListener extends Listener {
           }
         }
       } catch (e) {
-        muteLog.error(e)
+        this.client.log.error(e)
       }
 
       // ----- STRIKE SCHEDULE ----- //
@@ -75,11 +66,11 @@ class ReadyListener extends Listener {
         const strikes = await Strike.findAll()
 
         if (strikes.length === 0) {
-          strikeLog.debug('No strikes scheduled')
+          this.client.log.debug('No strikes scheduled')
         }
 
         for (const strike of strikes) {
-          strikeLog.debug(`Strike scheduled to expire at ${strike.expiration.toLocaleString(DateTime.DATETIME_FULL)}`)
+          this.client.log.debug(`Strike scheduled to expire at ${strike.expiration.toLocaleString(DateTime.DATETIME_FULL)}`)
         }
 
         const expiredStrikes = strikes.filter(strike => strike.expiration <= now)
@@ -114,11 +105,11 @@ class ReadyListener extends Listener {
           }
         }
       } catch (e) {
-        strikeLog.error(e)
+        this.client.log.error(e)
       }
 
       // ----- AUTOMOD ----- //
-    }, null, null, null, null, true)
+    }, /* onComplete */ null, /* start */ null, /* timezone */ null, /* context */ null, /* runOnInit */ true)
 
     job.start()
   }

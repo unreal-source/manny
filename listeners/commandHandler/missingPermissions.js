@@ -9,7 +9,7 @@ class MissingPermissionsListener extends Listener {
   }
 
   exec (message, command, type, missing) {
-    return this.client.log.error(`MISSING PERMISSIONS\n---\nCommand: ${command}\nSource: ${type}\nMissing Permissions: ${missing}`)
+    return this.client.log.error(`Missing Permissions >> ${command} >> ${type} >> ${missing}`)
   }
 }
 

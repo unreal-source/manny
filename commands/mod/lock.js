@@ -34,22 +34,27 @@ class LockChannelCommand extends Command {
   }
 
   async exec (message, { channel }) {
-    if (channel.permissionOverwrites.get(channel.guild.id).deny.has('VIEW_CHANNEL')) {
-      return message.util.send(`${channel} is unaffected by locks because it's restricted.`)
-    }
-
-    if (!channel.permissionOverwrites.get(channel.guild.id).deny.has('SEND_MESSAGES')) {
-      await channel.updateOverwrite(channel.guild.roles.everyone, {
-        SEND_MESSAGES: false
-      })
-
-      if (message.channel !== channel) {
-        message.util.send(`${config.prefixes.lock} ${channel} is now locked.`)
+    try {
+      if (channel.permissionOverwrites.get(channel.guild.id).deny.has('VIEW_CHANNEL')) {
+        return message.util.send(`${channel} is unaffected by locks because it's restricted.`)
       }
 
-      return channel.send(`${config.prefixes.lock} **Channel locked**`)
-    } else {
-      return message.util.send(`${message.channel === channel ? 'This channel' : channel} is already locked.`)
+      if (!channel.permissionOverwrites.get(channel.guild.id).deny.has('SEND_MESSAGES')) {
+        await channel.updateOverwrite(channel.guild.roles.everyone, {
+          SEND_MESSAGES: false
+        })
+
+        if (message.channel !== channel) {
+          message.util.send(`${config.prefixes.lock} ${channel} is now locked.`)
+        }
+
+        return channel.send(`${config.prefixes.lock} **Channel locked**`)
+      } else {
+        return message.util.send(`${message.channel === channel ? 'This channel' : channel} is already locked.`)
+      }
+    } catch (e) {
+      await message.channel.send('Something went wrong. Check the logs for details.')
+      return this.client.log.error(e)
     }
   }
 }

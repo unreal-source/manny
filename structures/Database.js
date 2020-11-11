@@ -4,9 +4,7 @@ import Sequelize from 'sequelize'
 import { Signale } from 'signale'
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, { logging: false })
-const log = new Signale({
-  scope: 'Database'
-})
+const log = new Signale()
 
 class Database {
   static get sequelize () {
@@ -30,11 +28,10 @@ class Database {
 
       for (const file of files) {
         await require(path.join(models, file))
-        log.info(`Model loaded: ${file}`)
       }
 
       await sequelize.sync()
-      log.success('Models synchronized')
+      log.info('Models synchronized')
     } catch (err) {
       log.error(err)
     }

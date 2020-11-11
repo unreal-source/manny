@@ -15,9 +15,9 @@ client.start()
 if (process.env.SENTRY_DSN) {
   Sentry.init({ dsn: process.env.SENTRY_DSN })
 } else {
-  client.log.warn('Sentry DSN not found. Skipping Sentry initialization.')
+  client.log.warn('SENTRY_DSN not found, skipping Sentry initialization')
 }
 
 process.on('unhandledRejection', error => {
-  client.log.error(`An unhandled promise rejection occured:\n${error}`)
+  client.log.error(`Unhandled promise rejection!\n${error}`)
 })

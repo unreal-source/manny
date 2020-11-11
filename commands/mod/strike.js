@@ -139,7 +139,8 @@ class StrikeCommand extends Command {
         return logChannel.send({ embed: logEntry })
       }
     } catch (e) {
-      this.client.log.error(e)
+      await message.channel.send('Something went wrong. Check the logs for details.')
+      return this.client.log.error(e)
     }
   }
 }

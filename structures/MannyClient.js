@@ -85,9 +85,7 @@ class MannyClient extends AkairoClient {
       directory: './listeners/'
     })
 
-    this.log = new Signale({
-      scope: 'Client'
-    })
+    this.log = new Signale()
   }
 
   init () {

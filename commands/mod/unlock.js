@@ -34,22 +34,27 @@ class UnlockChannelCommand extends Command {
   }
 
   async exec (message, { channel }) {
-    if (channel.permissionOverwrites.get(channel.guild.id).deny.has('VIEW_CHANNEL')) {
-      return message.util.send(`${channel} is unaffected by locks because it's restricted.`)
-    }
-
-    if (channel.permissionOverwrites.get(channel.guild.id).deny.has('SEND_MESSAGES')) {
-      await channel.updateOverwrite(channel.guild.roles.everyone, {
-        SEND_MESSAGES: null
-      })
-
-      if (message.channel !== channel) {
-        message.util.send(`${config.prefixes.unlock} ${channel} is now unlocked.`)
+    try {
+      if (channel.permissionOverwrites.get(channel.guild.id).deny.has('VIEW_CHANNEL')) {
+        return message.util.send(`${channel} is unaffected by locks because it's restricted.`)
       }
 
-      return channel.send(`${config.prefixes.unlock} **Channel unlocked**`)
-    } else {
-      return message.util.send(`${message.channel === channel ? 'This channel' : channel} is already unlocked.`)
+      if (channel.permissionOverwrites.get(channel.guild.id).deny.has('SEND_MESSAGES')) {
+        await channel.updateOverwrite(channel.guild.roles.everyone, {
+          SEND_MESSAGES: null
+        })
+
+        if (message.channel !== channel) {
+          message.util.send(`${config.prefixes.unlock} ${channel} is now unlocked.`)
+        }
+
+        return channel.send(`${config.prefixes.unlock} **Channel unlocked**`)
+      } else {
+        return message.util.send(`${message.channel === channel ? 'This channel' : channel} is already unlocked.`)
+      }
+    } catch (e) {
+      await message.channel.send('Something went wrong. Check the logs for details.')
+      return this.client.log.error(e)
     }
   }
 }

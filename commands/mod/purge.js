@@ -54,27 +54,22 @@ class PurgeCommand extends Command {
       await message.delete()
 
       if (author) {
-        try {
-          const messages = await message.channel.messages.fetch()
-          const filteredMessages = await messages.filter(message => message.author.id === author.id).first(count)
+        const messages = await message.channel.messages.fetch()
+        const filteredMessages = await messages.filter(message => message.author.id === author.id).first(count)
 
-          await message.channel.bulkDelete(filteredMessages)
+        await message.channel.bulkDelete(filteredMessages)
 
-          logEntry.addField('Author', author.user.tag)
+        logEntry.addField('Author', author.user.tag)
 
-          return logChannel.send({ embed: logEntry })
-        } catch (error) {
-          this.client.log.error(error)
-
-          return message.author.send('Failed to delete messages. Check the logs for more details.')
-        }
+        return logChannel.send({ embed: logEntry })
       }
 
       await message.channel.bulkDelete(count)
 
       return logChannel.send({ embed: logEntry })
-    } catch (err) {
-      return this.client.log.error(err)
+    } catch (e) {
+      await message.channel.send('Something went wrong. Check the logs for details.')
+      return this.client.log.error(e)
     }
   }
 }

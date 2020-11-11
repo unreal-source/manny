@@ -42,46 +42,51 @@ class UnbanCommand extends Command {
   }
 
   async exec (message, { user, reason }) {
-    if (user.id === message.author.id) {
-      return message.util.send(':warning: You cannot unban yourself.')
+    try {
+      if (user.id === message.author.id) {
+        return message.util.send(`${config.prefixes.warning} You cannot unban yourself.`)
+      }
+
+      if (user.id === this.client.user.id) {
+        return message.util.send(`${config.prefixes.warning} Nice try, human.`)
+      }
+
+      const bans = await message.guild.fetchBans()
+
+      if (!bans.some(ban => ban.user === user)) {
+        return message.util.send(`${user.tag} is not banned.`)
+      }
+
+      // Take action
+      await message.guild.members.unban(user, reason)
+
+      // Record case
+      const record = await Case.create({
+        action: 'unban',
+        user: user.tag,
+        userID: user.id,
+        moderator: message.author.tag,
+        moderatorID: message.author.id,
+        reason: reason,
+        timestamp: DateTime.local()
+      })
+
+      // Send mod log
+      const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+      const logEntry = this.client.util.embed()
+        .setColor(config.embeds.colors.blue)
+        .setAuthor(user.tag, user.displayAvatarURL())
+        .setTitle(`${config.prefixes.undo} Member unbanned`)
+        .setDescription(`by ${message.author.tag}`)
+        .addField('Reason', reason)
+        .setFooter(`#${record.id}`)
+        .setTimestamp()
+
+      return logChannel.send({ embed: logEntry })
+    } catch (e) {
+      await message.channel.send('Something went wrong. Check the logs for details.')
+      return this.client.log.error(e)
     }
-
-    if (user.id === this.client.user.id) {
-      return message.util.send(':warning: Nice try, human.')
-    }
-
-    const bans = await message.guild.fetchBans()
-
-    if (!bans.some(ban => ban.user === user)) {
-      return message.util.send(`${user.tag} is not banned.`)
-    }
-
-    // Take action
-    await message.guild.members.unban(user, reason)
-
-    // Record case
-    const record = await Case.create({
-      action: 'unban',
-      user: user.tag,
-      userID: user.id,
-      moderator: message.author.tag,
-      moderatorID: message.author.id,
-      reason: reason,
-      timestamp: DateTime.local()
-    })
-
-    // Send mod log
-    const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
-    const logEntry = this.client.util.embed()
-      .setColor(config.embeds.colors.blue)
-      .setAuthor(user.tag, user.displayAvatarURL())
-      .setTitle(`${config.prefixes.undo} Member unbanned`)
-      .setDescription(`by ${message.author.tag}`)
-      .addField('Reason', reason)
-      .setFooter(`#${record.id}`)
-      .setTimestamp()
-
-    return logChannel.send({ embed: logEntry })
   }
 }
 

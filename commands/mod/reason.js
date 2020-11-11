@@ -72,26 +72,31 @@ class ReasonCommand extends Command {
   }
 
   async exec (message, { infraction, reason }) {
-    // Update record
-    await Case.update({
-      reason: reason
-    }, {
-      where: { id: infraction.id }
-    })
+    try {
+      // Update record
+      await Case.update({
+        reason: reason
+      }, {
+        where: { id: infraction.id }
+      })
 
-    await message.util.send(`Reason for case #${infraction.id} updated.`)
+      await message.util.send(`Reason for case #${infraction.id} updated.`)
 
-    // Send mod log
-    const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
-    const logEntry = this.client.util.embed()
-      .setColor(config.embeds.colors.blue)
-      .setTitle(`${config.prefixes.edit} Reason edited for case #${infraction.id}`)
-      .setDescription(`by ${message.author.tag}`)
-      .addField('Old Reason', infraction.reason)
-      .addField('New Reason', reason)
-      .setTimestamp()
+      // Send mod log
+      const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+      const logEntry = this.client.util.embed()
+        .setColor(config.embeds.colors.blue)
+        .setTitle(`${config.prefixes.edit} Reason edited for case #${infraction.id}`)
+        .setDescription(`by ${message.author.tag}`)
+        .addField('Old Reason', infraction.reason)
+        .addField('New Reason', reason)
+        .setTimestamp()
 
-    return logChannel.send({ embed: logEntry })
+      return logChannel.send({ embed: logEntry })
+    } catch (e) {
+      await message.channel.send('Something went wrong. Check the logs for details.')
+      return this.client.log.error(e)
+    }
   }
 }
 

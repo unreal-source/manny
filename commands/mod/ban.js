@@ -98,8 +98,9 @@ class BanCommand extends Command {
         .setTimestamp()
 
       return logChannel.send({ embed: logEntry })
-    } catch (err) {
-      return this.client.log.error(err)
+    } catch (e) {
+      await message.channel.send('Something went wrong. Check the logs for details.')
+      return this.client.log.error(e)
     }
   }
 }

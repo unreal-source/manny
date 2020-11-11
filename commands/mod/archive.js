@@ -43,10 +43,15 @@ class ArchiveChannelCommand extends Command {
   }
 
   async exec (message, { channel, confirm }) {
-    if (confirm) {
-      await channel.setParent(config.archive.category)
-      await channel.lockPermissions()
-      return message.util.send(`${config.prefixes.archive} ${channel} has been archived.`)
+    try {
+      if (confirm) {
+        await channel.setParent(config.archive.category)
+        await channel.lockPermissions()
+        return message.util.send(`${config.prefixes.archive} ${channel} has been archived.`)
+      }
+    } catch (e) {
+      await message.channel.send('Something went wrong. Check the logs for details.')
+      return this.client.log.error(e)
     }
   }
 }

@@ -43,64 +43,69 @@ class UnmuteCommand extends Command {
   }
 
   async exec (message, { member, reason }) {
-    if (member.id === message.author.id) {
-      return message.util.send(`${config.emoji.warning} You can't unmute yourself.`)
-    }
-
-    if (member.id === this.client.user.id) {
-      return message.util.send(`${config.emoji.warning} Nice try, human.`)
-    }
-
-    if (!member.roles.cache.some(role => role.name === 'Muted')) {
-      return message.util.send(`${config.emoji.warning} That user is not muted.`)
-    }
-
-    const muteRole = await message.guild.roles.fetch(config.infractions.muteRole)
-
-    // Take action
-    await member.roles.remove(muteRole)
-
-    // Record case
-    const record = await Case.create({
-      action: 'unmute',
-      user: member.user.tag,
-      userID: member.id,
-      moderator: message.author.tag,
-      moderatorID: message.author.id,
-      reason: reason,
-      timestamp: DateTime.local()
-    })
-
-    // Remove from mute schedule
-    await Mute.destroy({
-      where: {
-        id: member.id
+    try {
+      if (member.id === message.author.id) {
+        return message.util.send(`${config.emoji.warning} You can't unmute yourself.`)
       }
-    })
 
-    // Send mod log
-    const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
-    const logEntry = this.client.util.embed()
-      .setColor(config.embeds.colors.yellow)
-      .setAuthor(member.user.tag, member.user.displayAvatarURL())
-      .setTitle(`${config.prefixes.undo} Member unmuted`)
-      .setDescription(`by ${message.author.tag}`)
-      .addField('Reason', reason)
-      .setFooter(`#${record.id}`)
-      .setTimestamp()
+      if (member.id === this.client.user.id) {
+        return message.util.send(`${config.emoji.warning} Nice try, human.`)
+      }
 
-    await logChannel.send({ embed: logEntry })
+      if (!member.roles.cache.some(role => role.name === 'Muted')) {
+        return message.util.send(`${config.emoji.warning} That user is not muted.`)
+      }
 
-    // Send receipt
-    const receipt = this.client.util.embed()
-      .setColor(config.embeds.colors.yellow)
-      .setAuthor(message.guild.name, message.guild.iconURL())
-      .setTitle(`${config.prefixes.undo} You were unmuted`)
-      .addField('Reason', reason)
-      .setFooter(`#${record.id}`)
-      .setTimestamp()
+      const muteRole = await message.guild.roles.fetch(config.infractions.muteRole)
 
-    return member.send({ embed: receipt })
+      // Take action
+      await member.roles.remove(muteRole)
+
+      // Record case
+      const record = await Case.create({
+        action: 'unmute',
+        user: member.user.tag,
+        userID: member.id,
+        moderator: message.author.tag,
+        moderatorID: message.author.id,
+        reason: reason,
+        timestamp: DateTime.local()
+      })
+
+      // Remove from mute schedule
+      await Mute.destroy({
+        where: {
+          id: member.id
+        }
+      })
+
+      // Send mod log
+      const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+      const logEntry = this.client.util.embed()
+        .setColor(config.embeds.colors.yellow)
+        .setAuthor(member.user.tag, member.user.displayAvatarURL())
+        .setTitle(`${config.prefixes.undo} Member unmuted`)
+        .setDescription(`by ${message.author.tag}`)
+        .addField('Reason', reason)
+        .setFooter(`#${record.id}`)
+        .setTimestamp()
+
+      await logChannel.send({ embed: logEntry })
+
+      // Send receipt
+      const receipt = this.client.util.embed()
+        .setColor(config.embeds.colors.yellow)
+        .setAuthor(message.guild.name, message.guild.iconURL())
+        .setTitle(`${config.prefixes.undo} You were unmuted`)
+        .addField('Reason', reason)
+        .setFooter(`#${record.id}`)
+        .setTimestamp()
+
+      return member.send({ embed: receipt })
+    } catch (e) {
+      await message.channel.send('Something went wrong. Check the logs for details.')
+      return this.client.log.error(e)
+    }
   }
 }
 

@@ -56,8 +56,8 @@ class GuildBanAddListener extends Listener {
         .setFooter(_.prettyDate(entry.createdAt))
 
       return logChannel.send({ embed: logEntry })
-    } catch (err) {
-      this.client.log.error(err)
+    } catch (e) {
+      return this.client.log.error(e)
     }
   }
 }
