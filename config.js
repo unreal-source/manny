@@ -4,8 +4,9 @@ const config = {
   },
   automod: {
     newAccountAge: '30m',
-    joinCount: 10,
-    notifChannel: ''
+    joinCount: 1,
+    notifChannel: '275091426038251540',
+    modRole: '335496981621506048'
   },
   infractions: {
     muteRole: '720439694784987239',
@@ -15,7 +16,6 @@ const config = {
     }
   },
   logs: {
-    category: '',
     channels: {
       memberLog: '495053365655633920',
       modLog: '551658054849003540'

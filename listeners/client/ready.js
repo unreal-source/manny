@@ -18,6 +18,8 @@ class ReadyListener extends Listener {
     this.client.guilds.cache.each(guild => this.client.log.success(`${this.client.user.username} successfully connected to ${guild.name}`))
     this.client.user.setActivity('the server • !help', { type: 'WATCHING' })
 
+    let currentMemberCount = this.client.guilds.cache.first().memberCount
+
     const job = new CronJob('0 */1 * * * *', async () => {
       const guild = this.client.guilds.cache.first()
       const now = DateTime.local()
@@ -109,6 +111,15 @@ class ReadyListener extends Listener {
       }
 
       // ----- AUTOMOD ----- //
+      const latestMemberCount = this.client.guilds.cache.first().memberCount
+      const difference = latestMemberCount - currentMemberCount
+
+      if (difference >= config.automod.joinCount) {
+        const notifChannel = this.client.channels.cache.get(config.automod.notifChannel)
+        notifChannel.send(`<@&${config.automod.modRole}> **${difference} new members joined the server in the last 1 minute.**`)
+      }
+
+      currentMemberCount = latestMemberCount
     }, /* onComplete */ null, /* start */ null, /* timezone */ null, /* context */ null, /* runOnInit */ true)
 
     job.start()
