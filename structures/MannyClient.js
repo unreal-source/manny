@@ -1,5 +1,4 @@
 import { AkairoClient, CommandHandler, ListenerHandler } from 'discord-akairo'
-import { Collection } from 'discord.js'
 import Database from './Database'
 import ms from 'ms'
 import { Signale } from 'signale'
