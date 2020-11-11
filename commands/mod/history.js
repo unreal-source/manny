@@ -71,10 +71,10 @@ class UserHistoryCommand extends Command {
           }))
       }
 
-      return message.channel.send({ embed: reply })
+      return message.util.send({ embed: reply })
     }
 
-    return message.channel.send(`${user.tag} has no infraction history`)
+    return message.util.send(`${user.tag} has no infraction history`)
   }
 }
 

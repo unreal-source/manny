@@ -54,15 +54,15 @@ class MuteCommand extends Command {
 
   async exec (message, { member, duration, reason }) {
     if (member.id === message.author.id) {
-      return message.channel.send(`${config.prefixes.warning} You can't mute yourself.`)
+      return message.util.send(`${config.prefixes.warning} You can't mute yourself.`)
     }
 
     if (member.id === this.client.user.id) {
-      return message.channel.send(`${config.prefixes.warning} Nice try, human.`)
+      return message.util.send(`${config.prefixes.warning} Nice try, human.`)
     }
 
     if (member.roles.cache.some(role => role.name === 'Muted')) {
-      return message.channel.send(`${config.prefixes.warning} That user is already muted.`)
+      return message.util.send(`${config.prefixes.warning} That user is already muted.`)
     }
 
     // const mutedRole = await message.guild.roles.fetch(config.infractions.mutedRole)

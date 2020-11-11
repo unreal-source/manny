@@ -26,6 +26,7 @@ class MannyClient extends AkairoClient {
       directory: './commands/',
       allowMention: true,
       commandUtil: true,
+      commandUtilLifetime: ms('2m'),
       handleEdits: true,
       prefix: config.commands.defaultPrefix,
       argumentDefaults: {

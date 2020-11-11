@@ -45,7 +45,7 @@ class GameIdeaCommand extends Command {
       'A {style:a} {genre:an} where you {verb} {supernatural:singular} in {setting:in}, but {diversifier}.'
     ]
 
-    return message.channel.send(generate(_.randomElement(templates)))
+    return message.util.send(generate(_.randomElement(templates)))
   }
 }
 

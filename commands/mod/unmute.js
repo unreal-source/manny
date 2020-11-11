@@ -44,15 +44,15 @@ class UnmuteCommand extends Command {
 
   async exec (message, { member, reason }) {
     if (member.id === message.author.id) {
-      return message.channel.send(`${config.emoji.warning} You can't unmute yourself.`)
+      return message.util.send(`${config.emoji.warning} You can't unmute yourself.`)
     }
 
     if (member.id === this.client.user.id) {
-      return message.channel.send(`${config.emoji.warning} Nice try, human.`)
+      return message.util.send(`${config.emoji.warning} Nice try, human.`)
     }
 
     if (!member.roles.cache.some(role => role.name === 'Muted')) {
-      return message.channel.send(`${config.emoji.warning} That user is not muted.`)
+      return message.util.send(`${config.emoji.warning} That user is not muted.`)
     }
 
     const muteRole = await message.guild.roles.fetch(config.infractions.muteRole)

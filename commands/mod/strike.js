@@ -46,15 +46,15 @@ class StrikeCommand extends Command {
 
   async exec (message, { member, reason }) {
     if (member.id === message.author.id) {
-      return message.channel.send(`${config.emoji.warning} You can't give yourself a strike.`)
+      return message.util.send(`${config.emoji.warning} You can't give yourself a strike.`)
     }
 
     if (member.id === this.client.user.id) {
-      return message.channel.send(`${config.emoji.warning} Nice try, human.`)
+      return message.util.send(`${config.emoji.warning} Nice try, human.`)
     }
 
     if (member.deleted) {
-      return message.channel.send(`${config.emoji.warning} ${member.user.tag} is no longer a member of this server.`)
+      return message.util.send(`${config.emoji.warning} ${member.user.tag} is no longer a member of this server.`)
     }
 
     try {

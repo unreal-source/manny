@@ -43,17 +43,17 @@ class UnbanCommand extends Command {
 
   async exec (message, { user, reason }) {
     if (user.id === message.author.id) {
-      return message.channel.send(':warning: You cannot unban yourself.')
+      return message.util.send(':warning: You cannot unban yourself.')
     }
 
     if (user.id === this.client.user.id) {
-      return message.channel.send(':warning: Nice try, human.')
+      return message.util.send(':warning: Nice try, human.')
     }
 
     const bans = await message.guild.fetchBans()
 
     if (!bans.some(ban => ban.user === user)) {
-      return message.channel.send(`${user.tag} is not banned.`)
+      return message.util.send(`${user.tag} is not banned.`)
     }
 
     // Take action

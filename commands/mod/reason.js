@@ -59,7 +59,7 @@ class ReasonCommand extends Command {
       .addField('Reason', infraction.reason)
       .setFooter(`#${infraction.id} • ${_.prettyDate(infraction.timestamp, true)}`)
 
-    await message.channel.send(embed)
+    await message.util.send(embed)
 
     const reason = yield {
       match: 'rest',
@@ -79,7 +79,7 @@ class ReasonCommand extends Command {
       where: { id: infraction.id }
     })
 
-    await message.channel.send(`Reason for case #${infraction.id} updated.`)
+    await message.util.send(`Reason for case #${infraction.id} updated.`)
 
     // Send mod log
     const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)

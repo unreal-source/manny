@@ -44,11 +44,11 @@ class BanCommand extends Command {
   async exec (message, { user, reason }) {
     try {
       if (user.id === message.author.id) {
-        return message.channel.send(`${config.emoji.warning} Why would you ban yourself?`)
+        return message.util.send(`${config.emoji.warning} Why would you ban yourself?`)
       }
 
       if (user.id === this.client.user.id) {
-        return message.channel.send(`${config.emoji.warning} Nice try, human.`)
+        return message.util.send(`${config.emoji.warning} Nice try, human.`)
       }
 
       // If user is a guild member, make sure we have permission to ban them
@@ -56,11 +56,11 @@ class BanCommand extends Command {
         const member = await message.guild.members.fetch(user)
 
         if (member.roles.highest.position >= message.member.roles.highest.position) {
-          return message.channel.send('You cannot ban this user.')
+          return message.util.send('You cannot ban this user.')
         }
 
         if (!member.bannable) {
-          return message.channel.send('I am unable to ban this user.')
+          return message.util.send('I am unable to ban this user.')
         }
       }
 

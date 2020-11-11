@@ -46,7 +46,7 @@ class ArchiveChannelCommand extends Command {
     if (confirm) {
       await channel.setParent(config.archive.category)
       await channel.lockPermissions()
-      return message.channel.send(`${config.prefixes.archive} ${channel} has been archived.`)
+      return message.util.send(`${config.prefixes.archive} ${channel} has been archived.`)
     }
   }
 }
