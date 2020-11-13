@@ -42,12 +42,13 @@ class MannyClient extends AkairoClient {
     this.commandHandler.resolver.addTypes({
       confirm: (message, phrase) => {
         if (!phrase) return null
-        if (phrase.match(/^(?:yes|y|no|n)$/gi)) return phrase
+        if (phrase.match(/^(?:yes|y)$/gi)) return true
+        if (phrase.match(/^(?:no|n)$/gi)) return false
         return null
       },
       dice: (message, phrase) => {
         if (!phrase) return null
-        if (phrase.match(/^d(2|3|4|5|6|8|10|12|20|100)$/)) return phrase
+        if (phrase.match(/^d(4|6|8|10|12|20)$/)) return phrase
         return null
       },
       duration: (message, phrase) => {
