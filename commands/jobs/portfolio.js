@@ -21,36 +21,36 @@ class PortfolioCommand extends Command {
     const type = yield {
       type: Argument.range('number', 1, 2, true),
       prompt: {
-        start: '__**Are you posting as an individual freelancer or a studio?**__\nPlease choose a number.\n\n**1. Freelancer**\n**2. Studio**',
-        retry: 'Please choose a number.'
+        start: '**Are you posting as an individual freelancer or a studio?**\n\nChoose one:\n**1. Freelancer**\n**2. Studio**',
+        retry: 'Please enter one of the numbers above.'
       }
     }
 
     const name = yield {
       prompt: {
-        start: type === 1 ? '__**What is your name**__?' : '__**What is the name of your studio?**__'
+        start: type === 1 ? '**What is your name**?' : '**What is the name of your studio?**'
       }
     }
 
     const services = yield {
       type: Argument.validate('string', (message, value) => value.length < 1024),
       prompt: {
-        start: '__**List the services you offer.**__',
-        retry: (message, data) => `Your message has **${data.phrase.length}** characters, exceeding the **1024** character limit. Please try again.`
+        start: '**List the services you offer. (Max 1024 characters)**',
+        retry: (message, data) => `Your message has **${data.phrase.length}** characters, exceeding the 1024 character limit. Please try again.`
       }
     }
 
     const url = yield {
       type: 'url',
       prompt: {
-        start: '__**Enter the URL for your portfolio website.**__\nExample: https://acmegames.com',
+        start: '**Enter the URL for your portfolio website.**\nExample: https://acmegames.com',
         retry: 'A portfolio URL is required.'
       }
     }
 
     const contact = yield {
       prompt: {
-        start: '__**How can prospective clients contact you?**__'
+        start: '**How can prospective clients contact you?**'
       }
     }
 
@@ -64,15 +64,15 @@ class PortfolioCommand extends Command {
       type: Argument.range('number', 1, 2, true),
       prompt: {
         start: message => {
-          const content = '__**Review your post to make sure it\'s accurate.**__\nPlease choose a number.\n\n**1. Send Post**\n**2. Start Over**\n_ _'
+          const content = '**Almost there! Please review your post to make sure it\'s accurate.**\n\nChoose one:\n**1. Send Post**\n**2. Start Over**\n_ _'
           return { content, embed }
         },
-        retry: 'Please choose a number.'
+        retry: 'Please enter one of the numbers above.'
       }
     }
 
     if (review === 2) {
-      await message.util.send('OK. The command the cancelled.')
+      await message.util.send('OK. Run the command again to start a new post.')
       return Flag.cancel()
     }
 
@@ -80,13 +80,13 @@ class PortfolioCommand extends Command {
   }
 
   async exec (message, { type, name, url, services, contact, embed }) {
-    const channel = this.client.channels.cache.get(type === 1 ? config.jobChannels.hireFreelancer : config.jobChannels.hireStudio)
+    const channel = this.client.channels.cache.get(type === 1 ? config.jobs.channels.hireFreelancer : config.jobs.channels.hireStudio)
     const post = await channel.send(embed)
-    const editedPost = embed.setFooter(`POST ID: ${post.id}`)
+    const editedPost = embed.setFooter(`ID - ${post.id}`)
 
     post.edit(`Posted by <@${message.author.id}>`, editedPost)
 
-    return message.util.send(`Your post has been added to **#${channel.name}**.`)
+    return message.channel.send(`Your post was successfully added to the **#${channel.name}** channel.`)
   }
 }
 

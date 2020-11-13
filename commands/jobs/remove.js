@@ -36,15 +36,15 @@ class RemoveCommand extends Command {
         type: Argument.range('number', 1, 2, true),
         prompt: {
           start: message => {
-            const content = `__**Remove this post from #${post.channel.name}?**__\nPlease choose a number.\n\n**1. Remove Post**\n**2. Cancel**\n_ _`
+            const content = `**Remove this post from the #${post.channel.name} channel?**\n\nChoose one:\n**1. Remove my post**\n**2. Cancel**\n_ _`
             const embed = post.embeds[0]
             return { content, embed }
           },
-          retry: 'Please choose a number.'
+          retry: 'Please enter one of the numbers above.'
         }
       }
     } else {
-      await message.util.send('You cannot remove that post.')
+      await message.util.send('You can\'t remove that post because it was made by another user.')
       return Flag.cancel()
     }
 
@@ -58,7 +58,7 @@ class RemoveCommand extends Command {
 
   async exec (message, { post }) {
     await post.delete()
-    return message.util.send(`Your post was removed from **#${post.channel.name}**.`)
+    return message.channel.send(`Your post was successfully removed from the **#${post.channel.name}** channel.`)
   }
 }
 

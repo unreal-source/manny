@@ -21,22 +21,22 @@ class UnpaidCommand extends Command {
     const title = yield {
       type: Argument.validate('string', (message, value) => value.length < 256),
       prompt: {
-        start: '__**Add a title that clearly states what you\'re looking for.**__\nExample: Character Artist Needed for Mod Project',
-        retry: (message, data) => `Your title has **${data.phrase.length}** characters, exceeding the **256** character limit. Please try again.`
+        start: '**Add a title that clearly states what you\'re looking for.**\nExample: Character Artist Needed for Mod Project',
+        retry: (message, data) => `Your title has **${data.phrase.length}** characters, exceeding the 256 character limit. Please try again.`
       }
     }
 
     const description = yield {
       type: Argument.validate('string', (message, value) => value.length < 2048),
       prompt: {
-        start: '__**Add a detailed description of the project and your needs.**__\n',
-        retry: (message, data) => `Your title has **${data.phrase.length}** characters, exceeding the **2048** character limit. Please try again.`
+        start: '**Add a detailed description of the project and your needs.**',
+        retry: (message, data) => `Your description has **${data.phrase.length}** characters, exceeding the 2048 character limit. Please try again.`
       }
     }
 
     const contact = yield {
       prompt: {
-        start: '__**How can people contact you?**__'
+        start: '**How can people contact you?**'
       }
     }
 
@@ -49,7 +49,7 @@ class UnpaidCommand extends Command {
       type: Argument.range('numnber', 1, 2, true),
       prompt: {
         start: message => {
-          const content = '__**Review your post to make sure it\'s accurate.**__\nPlease choose a number.\n\n**1. Send Post**\n**2. Start Over**\n_ _'
+          const content = '**Almost there! Please review your post to make sure it\'s accurate.**\n\nChoose one:\n**1. Send my post**\n**2. Start over**\n_ _'
           return { content, embed }
         },
         retry: 'Please choose a number.'
@@ -57,7 +57,7 @@ class UnpaidCommand extends Command {
     }
 
     if (review === 2) {
-      await message.util.send('OK. The command the cancelled.')
+      await message.util.send('OK. Run the command again to start a new post.')
       return Flag.cancel()
     }
 
@@ -65,13 +65,13 @@ class UnpaidCommand extends Command {
   }
 
   async exec (message, { embed }) {
-    const channel = this.client.channels.cache.get(config.jobChannels.unpaidGigs)
+    const channel = this.client.channels.cache.get(config.jobs.channels.unpaidGigs)
     const post = await channel.send(embed)
-    const editedPost = embed.setFooter(`POST ID: ${post.id}`)
+    const editedPost = embed.setFooter(`ID - ${post.id}`)
 
     post.edit(`Posted by <@${message.author.id}>`, editedPost)
 
-    return message.util.send(`Your post has been added to **#${channel.name}**.`)
+    return message.channel.send(`Your post was successfully added to the **#${channel.name}** channel.`)
   }
 }
 

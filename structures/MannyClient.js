@@ -69,7 +69,8 @@ class MannyClient extends AkairoClient {
       job: async (message, phrase) => {
         if (!phrase) return null
 
-        const category = message.guild.channels.cache.get(config.jobs.category)
+        const guild = this.guilds.cache.first()
+        const category = guild.channels.cache.get(config.jobs.category)
         for (const channel of category.children.values()) {
           try {
             return await channel.messages.fetch(phrase)
