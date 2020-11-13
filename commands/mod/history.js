@@ -54,7 +54,7 @@ class UserHistoryCommand extends Command {
         const bans = history.filter(infraction => infraction.action === 'ban')
 
         const reply = this.client.util.embed()
-          .setAuthor('Infraction History for')
+          .setAuthor('History for')
           .setTitle(`**${user.tag}**`)
           .setThumbnail(user.displayAvatarURL())
           .setDescription(`${mutes.length} Mutes • ${strikes.length} Strikes (${activeStrikes.length} Active) • ${bans.length} Bans`)
@@ -81,7 +81,7 @@ class UserHistoryCommand extends Command {
         return message.util.send({ embed: reply })
       }
 
-      return message.util.send(`${user.tag} has no infraction history`)
+      return message.util.send(`**${user.tag}** has no history.`)
     } catch (e) {
       await message.channel.send('Something went wrong. Check the logs for details.')
       return this.client.log.error(e)

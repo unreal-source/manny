@@ -56,7 +56,7 @@ class BanCommand extends Command {
         const member = await message.guild.members.fetch(user)
 
         if (member.roles.highest.position >= message.member.roles.highest.position) {
-          return message.util.send('You cannot ban this user.')
+          return message.util.send('You don\'t have permission to ban this user.')
         }
 
         if (!member.bannable) {

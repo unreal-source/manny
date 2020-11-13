@@ -54,7 +54,7 @@ class UnbanCommand extends Command {
       const bans = await message.guild.fetchBans()
 
       if (!bans.some(ban => ban.user === user)) {
-        return message.util.send(`${user.tag} is not banned.`)
+        return message.util.send(`**${user.tag}** is not banned.`)
       }
 
       // Take action

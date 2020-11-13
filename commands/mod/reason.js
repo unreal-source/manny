@@ -59,7 +59,7 @@ class ReasonCommand extends Command {
       .addField('Reason', infraction.reason)
       .setFooter(`#${infraction.id} • ${_.prettyDate(infraction.timestamp, true)}`)
 
-    await message.util.send(embed)
+    await message.channel.send(embed)
 
     const reason = yield {
       match: 'rest',
