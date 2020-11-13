@@ -112,7 +112,8 @@ class MuteCommand extends Command {
         .setFooter(`#${record.id}`)
         .setTimestamp()
 
-      return member.send({ embed: receipt })
+      await member.send({ embed: receipt })
+      return message.util.send(`${config.prefixes.mute} **${member.user.tag}** was muted for ${longDuration}.`)
     } catch (e) {
       await message.channel.send('Something went wrong. Check the logs for details.')
       return this.client.log.error(e)

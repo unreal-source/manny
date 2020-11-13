@@ -102,7 +102,8 @@ class UnmuteCommand extends Command {
         .setFooter(`#${record.id}`)
         .setTimestamp()
 
-      return member.send({ embed: receipt })
+      await member.send({ embed: receipt })
+      return message.util.send(`${config.prefixes.undo} **${member.user.tag}** was unmuted.`)
     } catch (e) {
       await message.channel.send('Something went wrong. Check the logs for details.')
       return this.client.log.error(e)

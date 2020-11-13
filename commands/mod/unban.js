@@ -83,7 +83,8 @@ class UnbanCommand extends Command {
         .setFooter(`#${record.id}`)
         .setTimestamp()
 
-      return logChannel.send({ embed: logEntry })
+      await logChannel.send({ embed: logEntry })
+      return message.util.send(`${config.prefixes.undo} **${user.tag}** was unbanned.`)
     } catch (e) {
       await message.channel.send('Something went wrong. Check the logs for details.')
       return this.client.log.error(e)

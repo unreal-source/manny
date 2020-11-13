@@ -139,7 +139,8 @@ class StrikeCommand extends Command {
         await message.guild.members.ban(member, { reason: reason })
 
         logEntry.addField('Punishment', 'Banned from the server')
-        return logChannel.send({ embed: logEntry })
+        await logChannel.send({ embed: logEntry })
+        return message.util.send(`${config.prefixes.strike} **${member.user.tag}** received strike 3. As a result, they were banned.`)
       }
     } catch (e) {
       await message.channel.send('Something went wrong. Check the logs for details.')
