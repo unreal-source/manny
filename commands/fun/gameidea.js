@@ -12,7 +12,6 @@ class GameIdeaCommand extends Command {
         short: 'Get a randomly-generated game idea.',
         syntax: '!gameidea'
       },
-      channel: 'guild',
       clientPermissions: ['SEND_MESSAGES']
     })
   }

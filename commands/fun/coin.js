@@ -11,7 +11,6 @@ class CoinFlipCommand extends Command {
         short: 'Flip a coin.',
         syntax: '!coin'
       },
-      channel: 'guild',
       clientPermissions: ['SEND_MESSAGES']
     })
   }

@@ -15,7 +15,6 @@ class RollCommand extends Command {
           dice: 'The type of dice to roll: d4, d6, d8, d10, d12, or d20.'
         }
       },
-      channel: 'guild',
       clientPermissions: ['SEND_MESSAGES']
     })
   }

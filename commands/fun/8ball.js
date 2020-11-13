@@ -14,7 +14,6 @@ class EightBallCommand extends Command {
           question: 'A yes/no question.'
         }
       },
-      channel: 'guild',
       clientPermissions: ['SEND_MESSAGES']
     })
   }
