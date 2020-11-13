@@ -80,7 +80,8 @@ class StrikeCommand extends Command {
       const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
       const logEntry = this.client.util.embed()
         .setColor(config.embeds.colors.orange)
-        .setAuthor(member.user.tag, member.user.displayAvatarURL())
+        .setAuthor(member.user.tag)
+        .setThumbnail(member.user.displayAvatarURL())
         .setTitle(`${config.prefixes.strike} Strike added`)
         .setDescription(`by ${message.author.tag}`)
         .addField('Reason', reason)
@@ -124,13 +125,15 @@ class StrikeCommand extends Command {
         logEntry.addField('Punishment', `Muted for ${muteDurationLong}`)
         await logChannel.send({ embed: logEntry })
 
-        receipt.setDescription(`As a result, you have been muted for ${muteDurationLong}.`)
-        return member.send({ embed: receipt })
+        receipt.setDescription(`As a result, you were muted for ${muteDurationLong}.`)
+        await member.send({ embed: receipt })
+
+        return message.util.send(`${config.prefixes.strike} **${member.user.tag}** received strike ${strikeCount}. As a result, they were muted for ${muteDurationLong}.`)
       }
 
       if (strikeCount === 3) {
         // Send receipt first since we can't DM the member after they're banned
-        receipt.setDescription('As a result, you have been banned from the server.')
+        receipt.setDescription('As a result, you were banned from the server.')
         await member.send({ embed: receipt })
 
         await message.guild.members.ban(member, { reason: reason })
