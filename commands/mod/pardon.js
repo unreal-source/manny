@@ -65,6 +65,14 @@ class PardonCommand extends Command {
         where: { id: infraction.id }
       })
 
+      const strikeCount = await Case.count({
+        where: {
+          action: 'strike',
+          userID: infraction.userID,
+          active: true
+        }
+      })
+
       // If member is muted, unmute and remove mute from schedule
       const member = await message.guild.member(record.userID)
 
@@ -96,6 +104,7 @@ class PardonCommand extends Command {
         .setColor(config.embeds.colors.orange)
         .setAuthor(message.guild.name, message.guild.iconURL())
         .setTitle(`${config.prefixes.undo} One of your strikes was removed`)
+        .setDescription(strikeCount === 0 ? 'You have no active strikes.' : `You have ${strikeCount} active strikes remaining.`)
         .addField('Reason', reason)
         .setFooter(`#${record.id}`)
         .setTimestamp()
