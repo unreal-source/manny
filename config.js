@@ -1,25 +1,42 @@
 const config = {
   commands: {
-    defaultPrefix: '!'
+    defaultPrefix: '!',
+    jobPrefix: '$'
   },
   automod: {
     newAccountAge: '30m',
-    joinCount: 1,
-    notifChannel: '275091426038251540',
-    modRole: '335496981621506048'
+    joinCount: 1
   },
-  infractions: {
-    muteRole: '720439694784987239',
+  strikes: {
     muteLevels: {
       1: '10m',
       2: '1h'
     }
   },
-  logs: {
-    channels: {
+  channels: {
+    archive: {
+      category: '758833108727365652'
+    },
+    automod: {
+      notifications: '275091426038251540'
+    },
+    jobs: {
+      category: '692565207184048129',
+      permanentJobs: '692565224984805436',
+      contractJobs: '692565242374389820',
+      unpaidGigs: '692565261559136296',
+      hireFreelancer: '695155145306013697',
+      hireStudio: '695155159692738570'
+    },
+    logs: {
       memberLog: '495053365655633920',
       modLog: '551658054849003540'
     }
+  },
+  roles: {
+    moderator: '335496981621506048',
+    muted: '720439694784987239',
+    voice: '776887405793640481'
   },
   embeds: {
     colors: {
@@ -49,19 +66,6 @@ const config = {
     undo: ':arrow_right_hook:',
     unlock: ':unlock:',
     warning: ':warning:'
-  },
-  jobs: {
-    category: '692565207184048129',
-    channels: {
-      permanentJobs: '692565224984805436',
-      contractJobs: '692565242374389820',
-      unpaidGigs: '692565261559136296',
-      hireFreelancer: '695155145306013697',
-      hireStudio: '695155159692738570'
-    }
-  },
-  archive: {
-    category: '758833108727365652'
   },
   meta: {
     links: {

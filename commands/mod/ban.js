@@ -44,11 +44,11 @@ class BanCommand extends Command {
   async exec (message, { user, reason }) {
     try {
       if (user.id === message.author.id) {
-        return message.util.send(`${config.emoji.warning} Why would you ban yourself?`)
+        return message.util.send(`${config.prefixes.warning} Why would you ban yourself?`)
       }
 
       if (user.id === this.client.user.id) {
-        return message.util.send(`${config.emoji.warning} Nice try, human.`)
+        return message.util.send(`${config.prefixes.warning} Nice try, human.`)
       }
 
       // If user is a guild member, make sure we have permission to ban them
@@ -87,7 +87,7 @@ class BanCommand extends Command {
       })
 
       // Send mod log
-      const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+      const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
       const logEntry = this.client.util.embed()
         .setColor(config.embeds.colors.red)
         .setAuthor(user.tag)

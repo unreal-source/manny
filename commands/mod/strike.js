@@ -46,15 +46,15 @@ class StrikeCommand extends Command {
 
   async exec (message, { member, reason }) {
     if (member.id === message.author.id) {
-      return message.util.send(`${config.emoji.warning} You can't give yourself a strike.`)
+      return message.util.send(`${config.prefixes.warning} You can't give yourself a strike.`)
     }
 
     if (member.id === this.client.user.id) {
-      return message.util.send(`${config.emoji.warning} Nice try, human.`)
+      return message.util.send(`${config.prefixes.warning} Nice try, human.`)
     }
 
     if (member.deleted) {
-      return message.util.send(`${config.emoji.warning} ${member.user.tag} is no longer a member of this server.`)
+      return message.util.send(`${config.prefixes.warning} ${member.user.tag} is no longer a member of this server.`)
     }
 
     try {
@@ -77,7 +77,7 @@ class StrikeCommand extends Command {
         }
       })
 
-      const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+      const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
       const logEntry = this.client.util.embed()
         .setColor(config.embeds.colors.orange)
         .setAuthor(member.user.tag)
@@ -97,17 +97,17 @@ class StrikeCommand extends Command {
         .setTimestamp()
 
       if (strikeCount === 1 || strikeCount === 2) {
-        const muteDuration = ms(config.infractions.muteLevels[strikeCount])
+        const muteDuration = ms(config.strikes.muteLevels[strikeCount])
         const muteDurationLong = ms(muteDuration, { long: true })
 
-        if (member.roles.cache.some(role => role.id === config.infractions.muteRole)) {
+        if (member.roles.cache.some(role => role.id === config.roles.muted)) {
           await Mute.update({
             expiration: DateTime.fromMillis(DateTime.local() + muteDuration)
           }, {
             where: { id: member.id }
           })
         } else {
-          const muteRole = await message.guild.roles.fetch(config.infractions.muteRole)
+          const muteRole = await message.guild.roles.fetch(config.roles.muted)
           await member.roles.add(muteRole)
 
           await Mute.create({

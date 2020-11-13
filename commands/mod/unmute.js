@@ -56,7 +56,7 @@ class UnmuteCommand extends Command {
         return message.util.send(`${config.prefixes.warning} **${member.user.tag}** is not muted.`)
       }
 
-      const muteRole = await message.guild.roles.fetch(config.infractions.muteRole)
+      const muteRole = await message.guild.roles.fetch(config.roles.muted)
 
       // Take action
       await member.roles.remove(muteRole)
@@ -80,7 +80,7 @@ class UnmuteCommand extends Command {
       })
 
       // Send mod log
-      const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+      const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
       const logEntry = this.client.util.embed()
         .setColor(config.embeds.colors.yellow)
         .setAuthor(member.user.tag)

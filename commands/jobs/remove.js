@@ -5,7 +5,7 @@ class RemoveCommand extends Command {
   constructor () {
     super('remove', {
       aliases: ['remove'],
-      prefix: '$',
+      prefix: config.commands.jobPrefix,
       category: 'Job Board',
       description: {
         name: 'Remove Post',

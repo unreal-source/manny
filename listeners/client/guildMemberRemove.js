@@ -14,7 +14,7 @@ class GuildMemberRemoveListener extends Listener {
       return
     }
 
-    const channel = this.client.channels.cache.get(config.logs.memberLog)
+    const channel = this.client.channels.cache.get(config.channels.logs.memberLog)
 
     if (member.user.bot) {
       return channel.send(`:robot: __**${member.user.tag}**__ was removed from the server \`BOT\``)

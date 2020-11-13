@@ -5,7 +5,7 @@ class UnpaidCommand extends Command {
   constructor () {
     super('unpaid', {
       aliases: ['unpaid'],
-      prefix: '$',
+      prefix: config.commands.jobPrefix,
       category: 'Job Board',
       description: {
         name: 'Post Unpaid Gig',

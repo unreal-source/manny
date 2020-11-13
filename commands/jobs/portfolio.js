@@ -5,7 +5,7 @@ class PortfolioCommand extends Command {
   constructor () {
     super('portfolio', {
       aliases: ['portfolio'],
-      prefix: '$',
+      prefix: config.commands.jobPrefix,
       category: 'Job Board',
       description: {
         name: 'Post Portfolio',
@@ -80,7 +80,7 @@ class PortfolioCommand extends Command {
   }
 
   async exec (message, { type, name, url, services, contact, embed }) {
-    const channel = this.client.channels.cache.get(type === 1 ? config.jobs.channels.hireFreelancer : config.jobs.channels.hireStudio)
+    const channel = this.client.channels.cache.get(type === 1 ? config.channels.jobs.hireFreelancer : config.channels.jobs.hireStudio)
     const post = await channel.send(embed)
     const editedPost = embed.setFooter(`ID - ${post.id}`)
 

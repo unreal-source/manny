@@ -5,7 +5,7 @@ class JobCommand extends Command {
   constructor () {
     super('job', {
       aliases: ['job'],
-      prefix: '$',
+      prefix: config.commands.jobPrefix,
       category: 'Job Board',
       description: {
         name: 'Post Job',
@@ -131,7 +131,7 @@ class JobCommand extends Command {
   }
 
   async exec (message, { type, embed }) {
-    const channel = this.client.channels.cache.get(type === 1 ? config.jobs.channels.permanentJobs : config.jobs.channels.contractJobs)
+    const channel = this.client.channels.cache.get(type === 1 ? config.channels.jobs.permanentJobs : config.channels.jobs.contractJobs)
     const post = await channel.send(embed)
     const editedPost = embed.setFooter(`ID - ${post.id}`)
 

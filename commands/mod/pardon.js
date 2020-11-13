@@ -77,7 +77,7 @@ class PardonCommand extends Command {
       const member = await message.guild.member(record.userID)
 
       if (member.roles.cache.some(role => role.name === 'Muted')) {
-        const muteRole = await message.guild.roles.fetch(config.infractions.muteRole)
+        const muteRole = await message.guild.roles.fetch(config.roles.muted)
         await member.roles.remove(muteRole)
 
         await Mute.destroy({
@@ -86,7 +86,7 @@ class PardonCommand extends Command {
       }
 
       // Send mod log
-      const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+      const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
       const logEntry = this.client.util.embed()
         .setColor(config.embeds.colors.orange)
         .setAuthor(member.user.tag)

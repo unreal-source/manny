@@ -46,7 +46,7 @@ class ReadyListener extends Listener {
           const member = await guild.member(mute.id)
 
           if (member) {
-            const muteRole = await guild.roles.fetch(config.infractions.muteRole)
+            const muteRole = await guild.roles.fetch(config.roles.muted)
             await member.roles.remove(muteRole)
 
             const receipt = this.client.util.embed()
@@ -115,8 +115,8 @@ class ReadyListener extends Listener {
       const difference = latestMemberCount - currentMemberCount
 
       if (difference >= config.automod.joinCount) {
-        const notifChannel = this.client.channels.cache.get(config.automod.notifChannel)
-        notifChannel.send(`<@&${config.automod.modRole}> **${difference} new members joined the server in the last 1 minute.**`)
+        const notifChannel = this.client.channels.cache.get(config.channels.automod.notifications)
+        notifChannel.send(`<@&${config.roles.moderator}> **${difference} new members joined the server in the last 1 minute.**`)
       }
 
       currentMemberCount = latestMemberCount

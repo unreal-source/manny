@@ -11,7 +11,7 @@ class GuildMemberAddListener extends Listener {
   }
 
   exec (member) {
-    const channel = this.client.channels.cache.get(config.logs.channels.memberLog)
+    const channel = this.client.channels.cache.get(config.channels.logs.memberLog)
     const now = DateTime.local()
     const accountCreated = DateTime.fromJSDate(member.user.createdAt)
     const accountAge = now.diff(accountCreated, 'minutes').toObject()

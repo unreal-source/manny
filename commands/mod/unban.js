@@ -72,7 +72,7 @@ class UnbanCommand extends Command {
       })
 
       // Send mod log
-      const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+      const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
       const logEntry = this.client.util.embed()
         .setColor(config.embeds.colors.blue)
         .setAuthor(user.tag)

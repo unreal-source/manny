@@ -69,7 +69,7 @@ class MuteCommand extends Command {
       const longDuration = ms(duration, { long: true })
 
       // Take action
-      await member.roles.add(config.infractions.muteRole)
+      await member.roles.add(config.roles.muted)
 
       // Record case
       const record = await Case.create({
@@ -90,7 +90,7 @@ class MuteCommand extends Command {
       })
 
       // Send mod log
-      const logChannel = this.client.channels.cache.get(config.logs.channels.modLog)
+      const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
       const logEntry = this.client.util.embed()
         .setColor(config.embeds.colors.yellow)
         .setAuthor(member.user.tag)
