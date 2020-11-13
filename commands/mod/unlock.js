@@ -35,23 +35,15 @@ class UnlockChannelCommand extends Command {
 
   async exec (message, { channel }) {
     try {
-      if (channel.permissionOverwrites.get(channel.guild.id).deny.has('VIEW_CHANNEL')) {
-        return message.util.send(`${channel} is unaffected by locks because it's restricted.`)
-      }
+      const permissions = channel.permissionOverwrites
 
-      if (channel.permissionOverwrites.get(channel.guild.id).deny.has('SEND_MESSAGES')) {
-        await channel.updateOverwrite(channel.guild.roles.everyone, {
-          SEND_MESSAGES: null
-        })
-
-        if (message.channel !== channel) {
-          message.util.send(`${config.prefixes.unlock} ${channel} is now unlocked.`)
-        }
-
-        return channel.send(`${config.prefixes.unlock} **Channel unlocked**`)
-      } else {
+      if (permissions.has(message.guild.id) && !permissions.get(message.guild.id).deny.has('SEND_MESSAGES')) {
         return message.util.send(`${message.channel === channel ? 'This channel' : channel} is already unlocked.`)
       }
+
+      await channel.updateOverwrite(message.guild.roles.everyone, { SEND_MESSAGES: null })
+
+      return message.channel.send(`${config.prefixes.lock} **The channel has been unlocked.**`)
     } catch (e) {
       await message.channel.send('Something went wrong. Check the logs for details.')
       return this.client.log.error(e)

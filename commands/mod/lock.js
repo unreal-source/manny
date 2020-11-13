@@ -35,23 +35,15 @@ class LockChannelCommand extends Command {
 
   async exec (message, { channel }) {
     try {
-      if (channel.permissionOverwrites.get(channel.guild.id).deny.has('VIEW_CHANNEL')) {
-        return message.util.send(`${channel} is unaffected by locks because it's restricted.`)
-      }
+      const permissions = channel.permissionOverwrites
 
-      if (!channel.permissionOverwrites.get(channel.guild.id).deny.has('SEND_MESSAGES')) {
-        await channel.updateOverwrite(channel.guild.roles.everyone, {
-          SEND_MESSAGES: false
-        })
-
-        if (message.channel !== channel) {
-          message.util.send(`${config.prefixes.lock} ${channel} is now locked.`)
-        }
-
-        return channel.send(`${config.prefixes.lock} **Channel locked**`)
-      } else {
+      if (permissions.has(message.guild.id) && permissions.get(message.guild.id).deny.has('SEND_MESSAGES')) {
         return message.util.send(`${message.channel === channel ? 'This channel' : channel} is already locked.`)
       }
+
+      await channel.updateOverwrite(message.guild.roles.everyone, { SEND_MESSAGES: false })
+
+      return message.channel.send(`${config.prefixes.lock} **The channel has been locked.**`)
     } catch (e) {
       await message.channel.send('Something went wrong. Check the logs for details.')
       return this.client.log.error(e)
