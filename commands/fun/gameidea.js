@@ -44,7 +44,11 @@ class GameIdeaCommand extends Command {
       'A {style:a} {genre:an} where you {verb} {supernatural:singular} in {setting:in}, but {diversifier}.'
     ]
 
-    return message.util.send(generate(_.randomElement(templates)))
+    if (message.channel.type !== 'dm') {
+      message.reply('Check your direct messages. :incoming_envelope:')
+    }
+
+    return message.author.send(generate(_.randomElement(templates)))
   }
 }
 
