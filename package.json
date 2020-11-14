@@ -28,6 +28,6 @@
   "scripts": {
     "start": "node -r esm bot",
     "dev": "node -r esm -r dotenv/config bot",
-    "lint": "standard | snazzy"
+    "test": "standard | snazzy"
   }
 }
