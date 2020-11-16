@@ -39,7 +39,7 @@ class HelpCommand extends Command {
       const categories = this.handler.categories.values()
       const help = this.client.util.embed()
         .setTitle('Command List')
-        .setDescription(`Say \`${config.commands.defaultPrefix}help [command]\` to learn more about a command. Example: \`${config.commands.defaultPrefix}help ping\``)
+        .setDescription(`Say \`${config.commands.defaultPrefix}help [command]\` to learn more about a command. Example: \`${config.commands.defaultPrefix}help roll\``)
 
       for (const category of categories) {
         const commands = category.filter(cmd => member.permissions.has(cmd.userPermissions))
