@@ -27,15 +27,6 @@ class ReadyListener extends Listener {
       // ----- MUTE SCHEDULE ----- //
       try {
         const mutes = await Mute.findAll()
-
-        if (mutes.length === 0) {
-          this.client.log.debug('No mutes scheduled')
-        }
-
-        for (const mute of mutes) {
-          this.client.log.debug(`Mute scheduled to expire at ${mute.expiration.toLocaleString(DateTime.DATETIME_FULL)}`)
-        }
-
         const expiredMutes = mutes.filter(mute => mute.expiration <= now)
 
         for (const mute of expiredMutes) {
@@ -66,15 +57,6 @@ class ReadyListener extends Listener {
       // ----- STRIKE SCHEDULE ----- //
       try {
         const strikes = await Strike.findAll()
-
-        if (strikes.length === 0) {
-          this.client.log.debug('No strikes scheduled')
-        }
-
-        for (const strike of strikes) {
-          this.client.log.debug(`Strike scheduled to expire at ${strike.expiration.toLocaleString(DateTime.DATETIME_FULL)}`)
-        }
-
         const expiredStrikes = strikes.filter(strike => strike.expiration <= now)
 
         for (const strike of expiredStrikes) {
