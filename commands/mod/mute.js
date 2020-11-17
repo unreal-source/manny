@@ -86,6 +86,7 @@ class MuteCommand extends Command {
       // Add to mute schedule
       await Mute.create({
         id: member.id,
+        user: member.user.tag,
         expiration: DateTime.fromMillis(DateTime.local() + duration)
       })
 

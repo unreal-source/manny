@@ -7,6 +7,10 @@ const Mute = Database.sequelize.define('Mutes', {
     allowNull: false,
     primaryKey: true
   },
+  user: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   expiration: {
     type: DataTypes.DATE,
     allowNull: false
