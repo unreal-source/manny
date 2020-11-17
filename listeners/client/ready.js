@@ -34,6 +34,15 @@ class ReadyListener extends Listener {
             where: { id: mute.id }
           })
 
+          const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
+          const logEntry = this.client.util.embed()
+            .setColor(config.embeds.colors.yellow)
+            .setAuthor(mute.user)
+            .setTitle(`${config.prefixes.expired} Mute expired`)
+            .setTimestamp()
+
+          await logChannel.send({ embed: logEntry })
+
           const member = await guild.member(mute.id)
 
           if (member) {
@@ -68,16 +77,26 @@ class ReadyListener extends Listener {
             where: { id: strike.id }
           })
 
+          const activeStrikes = await Case.count({
+            where: {
+              userID: record.userID,
+              active: true
+            }
+          })
+
+          const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
+          const logEntry = this.client.util.embed()
+            .setColor(config.embeds.colors.orange)
+            .setAuthor(record.user)
+            .setTitle(`${config.prefixes.expired} Strike expired`)
+            .setDescription(activeStrikes === 0 ? 'No active strikes' : `${activeStrikes} strikes remaining`)
+            .setTimestamp()
+
+          await logChannel.send({ embed: logEntry })
+
           const member = await guild.member(record.userID)
 
           if (member) {
-            const activeStrikes = await Case.count({
-              where: {
-                userID: member.id,
-                active: true
-              }
-            })
-
             const receipt = this.client.util.embed()
               .setColor(config.embeds.colors.orange)
               .setAuthor(guild.name, guild.iconURL())
