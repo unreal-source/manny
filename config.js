@@ -1,4 +1,4 @@
-const config = {
+export default {
   commands: {
     defaultPrefix: '!',
     jobPrefix: '$'
@@ -15,18 +15,28 @@ const config = {
   },
   channels: {
     archive: {
+      category: process.env.ARCHIVE_CATEGORY
     },
     automod: {
+      notifications: process.env.AUTOMOD_NOTIFICATION_CHANNEL
     },
     jobs: {
+      category: process.env.JOBS_CATEGORY,
+      permanentJobs: process.env.PERMANENT_JOBS_CHANNEL,
+      contractJobs: process.env.CONTRACT_JOBS_CHANNEL,
+      unpaidGigs: process.env.UNPAID_GIGS_CHANNEL,
+      hireFreelancer: process.env.HIRE_FREELANCER_CHANNEL,
+      hireStudio: process.env.HIRE_STUDIO_CHANNEL
     },
     logs: {
+      memberLog: process.env.MEMBER_LOG_CHANNEL,
+      modLog: process.env.MOD_LOG_CHANNEL
     }
   },
   roles: {
-    moderator: '335496981621506048',
-    muted: '720439694784987239',
-    voice: '776887405793640481'
+    moderator: process.env.MODERATOR_ROLE,
+    muted: process.env.MUTED_ROLE,
+    voice: process.env.VOICE_ROLE
   },
   meta: {
     links: {
@@ -37,5 +47,3 @@ const config = {
     }
   }
 }
-
-export default config
