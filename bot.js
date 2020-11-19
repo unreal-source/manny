@@ -14,6 +14,7 @@ client.start()
 
 if (process.env.SENTRY_DSN) {
   Sentry.init({ dsn: process.env.SENTRY_DSN })
+  client.log.success('Sentry connection succesful')
 } else {
   client.log.warn('SENTRY_DSN not found, skipping Sentry initialization')
 }
