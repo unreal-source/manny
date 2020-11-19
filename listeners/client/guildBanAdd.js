@@ -48,10 +48,10 @@ class GuildBanAddListener extends Listener {
       // Send mod log
       const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
       const logEntry = this.client.util.embed()
-        .setColor(config.embeds.colors.red)
+        .setColor(_.color('red'))
         .setAuthor(entry.executor.tag, entry.executor.displayAvatarURL())
         .setThumbnail(user.displayAvatarURL())
-        .setTitle(`${config.prefixes.ban} Banned ${user.tag}`)
+        .setTitle(`${_.prefix('ban')} Banned ${user.tag}`)
         .setDescription(`**Reason:** ${entry.reason}`)
         .setFooter(_.prettyDate(entry.createdAt))
 

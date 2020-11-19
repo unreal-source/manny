@@ -2,6 +2,7 @@ import { Command } from 'discord-akairo'
 import { DateTime } from 'luxon'
 import config from '../../config'
 import Case from '../../models/cases'
+import _ from '../../utilities/Util'
 
 class UnbanCommand extends Command {
   constructor () {
@@ -44,11 +45,11 @@ class UnbanCommand extends Command {
   async exec (message, { user, reason }) {
     try {
       if (user.id === message.author.id) {
-        return message.util.send(`${config.prefixes.warning} You cannot unban yourself.`)
+        return message.util.send(`${_.prefix('warning')} You cannot unban yourself.`)
       }
 
       if (user.id === this.client.user.id) {
-        return message.util.send(`${config.prefixes.warning} Nice try, human.`)
+        return message.util.send(`${_.prefix('warning')} Nice try, human.`)
       }
 
       const bans = await message.guild.fetchBans()
@@ -74,17 +75,17 @@ class UnbanCommand extends Command {
       // Send mod log
       const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
       const logEntry = this.client.util.embed()
-        .setColor(config.embeds.colors.blue)
+        .setColor(_.color('red'))
         .setAuthor(user.tag)
         .setThumbnail(user.displayAvatarURL())
-        .setTitle(`${config.prefixes.undo} Member unbanned`)
+        .setTitle(`${_.prefix('undo')} Member unbanned`)
         .setDescription(`by ${message.author.tag}`)
         .addField('Reason', reason)
         .setFooter(`#${record.id}`)
         .setTimestamp()
 
       await logChannel.send({ embed: logEntry })
-      return message.util.send(`${config.prefixes.undo} **${user.tag}** was unbanned.`)
+      return message.util.send(`${_.prefix('undo')} **${user.tag}** was unbanned.`)
     } catch (e) {
       await message.channel.send('Something went wrong. Check the logs for details.')
       return this.client.log.error(e)

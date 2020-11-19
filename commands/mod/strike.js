@@ -5,6 +5,7 @@ import Case from '../../models/cases'
 import Mute from '../../models/mutes'
 import Strike from '../../models/strikes'
 import ms from 'ms'
+import _ from '../../utilities/Util'
 
 class StrikeCommand extends Command {
   constructor () {
@@ -46,15 +47,15 @@ class StrikeCommand extends Command {
 
   async exec (message, { member, reason }) {
     if (member.id === message.author.id) {
-      return message.util.send(`${config.prefixes.warning} You can't give yourself a strike.`)
+      return message.util.send(`${_.prefix('warning')} You can't give yourself a strike.`)
     }
 
     if (member.id === this.client.user.id) {
-      return message.util.send(`${config.prefixes.warning} Nice try, human.`)
+      return message.util.send(`${_.prefix('warning')} Nice try, human.`)
     }
 
     if (member.deleted) {
-      return message.util.send(`${config.prefixes.warning} ${member.user.tag} is no longer a member of this server.`)
+      return message.util.send(`${_.prefix('warning')} ${member.user.tag} is no longer a member of this server.`)
     }
 
     try {
@@ -79,19 +80,19 @@ class StrikeCommand extends Command {
 
       const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
       const logEntry = this.client.util.embed()
-        .setColor(config.embeds.colors.orange)
+        .setColor(_.color('orange'))
         .setAuthor(member.user.tag)
         .setThumbnail(member.user.displayAvatarURL())
-        .setTitle(`${config.prefixes.strike} Strike added`)
+        .setTitle(`${_.prefix('strike')} Strike added`)
         .setDescription(`by ${message.author.tag}`)
         .addField('Reason', reason)
         .setFooter(`#${record.id}`)
         .setTimestamp()
 
       const receipt = this.client.util.embed()
-        .setColor(config.embeds.colors.orange)
+        .setColor(_.color('orange'))
         .setAuthor(message.guild.name, message.guild.iconURL())
-        .setTitle(`${config.prefixes.strike} You received a strike`)
+        .setTitle(`${_.prefix('strike')} You received a strike`)
         .addField('Reason', reason)
         .setFooter(`#${record.id}`)
         .setTimestamp()
@@ -128,7 +129,7 @@ class StrikeCommand extends Command {
         receipt.setDescription(`As a result, you were muted for ${muteDurationLong}.`)
         await member.send({ embed: receipt })
 
-        return message.util.send(`${config.prefixes.strike} **${member.user.tag}** received strike ${strikeCount}. As a result, they were muted for ${muteDurationLong}.`)
+        return message.util.send(`${_.prefix('strike')} **${member.user.tag}** received strike ${strikeCount}. As a result, they were muted for ${muteDurationLong}.`)
       }
 
       if (strikeCount === 3) {
@@ -140,7 +141,7 @@ class StrikeCommand extends Command {
 
         logEntry.addField('Punishment', 'Banned from the server')
         await logChannel.send({ embed: logEntry })
-        return message.util.send(`${config.prefixes.strike} **${member.user.tag}** received strike 3. As a result, they were banned.`)
+        return message.util.send(`${_.prefix('strike')} **${member.user.tag}** received strike 3. As a result, they were banned.`)
       }
     } catch (e) {
       await message.channel.send('Something went wrong. Check the logs for details.')

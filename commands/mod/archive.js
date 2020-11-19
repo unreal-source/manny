@@ -1,5 +1,6 @@
 import { Command } from 'discord-akairo'
 import config from '../../config'
+import _ from '../../utilities/Util'
 
 class ArchiveChannelCommand extends Command {
   constructor () {
@@ -47,7 +48,7 @@ class ArchiveChannelCommand extends Command {
       if (confirm) {
         await channel.setParent(config.channels.archive.category)
         await channel.lockPermissions()
-        return message.util.send(`${config.prefixes.archive} ${channel} has been archived.`)
+        return message.util.send(`${_.prefix('archive')} ${channel} has been archived.`)
       }
     } catch (e) {
       await message.channel.send('Something went wrong. Check the logs for details.')

@@ -3,6 +3,7 @@ import { DateTime } from 'luxon'
 import config from '../../config'
 import Case from '../../models/cases'
 import Mute from '../../models/mutes'
+import _ from '../../utilities/Util'
 
 class UnmuteCommand extends Command {
   constructor () {
@@ -45,15 +46,15 @@ class UnmuteCommand extends Command {
   async exec (message, { member, reason }) {
     try {
       if (member.id === message.author.id) {
-        return message.util.send(`${config.prefixes.warning} You can't unmute yourself.`)
+        return message.util.send(`${_.prefix('warning')} You can't unmute yourself.`)
       }
 
       if (member.id === this.client.user.id) {
-        return message.util.send(`${config.prefixes.warning} Nice try, human.`)
+        return message.util.send(`${_.prefix('warning')} Nice try, human.`)
       }
 
       if (!member.roles.cache.some(role => role.name === 'Muted')) {
-        return message.util.send(`${config.prefixes.warning} **${member.user.tag}** is not muted.`)
+        return message.util.send(`${_.prefix('warning')} **${member.user.tag}** is not muted.`)
       }
 
       const muteRole = await message.guild.roles.fetch(config.roles.muted)
@@ -82,10 +83,10 @@ class UnmuteCommand extends Command {
       // Send mod log
       const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
       const logEntry = this.client.util.embed()
-        .setColor(config.embeds.colors.yellow)
+        .setColor(_.color('yellow'))
         .setAuthor(member.user.tag)
         .setThumbnail(member.user.displayAvatarURL())
-        .setTitle(`${config.prefixes.undo} Member unmuted`)
+        .setTitle(`${_.prefix('undo')} Member unmuted`)
         .setDescription(`by ${message.author.tag}`)
         .addField('Reason', reason)
         .setFooter(`#${record.id}`)
@@ -95,15 +96,15 @@ class UnmuteCommand extends Command {
 
       // Send receipt
       const receipt = this.client.util.embed()
-        .setColor(config.embeds.colors.yellow)
+        .setColor(_.color('yellow'))
         .setAuthor(message.guild.name, message.guild.iconURL())
-        .setTitle(`${config.prefixes.undo} You were unmuted`)
+        .setTitle(`${_.prefix('undo')} You were unmuted`)
         .addField('Reason', reason)
         .setFooter(`#${record.id}`)
         .setTimestamp()
 
       await member.send({ embed: receipt })
-      return message.util.send(`${config.prefixes.undo} **${member.user.tag}** was unmuted.`)
+      return message.util.send(`${_.prefix('undo')} **${member.user.tag}** was unmuted.`)
     } catch (e) {
       await message.channel.send('Something went wrong. Check the logs for details.')
       return this.client.log.error(e)

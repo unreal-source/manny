@@ -4,6 +4,7 @@ import config from '../../config'
 import Case from '../../models/cases'
 import Mute from '../../models/mutes'
 import Strike from '../../models/strikes'
+import _ from '../../utilities/Util'
 
 class PardonCommand extends Command {
   constructor () {
@@ -88,10 +89,10 @@ class PardonCommand extends Command {
       // Send mod log
       const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
       const logEntry = this.client.util.embed()
-        .setColor(config.embeds.colors.orange)
+        .setColor(_.color('orange'))
         .setAuthor(member.user.tag)
         .setThumbnail(member.user.displayAvatarURL())
-        .setTitle(`${config.prefixes.undo} Strike removed`)
+        .setTitle(`${_.prefix('undo')} Strike removed`)
         .setDescription(`by ${message.author.tag}`)
         .addField('Reason', reason)
         .setFooter(`#${record.id}`)
@@ -101,16 +102,16 @@ class PardonCommand extends Command {
 
       // Send receipt
       const receipt = this.client.util.embed()
-        .setColor(config.embeds.colors.orange)
+        .setColor(_.color('orange'))
         .setAuthor(message.guild.name, message.guild.iconURL())
-        .setTitle(`${config.prefixes.undo} One of your strikes was removed`)
+        .setTitle(`${_.prefix('undo')} One of your strikes was removed`)
         .setDescription(strikeCount === 0 ? 'You have no active strikes.' : `You have ${strikeCount} active strikes remaining.`)
         .addField('Reason', reason)
         .setFooter(`#${record.id}`)
         .setTimestamp()
 
       await member.send({ embed: receipt })
-      return message.util.send(`${config.prefixes.undo} **${member.user.tag}** lost a strike.`)
+      return message.util.send(`${_.prefix('undo')} **${member.user.tag}** lost a strike.`)
     } catch (e) {
       await message.channel.send('Something went wrong. Check the logs for details.')
       return this.client.log.error(e)

@@ -5,6 +5,7 @@ import { DateTime } from 'luxon'
 import Case from '../../models/cases'
 import Mute from '../../models/mutes'
 import Strike from '../../models/strikes'
+import _ from '../../utilities/Util'
 
 class ReadyListener extends Listener {
   constructor () {
@@ -36,9 +37,9 @@ class ReadyListener extends Listener {
 
           const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
           const logEntry = this.client.util.embed()
-            .setColor(config.embeds.colors.yellow)
+            .setColor(_.color('yellow'))
             .setAuthor(mute.user)
-            .setTitle(`${config.prefixes.expired} Mute expired`)
+            .setTitle(`${_.prefix('expired')} Mute expired`)
             .setTimestamp()
 
           await logChannel.send({ embed: logEntry })
@@ -50,9 +51,9 @@ class ReadyListener extends Listener {
             await member.roles.remove(muteRole)
 
             const receipt = this.client.util.embed()
-              .setColor(config.embeds.colors.yellow)
+              .setColor(_.color('yellow'))
               .setAuthor(guild.name, guild.iconURL())
-              .setTitle(`${config.prefixes.expired} Your mute expired`)
+              .setTitle(`${_.prefix('expired')} Your mute expired`)
               .setDescription('You may now send messages in the server again.')
               .setTimestamp()
 
@@ -86,9 +87,9 @@ class ReadyListener extends Listener {
 
           const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
           const logEntry = this.client.util.embed()
-            .setColor(config.embeds.colors.orange)
+            .setColor(_.color('orange'))
             .setAuthor(record.user)
-            .setTitle(`${config.prefixes.expired} Strike expired`)
+            .setTitle(`${_.prefix('expired')} Strike expired`)
             .setDescription(activeStrikes === 0 ? 'No active strikes' : `${activeStrikes} strikes remaining`)
             .setTimestamp()
 
@@ -98,9 +99,9 @@ class ReadyListener extends Listener {
 
           if (member) {
             const receipt = this.client.util.embed()
-              .setColor(config.embeds.colors.orange)
+              .setColor(_.color('orange'))
               .setAuthor(guild.name, guild.iconURL())
-              .setTitle(`${config.prefixes.expired} Strike expired`)
+              .setTitle(`${_.prefix('expired')} Strike expired`)
               .setDescription(activeStrikes === 0 ? 'No active strikes' : `${activeStrikes} strikes remaining`)
               .setTimestamp()
 

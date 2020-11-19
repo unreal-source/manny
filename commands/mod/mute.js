@@ -4,6 +4,7 @@ import config from '../../config'
 import Case from '../../models/cases'
 import Mute from '../../models/mutes'
 import ms from 'ms'
+import _ from '../../utilities/Util'
 
 class MuteCommand extends Command {
   constructor () {
@@ -55,15 +56,15 @@ class MuteCommand extends Command {
   async exec (message, { member, duration, reason }) {
     try {
       if (member.id === message.author.id) {
-        return message.util.send(`${config.prefixes.warning} You can't mute yourself.`)
+        return message.util.send(`${_.prefix('warning')} You can't mute yourself.`)
       }
 
       if (member.id === this.client.user.id) {
-        return message.util.send(`${config.prefixes.warning} Nice try, human.`)
+        return message.util.send(`${_.prefix('warning')} Nice try, human.`)
       }
 
       if (member.roles.cache.some(role => role.name === 'Muted')) {
-        return message.util.send(`${config.prefixes.warning} That user is already muted.`)
+        return message.util.send(`${_.prefix('warning')} That user is already muted.`)
       }
 
       const longDuration = ms(duration, { long: true })
@@ -93,10 +94,10 @@ class MuteCommand extends Command {
       // Send mod log
       const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
       const logEntry = this.client.util.embed()
-        .setColor(config.embeds.colors.yellow)
+        .setColor(_.color('yellow'))
         .setAuthor(member.user.tag)
         .setThumbnail(member.user.displayAvatarURL())
-        .setTitle(`${config.prefixes.mute} Member muted for ${longDuration}`)
+        .setTitle(`${_.prefix('mute')} Member muted for ${longDuration}`)
         .setDescription(`by ${message.author.tag}`)
         .addField('Reason', reason)
         .setFooter(`#${record.id}`)
@@ -106,15 +107,15 @@ class MuteCommand extends Command {
 
       // Send receipt
       const receipt = this.client.util.embed()
-        .setColor(config.embeds.colors.yellow)
+        .setColor(_.color('yellow'))
         .setAuthor(message.guild.name, message.guild.iconURL())
-        .setTitle(`${config.prefixes.mute} You were muted for ${longDuration}`)
+        .setTitle(`${_.prefix('mute')} You were muted for ${longDuration}`)
         .addField('Reason', reason)
         .setFooter(`#${record.id}`)
         .setTimestamp()
 
       await member.send({ embed: receipt })
-      return message.util.send(`${config.prefixes.mute} **${member.user.tag}** was muted for ${longDuration}.`)
+      return message.util.send(`${_.prefix('mute')} **${member.user.tag}** was muted for ${longDuration}.`)
     } catch (e) {
       await message.channel.send('Something went wrong. Check the logs for details.')
       return this.client.log.error(e)

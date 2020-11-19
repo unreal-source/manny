@@ -61,17 +61,17 @@ class UserHistoryCommand extends Command {
 
         if (logs) {
           reply
-            .addField(`${config.prefixes.mute} Mutes`, mutes.length === 0
+            .addField(`${_.prefix('mute')} Mutes`, mutes.length === 0
               ? '`None`'
               : mutes.map((mute, index) => {
                 return `**Muted for ${mute.duration} by ${mute.moderator}**\nReason: ${mute.reason}\n${_.prettyDate(mute.timestamp)}${index !== mutes.length - 1 ? '\n' : ''}`
               }))
-            .addField(`${config.prefixes.strike} Strikes`, strikes.length === 0
+            .addField(`${_.prefix('strike')} Strikes`, strikes.length === 0
               ? '`None`'
               : strikes.map((strike, index) => {
                 return `**Strike added by ${strike.moderator}**\nReason: ${strike.reason}\n${_.prettyDate(strike.timestamp)}${index !== strikes.length - 1 ? '\n' : ''}`
               }))
-            .addField(`${config.prefixes.ban} Bans`, bans.length === 0
+            .addField(`${_.prefix('ban')} Bans`, bans.length === 0
               ? '`None`'
               : bans.map((ban, index) => {
                 return `**Banned by ${ban.moderator}**\nReason: ${ban.reason}\n${_.prettyDate(ban.timestamp)}${index !== bans.length - 1 ? '\n' : ''}`

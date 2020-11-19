@@ -1,5 +1,6 @@
 import { Command, Argument } from 'discord-akairo'
 import config from '../../config'
+import _ from '../../utilities/Util'
 
 class PurgeCommand extends Command {
   constructor () {
@@ -46,7 +47,7 @@ class PurgeCommand extends Command {
     try {
       const logChannel = await this.client.channels.cache.get(config.channels.logs.modLog)
       const logEntry = this.client.util.embed()
-        .setTitle(`${config.prefixes.purge} ${count} ${count > 1 ? 'messages' : 'message'} deleted`)
+        .setTitle(`${_.prefix('purge')} ${count} ${count > 1 ? 'messages' : 'message'} deleted`)
         .setDescription(`by ${message.author.tag}`)
         .addField('Channel', `#${message.channel.name}`)
         .setTimestamp()

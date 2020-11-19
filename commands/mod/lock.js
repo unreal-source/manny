@@ -1,5 +1,6 @@
 import { Command } from 'discord-akairo'
 import config from '../../config'
+import _ from '../../utilities/Util'
 
 class LockChannelCommand extends Command {
   constructor () {
@@ -43,7 +44,7 @@ class LockChannelCommand extends Command {
 
       await channel.updateOverwrite(message.guild.roles.everyone, { SEND_MESSAGES: false })
 
-      return message.channel.send(`${config.prefixes.lock} **The channel has been locked.**`)
+      return message.channel.send(`${_.prefix('lock')} **The channel has been locked.**`)
     } catch (e) {
       await message.channel.send('Something went wrong. Check the logs for details.')
       return this.client.log.error(e)

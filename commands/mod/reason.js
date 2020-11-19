@@ -34,21 +34,21 @@ class ReasonCommand extends Command {
     }
 
     const title = {
-      ban: `${config.prefixes.ban} Member banned`,
-      unban: `${config.prefixes.undo} Member unbanned`,
-      mute: `${config.prefixes.mute} Member muted for ${infraction.duration}`,
-      unmute: `${config.prefixes.undo} Member unmuted`,
-      strike: `${config.prefixes.strike} Strike added`,
-      pardon: `${config.prefixes.undo} Strike removed`
+      ban: `${_.prefix('ban')} Member banned`,
+      unban: `${_.prefix('undo')} Member unbanned`,
+      mute: `${_.prefix('mute')} Member muted for ${infraction.duration}`,
+      unmute: `${_.prefix('undo')} Member unmuted`,
+      strike: `${_.prefix('strike')} Strike added`,
+      pardon: `${_.prefix('undo')} Strike removed`
     }
 
     const border = {
-      mute: config.embeds.colors.yellow,
-      unmute: config.embeds.colors.yellow,
-      strike: config.embeds.colors.orange,
-      pardon: config.embeds.colors.orange,
-      ban: config.embeds.colors.red,
-      unban: config.embeds.colors.red
+      mute: _.color('yellow'),
+      unmute: _.color('yellow'),
+      strike: _.color('orange'),
+      pardon: _.color('orange'),
+      ban: _.color('red'),
+      unban: _.color('red')
     }
 
     const embed = this.client.util.embed()
@@ -85,8 +85,8 @@ class ReasonCommand extends Command {
       // Send mod log
       const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
       const logEntry = this.client.util.embed()
-        .setColor(config.embeds.colors.blue)
-        .setTitle(`${config.prefixes.edit} Reason edited for case #${infraction.id}`)
+        .setColor(_.color('blue'))
+        .setTitle(`${_.prefix('edit')} Reason edited for case #${infraction.id}`)
         .setDescription(`by ${message.author.tag}`)
         .addField('Old Reason', infraction.reason)
         .addField('New Reason', reason)
