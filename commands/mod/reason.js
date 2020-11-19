@@ -1,4 +1,4 @@
-import { Command, Flag } from 'discord-akairo'
+import { Command } from 'discord-akairo'
 import Case from '../../models/cases'
 import config from '../../config'
 import _ from '../../utilities/Util'
