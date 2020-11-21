@@ -43,7 +43,7 @@ export default {
       github: 'https://github.com/unreal-slackers',
       twitter: 'https://twitter.com/unrealslackers',
       website: 'https://unrealslackers.org',
-      appeals: 'https://appeals.unrealslackers.org'
+      appeals: process.env.BAN_APPEALS_LINK
     }
   }
 }
