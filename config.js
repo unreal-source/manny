@@ -5,7 +5,7 @@ export default {
   },
   automod: {
     newAccountAge: '30m',
-    joinCount: 1
+    joinCount: 10
   },
   strikes: {
     muteLevels: {
