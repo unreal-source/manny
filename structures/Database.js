@@ -3,7 +3,13 @@ import path from 'path'
 import Sequelize from 'sequelize'
 import { Signale } from 'signale'
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, { logging: false })
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  logging: false,
+  dialectOptions: {
+    ssl: true
+  }
+})
+
 const log = new Signale()
 
 class Database {
