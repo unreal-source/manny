@@ -1,5 +1,4 @@
 import { Command } from 'discord-akairo'
-import config from '../../config'
 import _ from '../../utilities/Util'
 
 class UnlockChannelCommand extends Command {
