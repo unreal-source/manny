@@ -1,7 +1,7 @@
 # Manny
 Everyone's favorite mannequin, here to serve the Unreal Slackers community.
 
-[![GitHub Super-Linter](https://github.com/unreal-slackers/manny/workflows/Lint/badge.svg)](https://github.com/marketplace/actions/super-linter)
+[![Linter](https://github.com/unreal-slackers/manny/workflows/Linter/badge.svg)](https://github.com/standard/standard)
 
 ## How can I report a bug or suggest a feature?
 If you find a bug or have an idea for a new feature, check the [issue tracker](https://github.com/unreal-slackers/manny/issues) to make sure it hasn't already been added. If you don't see it, [open a new issue](https://github.com/unreal-slackers/manny/issues/new/choose).
