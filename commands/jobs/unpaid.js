@@ -65,7 +65,7 @@ class UnpaidCommand extends Command {
   }
 
   async exec (message, { embed }) {
-    const channel = this.client.channels.cache.get(config.jobs.channels.unpaidGigs)
+    const channel = this.client.channels.cache.get(config.channels.jobs.unpaidGigs)
     const post = await channel.send(embed)
     const editedPost = embed.setFooter(`ID - ${post.id}`)
 

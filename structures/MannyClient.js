@@ -70,7 +70,7 @@ class MannyClient extends AkairoClient {
         if (!phrase) return null
 
         const guild = this.guilds.cache.first()
-        const category = guild.channels.cache.get(config.jobs.category)
+        const category = guild.channels.cache.get(config.channels.jobs.category)
         for (const channel of category.children.values()) {
           try {
             return await channel.messages.fetch(phrase)
