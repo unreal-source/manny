@@ -59,6 +59,8 @@ class MannyClient extends AkairoClient {
       infraction: async (message, phrase) => {
         if (!phrase) return null
 
+        if (phrase.startsWith('#')) phrase = phrase.substr(1)
+
         const record = await Case.findOne({
           where: { id: phrase }
         })
