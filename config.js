@@ -4,7 +4,7 @@ export default {
     jobPrefix: '$'
   },
   automod: {
-    newAccountAge: '30m',
+    newAccountAge: '30',
     joinCount: 10
   },
   strikes: {
