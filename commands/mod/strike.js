@@ -113,6 +113,7 @@ class StrikeCommand extends Command {
 
           await Mute.create({
             id: member.id,
+            user: member.user.tag,
             expiration: DateTime.fromMillis(DateTime.local() + muteDuration)
           })
         }
