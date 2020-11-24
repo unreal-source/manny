@@ -33,7 +33,7 @@ class StrikeCommand extends Command {
       type: 'member',
       prompt: {
         start: 'Which user do you want to give a strike to?',
-        retry: 'User not found. Please enter a valid @mention or ID.'
+        retry: 'User not found. Please enter a name, mention, or ID.'
       }
     }
 
