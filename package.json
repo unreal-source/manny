@@ -1,6 +1,6 @@
 {
   "name": "manny",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Everyone's favorite mannequin.",
   "main": "bot.js",
   "engines": {
