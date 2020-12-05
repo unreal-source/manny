@@ -54,7 +54,7 @@ class HelpCommand extends Command {
       message.author.send({ embed: help })
 
       if (message.channel.type !== 'dm') {
-        return message.reply('Check your direct messages. :incoming_envelope:')
+        return message.delete()
       }
     }
 
@@ -67,7 +67,7 @@ class HelpCommand extends Command {
       message.author.send({ embed: help })
 
       if (message.channel.type !== 'dm') {
-        return message.reply('Check your direct messages. :incoming_envelope:')
+        return message.delete()
       }
     }
   }

@@ -45,7 +45,7 @@ class GameIdeaCommand extends Command {
     ]
 
     if (message.channel.type !== 'dm') {
-      message.reply('Check your direct messages. :incoming_envelope:')
+      message.delete()
     }
 
     return message.author.send(generate(_.randomElement(templates)))
