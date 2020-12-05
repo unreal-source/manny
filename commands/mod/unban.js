@@ -44,6 +44,8 @@ class UnbanCommand extends Command {
 
   async exec (message, { user, reason }) {
     try {
+      await message.delete()
+
       if (user.id === message.author.id) {
         return message.util.send(`${_.prefix('warning')} You cannot unban yourself.`)
       }

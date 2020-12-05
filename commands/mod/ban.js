@@ -44,6 +44,8 @@ class BanCommand extends Command {
 
   async exec (message, { user, reason }) {
     try {
+      await message.delete()
+
       if (user.id === message.author.id) {
         return message.util.send(`${_.prefix('warning')} Why would you ban yourself?`)
       }

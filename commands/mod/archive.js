@@ -45,6 +45,8 @@ class ArchiveChannelCommand extends Command {
 
   async exec (message, { channel, confirm }) {
     try {
+      await message.delete()
+
       if (confirm) {
         await channel.setParent(config.channels.archive.category)
         await channel.lockPermissions()

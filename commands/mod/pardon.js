@@ -46,6 +46,8 @@ class PardonCommand extends Command {
 
   async exec (message, { infraction, reason }) {
     try {
+      await message.delete()
+
       // Record case
       const record = await Case.create({
         action: 'pardon',

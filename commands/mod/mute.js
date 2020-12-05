@@ -55,6 +55,8 @@ class MuteCommand extends Command {
 
   async exec (message, { member, duration, reason }) {
     try {
+      await message.delete()
+
       if (member.id === message.author.id) {
         return message.util.send(`${_.prefix('warning')} You can't mute yourself.`)
       }

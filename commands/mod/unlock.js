@@ -35,6 +35,8 @@ class UnlockChannelCommand extends Command {
 
   async exec (message, { channel }) {
     try {
+      await message.delete()
+
       const permissions = channel.permissionOverwrites
 
       if (permissions.has(message.guild.id) && !permissions.get(message.guild.id).deny.has('SEND_MESSAGES')) {

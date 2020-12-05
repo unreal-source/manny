@@ -73,6 +73,8 @@ class ReasonCommand extends Command {
 
   async exec (message, { infraction, reason }) {
     try {
+      await message.delete()
+
       // Update record
       await Case.update({
         reason: reason

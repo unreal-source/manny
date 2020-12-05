@@ -45,14 +45,14 @@ class PurgeCommand extends Command {
 
   async exec (message, { count, author }) {
     try {
+      await message.delete()
+
       const logChannel = await this.client.channels.cache.get(config.channels.logs.modLog)
       const logEntry = this.client.util.embed()
         .setTitle(`${_.prefix('purge')} ${count} ${count > 1 ? 'messages' : 'message'} deleted`)
         .setDescription(`by ${message.author.tag}`)
         .addField('Channel', `#${message.channel.name}`)
         .setTimestamp()
-
-      await message.delete()
 
       if (author) {
         const messages = await message.channel.messages.fetch()

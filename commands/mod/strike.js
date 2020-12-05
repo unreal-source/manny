@@ -46,6 +46,8 @@ class StrikeCommand extends Command {
   }
 
   async exec (message, { member, reason }) {
+    await message.delete()
+
     if (member.id === message.author.id) {
       return message.util.send(`${_.prefix('warning')} You can't give yourself a strike.`)
     }
