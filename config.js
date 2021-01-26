@@ -30,7 +30,8 @@ export default {
     },
     logs: {
       memberLog: process.env.MEMBER_LOG_CHANNEL,
-      modLog: process.env.MOD_LOG_CHANNEL
+      modLog: process.env.MOD_LOG_CHANNEL,
+      voiceLog: process.env.VOICE_LOG_CHANNEL
     }
   },
   roles: {
