@@ -46,6 +46,10 @@ class Util {
     return DateTime.fromJSDate(date).toLocaleString(short ? DateTime.DATE_SHORT : DateTime.DATETIME_FULL)
   }
 
+  static prettyStrikeExpiration (date) {
+    return DateTime.fromJSDate(date).plus({ days: 30 }).toLocaleString(DateTime.DATETIME_FULL)
+  }
+
   static randomElement (array) {
     return array[Math.floor(Math.random() * array.length)]
   }
