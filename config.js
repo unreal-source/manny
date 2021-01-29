@@ -37,6 +37,7 @@ export default {
   roles: {
     moderator: process.env.MODERATOR_ROLE,
     muted: process.env.MUTED_ROLE,
+    stream: process.env.STREAM_ROLE,
     voice: process.env.VOICE_ROLE
   },
   meta: {
