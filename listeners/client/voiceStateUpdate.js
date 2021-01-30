@@ -1,5 +1,6 @@
 import { Listener } from 'discord-akairo'
 import config from '../../config'
+import _ from '../../utilities/Util'
 
 class VoiceStateUpdateListener extends Listener {
   constructor () {
@@ -13,7 +14,7 @@ class VoiceStateUpdateListener extends Listener {
     const channel = this.client.channels.cache.get(config.channels.logs.voiceLog)
     const canStream = newState.member.roles.cache.some(role => role.id === config.roles.stream)
     const isModerator = newState.member.roles.cache.some(role => role.id === config.roles.moderator)
-    const username = isModerator ? `:shield: **${newState.member.displayName}**` : `<@${newState.member.id}>`
+    const username = isModerator ? `${_.prefix('moderator')} **${newState.member.displayName}**` : `<@${newState.member.id}>`
 
     // User joined a voice channel
     if (oldState.channel === null && newState.channel !== null) {

@@ -37,15 +37,15 @@ class StreamCommand extends Command {
         if (member.voice.channel !== null) {
           await member.roles.add(config.roles.stream)
           this.client.log.info(`Streaming role added >> ${member.user.tag}`)
-          return message.channel.send(`You may now stream in the **${member.voice.channel.name}** voice channel.`)
+          return message.channel.send(`${_.prefix('success')} You may now stream in the **${member.voice.channel.name}** voice channel.`)
         } else {
-          return message.channel.send(':warning: Please join the voice channel you want to stream in, then try again.')
+          return message.channel.send(`${_.prefix('warning')} Please join the voice channel you want to stream in, then try again.`)
         }
       }
 
-      return message.channel.send(`:warning: You are not eligible for streaming until **${_.prettyStrikeExpiration(strikes[0].timestamp)}**.`)
+      return message.channel.send(`${_.prefix('warning')} You are not eligible for streaming until **${_.prettyStrikeExpiration(strikes[0].timestamp)}**.`)
     } catch (e) {
-      await message.channel.send('Something went wrong. Please notify a moderator.')
+      await message.channel.send(`${_.prefix('error')} Something went wrong. Please notify a moderator.`)
       return this.client.log.error(e)
     }
   }
