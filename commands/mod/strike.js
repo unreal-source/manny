@@ -23,7 +23,7 @@ class StrikeCommand extends Command {
         }
       },
       channel: 'guild',
-      clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],
+      clientPermissions: ['EMBED_LINKS', 'MOVE_MEMBERS', 'SEND_MESSAGES'],
       userPermissions: ['BAN_MEMBERS']
     })
   }
@@ -125,6 +125,10 @@ class StrikeCommand extends Command {
           userID: member.id,
           expiration: DateTime.local().plus({ days: 30 })
         })
+
+        if (member.voice.channel !== null) {
+          await member.voice.kick()
+        }
 
         logEntry.addField('Punishment', `Muted for ${muteDurationLong}`)
         await logChannel.send({ embed: logEntry })

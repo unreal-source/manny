@@ -23,7 +23,7 @@ class MuteCommand extends Command {
         }
       },
       channel: 'guild',
-      clientPermissions: ['MANAGE_ROLES', 'EMBED_LINKS', 'SEND_MESSAGES'],
+      clientPermissions: ['MANAGE_ROLES', 'EMBED_LINKS', 'MOVE_MEMBERS', 'SEND_MESSAGES'],
       userPermissions: ['BAN_MEMBERS']
     })
   }
@@ -92,6 +92,10 @@ class MuteCommand extends Command {
         user: member.user.tag,
         expiration: DateTime.fromMillis(DateTime.local() + duration)
       })
+
+      if (member.voice.channel !== null) {
+        await member.voice.kick()
+      }
 
       // Send mod log
       const logChannel = this.client.channels.cache.get(config.channels.logs.modLog)
