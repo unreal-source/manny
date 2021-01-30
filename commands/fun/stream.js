@@ -34,6 +34,10 @@ class StreamCommand extends Command {
 
       // Add the stream role if the user is in a voice channel and has no active strikes
       if (strikeCount === 0) {
+        if (member.roles.cache.some(role => role.id === config.roles.stream)) {
+          return message.channel.send(`${_.prefix('warning')} You are already able to stream in the **${member.voice.channel.name}** voice channel.`)
+        }
+
         if (member.voice.channel !== null) {
           await member.roles.add(config.roles.stream)
           this.client.log.info(`Streaming role added >> ${member.user.tag}`)
