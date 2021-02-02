@@ -45,7 +45,7 @@ class UnlockChannelCommand extends Command {
 
       await channel.updateOverwrite(message.guild.roles.everyone, { SEND_MESSAGES: null })
 
-      return message.channel.send(`${_.prefix('lock')} **The channel has been unlocked.**`)
+      return channel.send(`${_.prefix('lock')} **The channel has been unlocked.**`)
     } catch (e) {
       await message.channel.send('Something went wrong. Check the logs for details.')
       return this.client.log.error(e)
