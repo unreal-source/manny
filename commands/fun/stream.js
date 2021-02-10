@@ -1,6 +1,7 @@
 import { Command } from 'discord-akairo'
 import config from '../../config'
 import Case from '../../models/cases'
+import { DateTime } from 'luxon'
 import _ from '../../utilities/Util'
 
 class StreamCommand extends Command {
@@ -21,6 +22,10 @@ class StreamCommand extends Command {
   async exec (message) {
     try {
       const member = this.client.guilds.cache.first().member(message.author)
+      const now = DateTime.local()
+      const joinedServer = DateTime.fromJSDate(member.joinedAt)
+      const timeSinceJoin = now.diff(joinedServer, 'days').toObject()
+      const timeUntilEligible = joinedServer.plus({ days: 7 })
       const strikes = await Case.findAll({
         where: {
           action: 'strike',
@@ -32,7 +37,10 @@ class StreamCommand extends Command {
 
       const strikeCount = strikes.length
 
-      // Add the stream role if the user is in a voice channel and has no active strikes
+      if (timeSinceJoin.days < 7) {
+        return message.channel.send(`${_.prefix('warning')} You are not eligible for streaming until **${_.prettyDate(timeUntilEligible.toJSDate())}**.`)
+      }
+
       if (strikeCount === 0) {
         if (member.roles.cache.some(role => role.id === config.roles.stream)) {
           return message.channel.send(`${_.prefix('warning')} You are already able to stream in the **${member.voice.channel.name}** voice channel.`)
