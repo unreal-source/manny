@@ -46,7 +46,7 @@ class UnpaidCommand extends Command {
       .addField('Contact', contact)
 
     const review = yield {
-      type: Argument.range('numnber', 1, 2, true),
+      type: Argument.range('number', 1, 2, true),
       prompt: {
         start: message => {
           const content = '**Almost there! Please review your post to make sure it\'s accurate.**\n\nChoose one:\n**1. Send my post**\n**2. Start over**\n_ _'
