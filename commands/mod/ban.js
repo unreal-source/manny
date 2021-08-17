@@ -21,8 +21,7 @@ class BanCommand extends Command {
       },
       channel: 'guild',
       clientPermissions: ['BAN_MEMBERS', 'EMBED_LINKS', 'SEND_MESSAGES'],
-      userPermissions: ['BAN_MEMBERS'],
-      flags: ['--purge', '-p']
+      userPermissions: ['BAN_MEMBERS']
     })
   }
 
@@ -35,20 +34,15 @@ class BanCommand extends Command {
       }
     }
 
-    const purge = yield {
-      match: 'flag',
-      flag: ['--purge', '-p']
-    }
-
     const reason = yield {
       match: 'rest',
       default: '`No reason given`'
     }
 
-    return { user, purge, reason }
+    return { user, reason }
   }
 
-  async exec (message, { user, purge, reason }) {
+  async exec (message, { user, reason }) {
     try {
       await message.delete()
 
@@ -82,7 +76,7 @@ class BanCommand extends Command {
       await user.send({ embed: receipt })
 
       // Take action
-      await message.guild.members.ban(user, { days: purge ? 1 : 0, reason: reason })
+      await message.guild.members.ban(user, { days: 1, reason: reason })
 
       // Record case
       const record = await Case.create({
