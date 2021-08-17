@@ -30,11 +30,7 @@ class StrikeCommand extends Command {
 
   * args () {
     const member = yield {
-      type: 'member',
-      prompt: {
-        start: 'Which user do you want to give a strike to?',
-        retry: 'User not found. Please enter a name, mention, or ID.'
-      }
+      type: 'member'
     }
 
     const reason = yield {
@@ -46,6 +42,10 @@ class StrikeCommand extends Command {
   }
 
   async exec (message, { member, reason }) {
+    if (!member) {
+      return message.channel.send('User not found. Please try again.')
+    }
+
     await message.delete()
 
     if (member.id === message.author.id) {

@@ -27,11 +27,7 @@ class UnbanCommand extends Command {
 
   * args () {
     const user = yield {
-      type: 'user',
-      prompt: {
-        start: 'Which user do you want to unban?',
-        retry: 'User not found. Please enter a name, mention, or ID.'
-      }
+      type: 'user'
     }
 
     const reason = yield {
@@ -44,6 +40,10 @@ class UnbanCommand extends Command {
 
   async exec (message, { user, reason }) {
     try {
+      if (!user) {
+        return message.channel.send('User not found. Please try again.')
+      }
+
       await message.delete()
 
       if (user.id === message.author.id) {
