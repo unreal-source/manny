@@ -20,6 +20,12 @@ class Util {
     return colors[color]
   }
 
+  static delay (duration) {
+    return new Promise(resolve => {
+      setTimeout(resolve, duration)
+    })
+  }
+
   static prefix (prefix) {
     const prefixes = {
       archive: ':card_box:',
