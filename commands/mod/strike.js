@@ -134,7 +134,12 @@ class StrikeCommand extends Command {
         await logChannel.send({ embed: logEntry })
 
         receipt.setDescription(`As a result, you were muted for ${muteDurationLong}.`)
-        await member.send({ embed: receipt })
+
+        try {
+          await member.send({ embed: receipt })
+        } catch (e) {
+          await message.channel.send(':warning: Failed to send a DM. User will not be notified.')
+        }
 
         return message.util.send(`${_.prefix('strike')} **${member.user.tag}** received strike ${strikeCount}. As a result, they were muted for ${muteDurationLong}.`)
       }

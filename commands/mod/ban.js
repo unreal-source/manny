@@ -73,7 +73,12 @@ class BanCommand extends Command {
         .setTitle(`${_.prefix('ban')} You were banned from the server`)
         .addField('Reason', reason)
         .addField('Appeals', `If you would like to appeal this decision, [fill out this form](${config.meta.links.appeals}) and we will get back to you as soon as possible.`)
-      await user.send({ embed: receipt })
+
+      try {
+        await user.send({ embed: receipt })
+      } catch (e) {
+        await message.channel.send(':warning: Failed to send a DM. User will not be notified.')
+      }
 
       // Take action
       await message.guild.members.ban(user, { days: 1, reason: reason })

@@ -112,7 +112,12 @@ class PardonCommand extends Command {
         .setFooter(`#${record.id}`)
         .setTimestamp()
 
-      await member.send({ embed: receipt })
+      try {
+        await member.send({ embed: receipt })
+      } catch (e) {
+        await message.channel.send(':warning: Failed to send a DM. User will not be notified.')
+      }
+
       return message.util.send(`${_.prefix('undo')} **${member.user.tag}** lost a strike.`)
     } catch (e) {
       await message.channel.send('Something went wrong. Check the logs for details.')
