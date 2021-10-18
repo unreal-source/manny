@@ -7,20 +7,20 @@ assignees: ''
 
 ---
 
-**Describe the bug**
+### Description
 A clear and concise description of what the bug is.
 
-**Steps to reproduce**
+### Steps to reproduce
 List the steps we can follow to reproduce the bug.
 
-**Expected behavior**
+### Expected behavior
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
+### Screenshots
 If applicable, add screenshots to help explain your problem.
 
-**Platform**
+### Platform
 Tell us if you saw this bug on desktop, mobile, or the web.
 
-**Additional context**
+### Additional context
 Add any other context about the problem here.
