@@ -10,8 +10,9 @@ class Uptime extends SlashCommand {
   }
 
   run (interaction) {
-    const uptime = ms(this.client.uptime)
-    return interaction.reply({ content: `:stopwatch: I have been online for ${uptime}`, ephemeral: true })
+    const uptime = ms(this.client.uptime, { long: true })
+
+    return interaction.reply({ content: `:stopwatch: I have been online for \`${uptime}\``, ephemeral: true })
   }
 }
 

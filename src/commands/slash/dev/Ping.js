@@ -13,7 +13,7 @@ class Ping extends SlashCommand {
     const heartbeat = this.client.ws.ping
     const latency = response.createdTimestamp - interaction.createdTimestamp
 
-    return interaction.editReply({ content: `:ping_pong: Ping... Pong! My heartbeat is ${heartbeat}ms. My latency is ${latency}ms` })
+    return interaction.editReply({ content: `:ping_pong: Ping... Pong! Roundtrip latency is \`${latency}ms\`. Heartbeat is \`${heartbeat}ms\`.` })
   }
 }
 
