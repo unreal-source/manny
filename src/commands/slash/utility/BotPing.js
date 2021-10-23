@@ -1,10 +1,10 @@
 import { SlashCommand } from 'hiei.js'
 
-class Ping extends SlashCommand {
+class BotPing extends SlashCommand {
   constructor () {
     super({
       name: 'ping',
-      description: 'Check the bot\'s latency'
+      description: 'Check the bot\'s latency and websocket heartbeat'
     })
   }
 
@@ -17,4 +17,4 @@ class Ping extends SlashCommand {
   }
 }
 
-export default Ping
+export default BotPing
