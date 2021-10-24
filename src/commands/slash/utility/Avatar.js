@@ -19,7 +19,7 @@ class Avatar extends SlashCommand {
   async run (interaction) {
     const user = interaction.options.getUser('user')
 
-    return interaction.reply({ content: user.displayAvatarURL({ size: 512 }) })
+    return interaction.reply({ content: user.displayAvatarURL({ size: 512 }), ephemeral: true })
   }
 }
 
