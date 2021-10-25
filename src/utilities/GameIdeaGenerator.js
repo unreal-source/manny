@@ -647,7 +647,7 @@ const animal = [
   { singular: 'a pig', plural: 'pigs' },
   { singular: 'a puppy', plural: 'puppies' },
   { singular: 'a rabbit', plural: 'rabbits' },
-  { singular: 'a sharks', plural: 'sharks' },
+  { singular: 'a shark', plural: 'sharks' },
   { singular: 'a snake', plural: 'snakes' },
   { singular: 'a tiger', plural: 'tigers' },
   { singular: 'a wolf', plural: 'wolves' }
