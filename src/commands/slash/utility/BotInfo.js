@@ -2,6 +2,7 @@ import { SlashCommand } from 'hiei.js'
 import { MessageEmbed } from 'discord.js'
 import { time } from '@discordjs/builders'
 import { getMetadata } from '../../../utilities/Util.js'
+import { links } from '../../../manny.config.js'
 import ms from 'ms'
 
 class BotInfo extends SlashCommand {
@@ -25,7 +26,7 @@ class BotInfo extends SlashCommand {
       .addField('Uptime', ms(this.client.uptime, { long: true }), true)
       .addField('Heartbeat', `${this.client.ws.ping}ms`, true)
       .addField('Memory Usage', `${Math.round(memoryUsed * 100) / 100} MB`, true)
-      .addField('Links', 'TBD')
+      .addField('Links', `[Source code](${links.botRepo}) • [Report a bug](${links.botBugs}) • [Contribute](${links.botContribute})`)
 
     return interaction.reply({ embeds: [info] })
   }
