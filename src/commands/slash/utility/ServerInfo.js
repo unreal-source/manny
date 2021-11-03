@@ -12,12 +12,12 @@ class ServerInfo extends SlashCommand {
   }
 
   async run (interaction) {
-    const total = interaction.guild.memberCount.toString()
-    const online = interaction.guild.members.cache.filter(member => member.presence?.status === 'online').size.toString()
-    const boostLevel = {
-      TIER_1: 'Level 1',
-      TIER_2: 'Level 2',
-      TIER_3: 'Level 3'
+    const totalMembers = interaction.guild.memberCount.toString()
+    const onlineMembers = interaction.guild.members.cache.filter(member => member.presence?.status === 'online').size.toString()
+    const boostTierNames = {
+      TIER_1: 'Friends',
+      TIER_2: 'Groups',
+      TIER_3: 'Communities'
     }
 
     const boostThreshold = {
@@ -26,16 +26,18 @@ class ServerInfo extends SlashCommand {
       3: 14
     }
 
-    const nextLevel = interaction.guild.premiumSubscriptionCount < boostThreshold[3] ? `${boostThreshold[interaction.guild.premiumTier + 1] - interaction.guild.premiumSubscriptionCount} boosts until ${boostLevel[interaction.guild.premiumTier + 1]}` : ''
+    const boostCount = interaction.guild.premiumSubscriptionCount
+    const currentTier = interaction.guild.premiumTier
+    const nextTier = boostCount < boostThreshold[3] ? `${boostThreshold[currentTier + 1] - boostCount} boosts until ${boostTierNames[currentTier + 1]}` : ''
 
     const info = new MessageEmbed()
       .setTitle(interaction.guild.name)
       .setDescription(interaction.guild.description ? interaction.guild.description : '')
       .setThumbnail(interaction.guild.iconURL())
-      .addField('Members', thousands(total), true)
-      .addField('Online', thousands(online), true)
-      .addField('Server Boost', interaction.guild.premiumTier === 'NONE' ? 'None' : `${boostLevel[interaction.guild.premiumTier]} • ${interaction.guild.premiumSubscriptionCount} Boosts • ${nextLevel}`)
-      .addField('Created', time(interaction.guild.createdAt))
+      .addField('Members', thousands(totalMembers), true)
+      .addField('Online', thousands(onlineMembers), true)
+      .addField('Boost Status', currentTier === 'NONE' ? 'No boosts' : `${boostTierNames[currentTier]} • ${boostCount} Boosts • ${nextTier}`)
+      .addField('Created', `${time(interaction.guild.createdAt)} • ${time(interaction.guild.createdAt, 'R')}`)
 
     if (interaction.guild.vanityURLCode) {
       info.addField('Invite', `[discord.gg/${interaction.guild.vanityURLCode}](https://discord.gg/${interaction.guild.vanityURLCode})`)
