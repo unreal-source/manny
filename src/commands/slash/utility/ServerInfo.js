@@ -2,6 +2,7 @@ import { SlashCommand } from 'hiei.js'
 import { MessageEmbed } from 'discord.js'
 import { time } from '@discordjs/builders'
 import { thousands } from '../../../utilities/Util.js'
+import { links } from '../../../manny.config.js'
 
 class ServerInfo extends SlashCommand {
   constructor () {
@@ -56,6 +57,7 @@ class ServerInfo extends SlashCommand {
       .addField('Online', thousands(onlineMembers), true)
       .addField('Boost Status', `${boostTierEmoji[interaction.guild.premiumTier]} ${boostTierName[interaction.guild.premiumTier]} ${boostCount} ${nextTier}`)
       .addField('Created', `${time(interaction.guild.createdAt)} • ${time(interaction.guild.createdAt, 'R')}`)
+      .addField('Links', `[Website](${links.website}) • [Twitter](${links.twitter}) • [GitHub](${links.github})`)
 
     if (interaction.guild.vanityURLCode) {
       info.addField('Invite', `[discord.gg/${interaction.guild.vanityURLCode}](https://discord.gg/${interaction.guild.vanityURLCode})`)
