@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Case {
+  id                    Int             @id @default(autoincrement())
+  action                String
+  reason                String
+  reference             String
+  timestamp             DateTime
+  modUsername           String
+  modId                 String
+  targetUsername        String
+  targetId              String
+}
+
+model Mute {
+  id                    Int             @id
+  expiration            DateTime
+}
+
+model Strike {
+  id                    Int             @id
+  expiration            DateTime
+}
+
+model Note {
+  id                    Int             @id @default(autoincrement())
+  content               String
+  timestamp             DateTime
+  modUsername           String
+  modId                 String
+  targetUsername        String
+  targetId              String
+}

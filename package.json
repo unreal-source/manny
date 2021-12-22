@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "dotenv": "^10.0.0",
+    "prisma": "^3.4.0",
     "snazzy": "^9.0.0",
     "standard": "^16.0.4"
   }
