@@ -1,7 +1,7 @@
 import { SlashCommand } from 'hiei.js'
 import { MessageEmbed } from 'discord.js'
 import { time } from '@discordjs/builders'
-import { getMetadata } from '../../../utilities/Util.js'
+import { jimp } from '../../../utilities/Util.js'
 import { links } from '../../../manny.config.js'
 import ms from 'ms'
 
@@ -15,7 +15,7 @@ class BotInfo extends SlashCommand {
 
   async run (interaction) {
     const memoryUsed = (process.memoryUsage().heapUsed / 1024 / 1024)
-    const meta = await getMetadata()
+    const meta = await jimp('../../package.json')
     const info = new MessageEmbed()
       .setTitle(this.client.user.tag)
       .setDescription(this.client.application.description ? this.client.application.description : '')

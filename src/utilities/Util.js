@@ -10,8 +10,9 @@ export function delay (duration) {
   })
 }
 
-export async function getMetadata () {
-  return JSON.parse(await readFile(new URL('../../package.json', import.meta.url)))
+export async function jimp (file) {
+  const json = JSON.parse(await readFile(new URL(file, import.meta.url)))
+  return json
 }
 
 export function randomElement (array) {
