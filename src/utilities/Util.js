@@ -11,8 +11,7 @@ export function delay (duration) {
 }
 
 export async function jimp (file) {
-  const json = JSON.parse(await readFile(new URL(file, import.meta.url)))
-  return json
+  return JSON.parse(await readFile(new URL(file, import.meta.url)))
 }
 
 export function randomElement (array) {
