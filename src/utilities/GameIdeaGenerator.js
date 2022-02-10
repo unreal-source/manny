@@ -93,8 +93,7 @@ const genre = {
   an: [
     'action-adventure game',
     'action RPG',
-    'endless runner',
-    'immersive sim'
+    'endless runner'
   ]
 }
 
