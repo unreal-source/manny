@@ -48,7 +48,7 @@ class ServerInfo extends SlashCommand {
       .addField('Online', thousands(onlineMembers), true)
       .addField('Boost Status', `${boostTierName[interaction.guild.premiumTier]} ${boostCount} ${nextTier}`)
       .addField('Created', `${time(interaction.guild.createdAt)} • ${time(interaction.guild.createdAt, 'R')}`)
-      .addField('Links', `[Website](${links.website}) • [Twitter](${links.twitter}) • [GitHub](${links.github})`)
+      .addField('Links', `[Website](${links.website}) • [Twitter](${links.twitter}) • [GitHub](${links.github}) • [Donate](${links.donate})`)
 
     if (interaction.guild.vanityURLCode) {
       info.addField('Invite', `[discord.gg/${interaction.guild.vanityURLCode}](https://discord.gg/${interaction.guild.vanityURLCode})`)
