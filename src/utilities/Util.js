@@ -10,7 +10,7 @@ export function delay (duration) {
   })
 }
 
-export async function jimp (file) {
+export async function jason (file) {
   return JSON.parse(await readFile(new URL(file, import.meta.url)))
 }
 
