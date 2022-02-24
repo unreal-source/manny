@@ -15,29 +15,29 @@ model Case {
   action                String
   reason                String
   reference             String
-  timestamp             DateTime
-  modUsername           String
-  modId                 String
-  targetUsername        String
+  moderatorName         String
+  moderatorId           String
+  targetName            String
   targetId              String
-}
-
-model Mute {
-  id                    Int             @id
-  expiration            DateTime
+  duration              String
+  active                Boolean
+  timestamp             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
 }
 
 model Strike {
-  id                    Int             @id
+  caseNumber            Int             @id
+  targetId              String
   expiration            DateTime
 }
 
 model Note {
   id                    Int             @id @default(autoincrement())
   content               String
-  timestamp             DateTime
-  modUsername           String
-  modId                 String
-  targetUsername        String
+  moderatorName         String
+  moderatorId           String
+  targetName            String
   targetId              String
+  timestamp             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
 }
