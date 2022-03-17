@@ -45,6 +45,15 @@ class Timeout extends SlashCommand {
     const reason = interaction.options.getString('reason')
     const prisma = new PrismaClient()
 
+    // You can't timeout the bot or yourself
+    if (member.id === this.client.user.id) {
+      return interaction.reply({ content: 'Nice try, human.', ephemeral: true })
+    }
+
+    if (member.id === interaction.member.id) {
+      return interaction.reply({ content: 'You can\'t time yourself out.', ephemeral: true })
+    }
+
     // Timeout the member
     await member.timeout(ms(duration), reason)
 
