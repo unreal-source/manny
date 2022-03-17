@@ -11,33 +11,59 @@ datasource db {
 }
 
 model Case {
-  id                    Int             @id @default(autoincrement())
-  action                String
-  reason                String
-  reference             String
-  moderatorName         String
-  moderatorId           String
-  targetName            String
-  targetId              String
-  duration              String
-  active                Boolean
-  timestamp             DateTime        @default(now())
-  updatedAt             DateTime        @updatedAt
+  id                 Int             @id @default(autoincrement())
+  action             String
+  member             String
+  memberId           String
+  moderator          String
+  moderatorId        String
+  reason             String
+  strike             Strike?
+  timeout            Timeout?
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
 }
 
 model Strike {
-  caseNumber            Int             @id
-  targetId              String
-  expiration            DateTime
+  id                 Int             @id @unique
+  case               Case            @relation(fields: [id], references: [id])
+  expiration         DateTime
+  isActive           Boolean
+}
+
+model Timeout {
+  id                 Int             @id @unique
+  case               Case            @relation(fields: [id], references: [id])
+  duration           String
 }
 
 model Note {
-  id                    Int             @id @default(autoincrement())
-  content               String
-  moderatorName         String
-  moderatorId           String
-  targetName            String
-  targetId              String
-  timestamp             DateTime        @default(now())
-  updatedAt             DateTime        @updatedAt
+  id                 Int             @id @default(autoincrement())
+  content            String
+  member             String
+  memberId           String
+  moderator          String
+  moderatorId        String
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+}
+
+model JobPost {
+  id                 Int              @id @default(autoincrement())
+  type               String
+  member             String
+  memberId           String
+  messageId          String
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+}
+
+model Portfolio {
+  id                 Int              @id @default(autoincrement())
+  type               String
+  member             String
+  memberId           String
+  messageId          String
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
 }
