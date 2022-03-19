@@ -54,13 +54,13 @@ class Timeout extends SlashCommand {
       return interaction.reply({ content: 'You can\'t time yourself out.', ephemeral: true })
     }
 
-    // Timeout the member
+    // Timeout member
     await member.timeout(ms(duration), reason)
 
-    // Send the moderator a confirmation
+    // Notify moderator
     await interaction.reply({ content: `${member.user.tag} was timed out for ${duration}.`, ephemeral: true })
 
-    // Create a case in the database
+    // Create case in database
     const incident = await prisma.case.create({
       data: {
         action: 'Timed out',
@@ -75,7 +75,7 @@ class Timeout extends SlashCommand {
       }
     })
 
-    // Add an entry to the moderation log
+    // Send mod log
     const logChannel = interaction.guild.channels.cache.get(process.env.MOD_LOG_CHANNEL)
     const logEntry = new MessageEmbed()
       .setAuthor({ name: `⏳ ${incident.action}` })
@@ -88,7 +88,7 @@ class Timeout extends SlashCommand {
 
     logChannel.send({ embeds: [logEntry] })
 
-    // Notify the member
+    // Notify member
     const receipt = new MessageEmbed()
       .setAuthor({ name: interaction.guild.name, iconURL: interaction.guild.iconURL() })
       .setTitle(`You were timed out for ${duration}`)
