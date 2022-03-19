@@ -57,7 +57,8 @@ class Kick extends SlashCommand {
         .setAuthor({ name: interaction.guild.name, iconURL: interaction.guild.iconURL() })
         .setTitle('You were kicked from the server')
         .addField('Reason', reason)
-        .settFooter({ text: `Case #${incident.id}` })
+        .setFooter({ text: `Case #${incident.id}` })
+        .setTimestamp()
 
       try {
         await member.send({ embeds: [notification] })
