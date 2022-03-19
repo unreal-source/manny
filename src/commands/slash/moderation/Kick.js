@@ -38,38 +38,56 @@ class Kick extends SlashCommand {
       return interaction.reply({ content: 'You can\'t kick yourself.', ephemeral: true })
     }
 
-    // Kick the member
-    await member.kick(reason)
+    // Make sure member is kickable
+    if (member.kickable) {
+      // Create case in database
+      const incident = await prisma.case.create({
+        data: {
+          action: 'Kicked',
+          member: member.user.tag,
+          memberId: member.id,
+          moderator: interaction.member.user.tag,
+          moderatorId: interaction.member.id,
+          reason: reason
+        }
+      })
 
-    // Send the moderator a confirmation
-    await interaction.reply({ content: `${member.user.tag} was kicked from the server.`, ephemeral: true })
+      // Notify member
+      const notification = new MessageEmbed()
+        .setAuthor({ name: interaction.guild.name, iconURL: interaction.guild.iconURL() })
+        .setTitle('You were kicked from the server')
+        .addField('Reason', reason)
+        .settFooter({ text: `Case #${incident.id}` })
 
-    // Create a case in the database
-    const incident = await prisma.case.create({
-      data: {
-        action: 'Kicked',
-        member: member.user.tag,
-        memberId: member.id,
-        moderator: interaction.member.user.tag,
-        moderatorId: interaction.member.id,
-        reason: reason
+      try {
+        await member.send({ embeds: [notification] })
+      } catch (e) {
+        await interaction.followUp({ content: ':warning: The user wasn\'t notified because they\'re not accepting direct messages.', ephemeral: true })
       }
-    })
 
-    // Add an entry to the moderation log
-    const logChannel = interaction.guild.channels.cache.get(process.env.MOD_LOG_CHANNEL)
-    const logEntry = new MessageEmbed()
-      .setAuthor({ name: `🥾 ${incident.action}` })
-      .setTitle(incident.member)
-      .addField('Moderator', incident.moderator)
-      .addField('Reason', incident.reason)
-      .setThumbnail(member.displayAvatarURL())
-      .setFooter({ text: `#${incident.id}` })
-      .setTimestamp()
+      // Kick member
+      await member.kick(reason)
 
-    logChannel.send({ embeds: [logEntry] })
+      // Notify moderator
+      await interaction.reply({ content: `${member.user.tag} was kicked from the server.`, ephemeral: true })
 
-    // TODO: Log the incident with Grafana
+      // Send mod log
+      const logChannel = interaction.guild.channels.cache.get(process.env.MOD_LOG_CHANNEL)
+      const logEntry = new MessageEmbed()
+        .setAuthor({ name: `🥾 ${incident.action}` })
+        .setTitle(incident.member)
+        .addField('Moderator', incident.moderator)
+        .addField('Reason', incident.reason)
+        .setThumbnail(member.displayAvatarURL())
+        .setFooter({ text: `Case #${incident.id}` })
+        .setTimestamp()
+
+      logChannel.send({ embeds: [logEntry] })
+
+      // TODO: Log the incident with Grafana
+    } else {
+      return interaction.reply({ content: 'I don\'t have permission to kick that member.', ephemeral: true })
+    }
   }
 }
 
