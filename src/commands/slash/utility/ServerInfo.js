@@ -2,7 +2,6 @@ import { SlashCommand } from 'hiei.js'
 import { MessageEmbed } from 'discord.js'
 import { time } from '@discordjs/builders'
 import { thousands } from '../../../utilities/Util.js'
-import { links } from '../../../manny.config.js'
 
 class ServerInfo extends SlashCommand {
   constructor () {
@@ -39,6 +38,13 @@ class ServerInfo extends SlashCommand {
 
     const totalMembers = interaction.guild.memberCount.toString()
     const onlineMembers = interaction.guild.members.cache.filter(member => member.presence?.status === 'online').size.toString()
+
+    const links = {
+      donate: process.env.DONATE_LINK,
+      github: process.env.GITHUB_LINK,
+      twitter: process.env.TWITTER_LINK,
+      website: process.env.WEBSITE_LINK
+    }
 
     const info = new MessageEmbed()
       .setTitle(interaction.guild.name)
