@@ -45,7 +45,7 @@ class Timeout extends SlashCommand {
     const reason = interaction.options.getString('reason')
     const prisma = new PrismaClient()
 
-    // Abort early if the member is gone but still cached
+    // Abort if member is gone but still cached
     if (!member) {
       return interaction.reply({ content: 'Member not found. They may have already left the server. If they still appear in autocomplete, refresh your client to clear the cache.', ephemeral: true })
     }
