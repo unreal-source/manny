@@ -1,5 +1,5 @@
 import { SlashCommand } from 'hiei.js'
-import { randomElement } from '../../../utilities/Util.js'
+import { randomElement } from '../../../utilities/util.js'
 
 class CoinToss extends SlashCommand {
   constructor () {

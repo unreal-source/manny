@@ -1,4 +1,4 @@
-import { randomElement } from './Util.js'
+import { randomElement } from './util.js'
 
 const style = {
   a: [

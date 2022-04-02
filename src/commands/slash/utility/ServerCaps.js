@@ -1,6 +1,6 @@
 import { SlashCommand } from 'hiei.js'
 import { MessageEmbed } from 'discord.js'
-import { thousands } from '../../../utilities/Util.js'
+import { thousands } from '../../../utilities/util.js'
 
 class ServerCaps extends SlashCommand {
   constructor () {

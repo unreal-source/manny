@@ -1,7 +1,7 @@
 import { SlashCommand } from 'hiei.js'
 import { MessageEmbed } from 'discord.js'
 import { time } from '@discordjs/builders'
-import { thousands } from '../../../utilities/Util.js'
+import { thousands } from '../../../utilities/util.js'
 
 class ServerInfo extends SlashCommand {
   constructor () {

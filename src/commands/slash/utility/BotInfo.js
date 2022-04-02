@@ -1,7 +1,7 @@
 import { SlashCommand } from 'hiei.js'
 import { MessageEmbed } from 'discord.js'
 import { time } from '@discordjs/builders'
-import { jason } from '../../../utilities/Util.js'
+import { jason } from '../../../utilities/util.js'
 import { links } from '../../../manny.config.js'
 import ms from 'ms'
 

@@ -1,7 +1,7 @@
 import { SlashCommand } from 'hiei.js'
 import { MessageEmbed } from 'discord.js'
 import { time } from '@discordjs/builders'
-import { capitalize } from '../../../utilities/Util.js'
+import { capitalize } from '../../../utilities/util.js'
 
 class ChannelInfo extends SlashCommand {
   constructor () {
