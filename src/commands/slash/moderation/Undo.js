@@ -162,7 +162,20 @@ class Undo extends SlashCommand {
         const member = interaction.options.getMember('user')
         const reason = interaction.options.getString('reason')
 
-        // Cache, bot, self guards
+        // Abort if member is gone but still cached
+        if (!member) {
+          return interaction.reply({ content: 'Member not found. They may have already left the server. If they still appear in autocomplete, refresh your client to clear the cache.', ephemeral: true })
+        }
+
+        // You can't timeout the bot or yourself
+        if (member.id === this.client.user.id) {
+          return interaction.reply({ content: 'Nice try, human.', ephemeral: true })
+        }
+
+        if (member.id === interaction.member.id) {
+          return interaction.reply({ content: 'You can\'t cancel your own timeout.', ephemeral: true })
+        }
+
         // Check if member is banned
         // If yes: unban member, notify moderator, create case, create mod log, notify member
         // If no: notify moderator "that member is not banned"

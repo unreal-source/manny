@@ -1,5 +1,6 @@
 import { SlashCommand } from 'hiei.js'
 import { MessageEmbed } from 'discord.js'
+import { time } from '@discordjs/builders'
 import ms from 'ms'
 import pkg from '@prisma/client'
 const { PrismaClient } = pkg
@@ -57,6 +58,11 @@ class Timeout extends SlashCommand {
 
     if (member.id === interaction.member.id) {
       return interaction.reply({ content: 'You can\'t time yourself out.', ephemeral: true })
+    }
+
+    // Abort if member is already timed out
+    if (member.isCommunicationDisabled()) {
+      return interaction.reply({ content: `${member.user.tag} is already timed out until ${time(member.communicationDisabledUntil)}.`, ephemeral: true })
     }
 
     // Timeout member
