@@ -53,9 +53,9 @@ class Undo extends SlashCommand {
           description: 'Revoke a ban',
           options: [
             {
-              type: 'USER',
+              type: 'STRING',
               name: 'user',
-              description: 'The banned user',
+              description: 'The ID of the banned user',
               required: true
             },
             {
@@ -159,26 +159,62 @@ class Undo extends SlashCommand {
       }
 
       case 'ban': {
-        const member = interaction.options.getMember('user')
+        const id = interaction.options.getString('user')
         const reason = interaction.options.getString('reason')
 
-        // Abort if member is gone but still cached
-        if (!member) {
-          return interaction.reply({ content: 'Member not found. They may have already left the server. If they still appear in autocomplete, refresh your client to clear the cache.', ephemeral: true })
-        }
-
-        // You can't timeout the bot or yourself
-        if (member.id === this.client.user.id) {
+        // You can't unban the bot or yourself
+        if (id === this.client.user.id) {
           return interaction.reply({ content: 'Nice try, human.', ephemeral: true })
         }
 
-        if (member.id === interaction.member.id) {
-          return interaction.reply({ content: 'You can\'t cancel your own timeout.', ephemeral: true })
+        if (id === interaction.member.id) {
+          return interaction.reply({ content: 'You can\'t revoke your own ban.', ephemeral: true })
         }
 
         // Check if member is banned
-        // If yes: unban member, notify moderator, create case, create mod log, notify member
-        // If no: notify moderator "that member is not banned"
+        try {
+          const ban = await interaction.guild.bans.fetch(id)
+
+          // Revoke ban
+          await interaction.guild.members.unban(id)
+
+          // Notify moderator
+          await interaction.reply({ content: `${ban.user.tag} is no longer banned.`, ephemeral: true })
+
+          // Create case
+          const incident = await prisma.case.create({
+            data: {
+              action: 'Ban revoked',
+              member: ban.user.tag,
+              memberId: ban.user.id,
+              moderator: interaction.member.user.tag,
+              moderatorId: interaction.member.id,
+              reason: reason
+            }
+          })
+
+          // Create mod log
+          const modLog = interaction.guild.channels.cache.get(process.env.MOD_LOG_CHANNEL)
+          const modLogEntry = new MessageEmbed()
+            .setAuthor({ name: `↩️ ${incident.action}` })
+            .setTitle(incident.member)
+            .addField('Moderator', incident.moderator)
+            .addField('Reason', incident.reason)
+            .setThumbnail(ban.user.displayAvatarURL())
+            .setFooter({ text: `#${incident.id}` })
+            .setTimestamp()
+
+          modLog.send({ embeds: [modLogEntry] })
+
+          // TODO: Log the incident with Grafana
+        } catch {
+          try {
+            const member = await interaction.guild.members.fetch(id)
+            return interaction.reply({ content: `${member.user.tag} is not banned.`, ephemeral: true })
+          } catch {
+            return interaction.reply({ content: `${id} is not a valid user ID.`, ephemeral: true })
+          }
+        }
         break
       }
     }
