@@ -10,44 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Case {
-  id                 Int             @id @default(autoincrement())
-  action             String
-  member             String
-  memberId           String
-  moderator          String
-  moderatorId        String
-  reason             String
-  strike             Strike?
-  timeout            Timeout?
-  createdAt          DateTime        @default(now())
-  updatedAt          DateTime        @updatedAt
-}
-
-model Strike {
-  id                 Int             @id @unique
-  case               Case            @relation(fields: [id], references: [id])
-  expiration         DateTime
-  isActive           Boolean
-}
-
-model Timeout {
-  id                 Int             @id @unique
-  case               Case            @relation(fields: [id], references: [id])
-  duration           String
-}
-
-model Note {
-  id                 Int             @id @default(autoincrement())
-  content            String
-  member             String
-  memberId           String
-  moderator          String
-  moderatorId        String
-  createdAt          DateTime        @default(now())
-  updatedAt          DateTime        @updatedAt
-}
-
 model JobPost {
   id                 Int              @id @default(autoincrement())
   type               String
