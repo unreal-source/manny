@@ -1,5 +1,6 @@
+import { ApplicationCommandOptionType } from 'discord.js'
 import { SlashCommand } from 'hiei.js'
-import { randomInt } from '../../../utilities/Util.js'
+import { randomInteger } from '../../utilities/random-util.js'
 
 class RollDice extends SlashCommand {
   constructor () {
@@ -8,7 +9,7 @@ class RollDice extends SlashCommand {
       description: 'Roll up to 7 gaming dice',
       options: [
         {
-          type: 'INTEGER',
+          type: ApplicationCommandOptionType.Integer,
           name: 'quantity',
           description: 'The number of dice you want to roll.',
           required: true,
@@ -23,7 +24,7 @@ class RollDice extends SlashCommand {
           ]
         },
         {
-          type: 'INTEGER',
+          type: ApplicationCommandOptionType.Integer,
           name: 'sides',
           description: 'The number of sides your dice should have.',
           required: true,
@@ -43,7 +44,7 @@ class RollDice extends SlashCommand {
   async run (interaction) {
     const quantity = interaction.options.getInteger('quantity')
     const sides = interaction.options.getInteger('sides')
-    const roll = Array(quantity).fill(0).map(i => randomInt(1, sides)).join(', ')
+    const roll = Array(quantity).fill(0).map(i => randomInteger(1, sides)).join(', ')
 
     return interaction.reply({ content: `:game_die: ${roll}` })
   }

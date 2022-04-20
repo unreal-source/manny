@@ -1,6 +1,6 @@
 import { SlashCommand } from 'hiei.js'
-import { generate } from '../../../utilities/GameIdeaGenerator.js'
-import { randomElement } from '../../../utilities/util.js'
+import { generate } from '../../utilities/game-idea-generator.js'
+import { randomElement } from '../../utilities/random-util.js'
 
 class GameIdea extends SlashCommand {
   constructor () {

@@ -1,5 +1,6 @@
+import { ApplicationCommandOptionType } from 'discord.js'
 import { SlashCommand } from 'hiei.js'
-import { randomElement } from '../../utilities/util.js'
+import { randomElement } from '../../utilities/random-util.js'
 
 class Magic8Ball extends SlashCommand {
   constructor () {
@@ -8,7 +9,7 @@ class Magic8Ball extends SlashCommand {
       description: 'Ask the Magic 8-Ball a yes/no question',
       options: [
         {
-          type: 'STRING',
+          type: ApplicationCommandOptionType.String,
           name: 'question',
           description: 'The yes/no question you want to ask',
           required: true
