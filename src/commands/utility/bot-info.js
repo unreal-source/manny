@@ -1,9 +1,9 @@
 import { SlashCommand } from 'hiei.js'
 import { MessageEmbed } from 'discord.js'
 import { time } from '@discordjs/builders'
-import { jason } from '../../../utilities/util.js'
-import { links } from '../../../manny.config.js'
+import { importJson } from '../../utilities/json-util.js'
 import ms from 'ms'
+import { resolve } from 'node:path'
 
 class BotInfo extends SlashCommand {
   constructor () {
@@ -15,7 +15,7 @@ class BotInfo extends SlashCommand {
 
   async run (interaction) {
     const memoryUsed = (process.memoryUsage().heapUsed / 1024 / 1024)
-    const meta = await jason('../../package.json')
+    const meta = await importJson(resolve(process.cwd(), 'package.json'))
     const info = new MessageEmbed()
       .setTitle(this.client.user.tag)
       .setDescription(this.client.application.description ? this.client.application.description : '')
@@ -26,7 +26,7 @@ class BotInfo extends SlashCommand {
       .addField('Uptime', ms(this.client.uptime, { long: true }), true)
       .addField('Heartbeat', `${this.client.ws.ping}ms`, true)
       .addField('Memory Usage', `${Math.round(memoryUsed * 100) / 100} MB`, true)
-      .addField('Links', `[Source code](${links.botRepo}) • [Report a bug](${links.botBugs}) • [Contribute](${links.botContribute})`)
+      .addField('Links', `[Source code](${process.env.BOT_REPO_LINK}) • [Report a bug](${process.env.BOT_BUGS_LINK}) • [Contribute](${process.env.BOT_CONTRIBUTE_LINK})`)
 
     return interaction.reply({ embeds: [info] })
   }

@@ -1,5 +1,6 @@
 import { SlashCommand } from 'hiei.js'
-import { readFile } from 'node:fs/promises'
+import { importJson } from '../../utilities/json-util.js'
+import { resolve } from 'node:path'
 
 class BotVersion extends SlashCommand {
   constructor () {
@@ -10,7 +11,7 @@ class BotVersion extends SlashCommand {
   }
 
   async run (interaction) {
-    const meta = JSON.parse(await readFile(new URL('../../../../package.json', import.meta.url)))
+    const meta = await importJson(resolve(process.cwd(), 'package.json'))
     return interaction.reply({ content: `Current version is \`${meta.version}\``, ephemeral: true })
   }
 }

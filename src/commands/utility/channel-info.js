@@ -1,7 +1,7 @@
 import { SlashCommand } from 'hiei.js'
-import { MessageEmbed } from 'discord.js'
+import { ApplicationCommandOptionType, MessageEmbed } from 'discord.js'
 import { time } from '@discordjs/builders'
-import { capitalize } from '../../../utilities/util.js'
+import { capitalize } from '../../utilities/string-util.js'
 
 class ChannelInfo extends SlashCommand {
   constructor () {
@@ -10,7 +10,7 @@ class ChannelInfo extends SlashCommand {
       description: 'Learn more about a channel',
       options: [
         {
-          type: 'CHANNEL',
+          type: ApplicationCommandOptionType.Channel,
           name: 'channel',
           description: 'The channel you want to learn about',
           required: true

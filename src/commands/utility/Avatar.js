@@ -1,4 +1,5 @@
 import { SlashCommand } from 'hiei.js'
+import { ApplicationCommandOptionType } from 'discord.js'
 
 class Avatar extends SlashCommand {
   constructor () {
@@ -7,7 +8,7 @@ class Avatar extends SlashCommand {
       description: 'View a large version of someone\'s avatar',
       options: [
         {
-          type: 'USER',
+          type: ApplicationCommandOptionType.User,
           name: 'user',
           description: 'The user who\'s avatar you want to see',
           required: true

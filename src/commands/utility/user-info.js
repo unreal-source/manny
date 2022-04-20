@@ -1,5 +1,5 @@
 import { SlashCommand } from 'hiei.js'
-import { MessageEmbed } from 'discord.js'
+import { ApplicationCommandOptionType, MessageEmbed } from 'discord.js'
 import { time } from '@discordjs/builders'
 
 class UserInfo extends SlashCommand {
@@ -9,7 +9,7 @@ class UserInfo extends SlashCommand {
       description: 'Learn more about a user',
       options: [
         {
-          type: 'USER',
+          type: ApplicationCommandOptionType.User,
           name: 'user',
           description: 'The user you want to learn about',
           required: true

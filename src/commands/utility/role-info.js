@@ -1,5 +1,5 @@
+import { ApplicationCommandOptionType, MessageEmbed } from 'discord.js'
 import { SlashCommand } from 'hiei.js'
-import { MessageEmbed } from 'discord.js'
 import { time } from '@discordjs/builders'
 
 class RoleInfo extends SlashCommand {
@@ -9,7 +9,7 @@ class RoleInfo extends SlashCommand {
       description: 'Learn more about a role',
       options: [
         {
-          type: 'ROLE',
+          type: ApplicationCommandOptionType.Role,
           name: 'role',
           description: 'The role you want to learn about',
           required: true
