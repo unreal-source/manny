@@ -1,5 +1,5 @@
-import { ApplicationCommandOptionType } from 'discord.js'
 import { SlashCommand } from 'hiei.js'
+import { ApplicationCommandOptionType } from 'discord.js'
 import { randomInteger } from '../../utilities/random-util.js'
 
 class RollDice extends SlashCommand {
