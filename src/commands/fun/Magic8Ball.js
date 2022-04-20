@@ -1,5 +1,5 @@
 import { SlashCommand } from 'hiei.js'
-import { randomElement } from '../../../utilities/util.js'
+import { randomElement } from '../../utilities/util.js'
 
 class Magic8Ball extends SlashCommand {
   constructor () {
