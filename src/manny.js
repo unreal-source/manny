@@ -4,7 +4,8 @@ import { HieiClient } from 'hiei.js'
 const client = new HieiClient({
   intents: [
     GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildPresences
   ]
 })
 
