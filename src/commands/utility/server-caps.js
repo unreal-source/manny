@@ -1,5 +1,5 @@
 import { SlashCommand } from 'hiei.js'
-import { MessageEmbed } from 'discord.js'
+import { EmbedBuilder } from 'discord.js'
 import { thousands } from '../../utilities/number-util.js'
 
 class ServerCaps extends SlashCommand {
@@ -12,9 +12,10 @@ class ServerCaps extends SlashCommand {
 
   async run (interaction) {
     const guild = await interaction.guild.fetch()
-    const embed = new MessageEmbed()
-      .addField('Maximum Members', thousands(guild.maximumMembers))
-      .addField('Maximum Presences', thousands(guild.maximumPresences))
+    const embed = new EmbedBuilder()
+      .addFields(
+        { name: 'Maximum Members', value: thousands(guild.maximumMembers) },
+        { name: 'Maximum Presences', value: thousands(guild.maximumPresences) })
 
     return interaction.reply({ embeds: [embed], ephemeral: true })
   }

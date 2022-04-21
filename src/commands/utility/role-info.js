@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, MessageEmbed } from 'discord.js'
+import { ApplicationCommandOptionType, EmbedBuilder } from 'discord.js'
 import { SlashCommand } from 'hiei.js'
 import { time } from '@discordjs/builders'
 
@@ -20,16 +20,17 @@ class RoleInfo extends SlashCommand {
 
   async run (interaction) {
     const role = interaction.options.getRole('role')
-    const info = new MessageEmbed()
+    const info = new EmbedBuilder()
       .setColor(role.hexColor)
       .setTitle(role.name)
-      .addField('Color', role.hexColor, true)
-      .addField('\u200b', '\u200b', true)
-      .addField('ID', role.id, true)
-      .addField('Members', role.members.size.toString(), true)
-      .addField('\u200b', '\u200b', true)
-      .addField('Mentionable', role.mentionable ? 'Yes' : 'No', true)
-      .addField('Created', `${time(role.createdAt)} • ${time(role.createdAt, 'R')}`)
+      .addFields(
+        { name: 'Color', value: role.hexColor, inline: true },
+        { name: '\u200b', value: '\u200b', inline: true },
+        { name: 'ID', value: role.id, inline: true },
+        { name: 'Members', value: role.members.size.toString(), inline: true },
+        { name: '\u200b', value: '\u200b', inline: true },
+        { name: 'Mentionable', value: role.mentionable ? 'Yes' : 'No', inline: true },
+        { name: 'Created', value: `${time(role.createdAt)} • ${time(role.createdAt, 'R')}` })
 
     return interaction.reply({ embeds: [info] })
   }
