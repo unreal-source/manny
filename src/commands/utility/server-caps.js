@@ -12,10 +12,12 @@ class ServerCaps extends SlashCommand {
 
   async run (interaction) {
     const guild = await interaction.guild.fetch()
+    const maxMembers = guild.maximumMembers ? thousands(guild.maximumMembers) : 'Unknown'
+    const maxPresences = guild.maximumPresences ? thousands(guild.maximumPresences) : 'Unknown'
     const embed = new EmbedBuilder()
       .addFields(
-        { name: 'Maximum Members', value: thousands(guild.maximumMembers) },
-        { name: 'Maximum Presences', value: thousands(guild.maximumPresences) })
+        { name: 'Maximum Members', value: maxMembers },
+        { name: 'Maximum Presences', value: maxPresences })
 
     return interaction.reply({ embeds: [embed], ephemeral: true })
   }
