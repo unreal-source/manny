@@ -5,7 +5,8 @@ const client = new HieiClient({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.GuildPresences
+    GatewayIntentBits.GuildPresences,
+    GatewayIntentBits.GuildVoiceStates
   ]
 })
 
