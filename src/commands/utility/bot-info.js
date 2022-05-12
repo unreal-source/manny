@@ -9,7 +9,7 @@ class BotInfo extends SlashCommand {
   constructor () {
     super({
       name: 'bot',
-      description: 'Learn more about the bot'
+      description: 'Learn more about Manny'
     })
   }
 
