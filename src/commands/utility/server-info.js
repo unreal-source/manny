@@ -41,20 +41,19 @@ class ServerInfo extends SlashCommand {
     const info = new EmbedBuilder()
       .setTitle(interaction.guild.name)
       .setThumbnail(interaction.guild.iconURL())
-      .addFields(
+      .addFields([
         { name: 'Members', value: thousands(totalMembers), inline: true },
         { name: 'Online', value: thousands(onlineMembers), inline: true },
         { name: 'Boost Status', value: `${boostTierName[interaction.guild.premiumTier]} ${boostCount} ${nextTier}` },
         { name: 'Created', value: `${time(interaction.guild.createdAt)} • ${time(interaction.guild.createdAt, 'R')}` },
-        { name: 'Links', value: `[Website](${links.website}) • [Twitter](${links.twitter}) • [GitHub](${links.github}) • [Donate](${links.donate})` })
+        { name: 'Links', value: `[Website](${links.website}) • [Twitter](${links.twitter}) • [GitHub](${links.github}) • [Donate](${links.donate})` }])
 
     if (interaction.guild.description) {
       info.setDescription(interaction.guild.description)
     }
 
     if (interaction.guild.vanityURLCode) {
-      info.addFields(
-        { name: 'Invite', value: `[discord.gg/${interaction.guild.vanityURLCode}](https://discord.gg/${interaction.guild.vanityURLCode})` })
+      info.addFields([{ name: 'Invite', value: `[discord.gg/${interaction.guild.vanityURLCode}](https://discord.gg/${interaction.guild.vanityURLCode})` }])
     }
 
     return interaction.reply({ embeds: [info] })

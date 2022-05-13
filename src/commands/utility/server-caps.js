@@ -15,9 +15,9 @@ class ServerCaps extends SlashCommand {
     const maxMembers = guild.maximumMembers ? thousands(guild.maximumMembers) : 'Unknown'
     const maxPresences = guild.maximumPresences ? thousands(guild.maximumPresences) : 'Unknown'
     const embed = new EmbedBuilder()
-      .addFields(
+      .addFields([
         { name: 'Maximum Members', value: maxMembers },
-        { name: 'Maximum Presences', value: maxPresences })
+        { name: 'Maximum Presences', value: maxPresences }])
 
     return interaction.reply({ embeds: [embed], ephemeral: true })
   }

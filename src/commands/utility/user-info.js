@@ -30,13 +30,13 @@ class UserInfo extends SlashCommand {
     const info = new EmbedBuilder()
       .setTitle(`${member.user.tag} ${member.nickname ? `(${member.nickname})` : ''} ${member.user.bot ? '`BOT`' : ''}`)
       .setThumbnail(member.displayAvatarURL())
-      .addFields(
+      .addFields([
         { name: 'Status', value: status[member.presence.status], inline: true },
         { name: 'ID', value: member.id, inline: true },
         { name: 'Membership', value: member.pending ? 'Pending' : 'Confirmed' },
         { name: 'Roles', value: member.roles.cache.map(role => `\`${role.name}\``).join(' ') },
         { name: 'Joined Server', value: `${time(member.joinedAt)} • ${time(member.joinedAt, 'R')}` },
-        { name: 'Joined Discord', value: `${time(member.user.createdAt)} • ${time(member.user.createdAt, 'R')}` })
+        { name: 'Joined Discord', value: `${time(member.user.createdAt)} • ${time(member.user.createdAt, 'R')}` }])
 
     return interaction.reply({ embeds: [info] })
   }

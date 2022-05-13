@@ -23,14 +23,14 @@ class RoleInfo extends SlashCommand {
     const info = new EmbedBuilder()
       .setColor(role.hexColor)
       .setTitle(role.name)
-      .addFields(
+      .addFields([
         { name: 'Color', value: role.hexColor, inline: true },
         { name: '\u200b', value: '\u200b', inline: true },
         { name: 'ID', value: role.id, inline: true },
         { name: 'Members', value: role.members.size.toString(), inline: true },
         { name: '\u200b', value: '\u200b', inline: true },
         { name: 'Mentionable', value: role.mentionable ? 'Yes' : 'No', inline: true },
-        { name: 'Created', value: `${time(role.createdAt)} • ${time(role.createdAt, 'R')}` })
+        { name: 'Created', value: `${time(role.createdAt)} • ${time(role.createdAt, 'R')}` }])
 
     return interaction.reply({ embeds: [info] })
   }
