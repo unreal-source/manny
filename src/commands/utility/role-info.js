@@ -20,17 +20,13 @@ class RoleInfo extends SlashCommand {
 
   async run (interaction) {
     const role = interaction.options.getRole('role')
+    const members = role.members.size.toString()
+    const mentionable = role.mentionable ? 'Yes' : 'No'
+    const created = `${time(role.createdAt)} • ${time(role.createdAt, 'R')}`
     const info = new EmbedBuilder()
       .setColor(role.hexColor)
       .setTitle(role.name)
-      .addFields([
-        { name: 'Color', value: role.hexColor, inline: true },
-        { name: '\u200b', value: '\u200b', inline: true },
-        { name: 'ID', value: role.id, inline: true },
-        { name: 'Members', value: role.members.size.toString(), inline: true },
-        { name: '\u200b', value: '\u200b', inline: true },
-        { name: 'Mentionable', value: role.mentionable ? 'Yes' : 'No', inline: true },
-        { name: 'Created', value: `${time(role.createdAt)} • ${time(role.createdAt, 'R')}` }])
+      .setDescription(`**ID:** ${role.id}\n**Color:** ${role.hexColor}\n**Members:** ${members}\n**Mentionable:** ${mentionable}\n**Created:** ${created}`)
 
     return interaction.reply({ embeds: [info] })
   }

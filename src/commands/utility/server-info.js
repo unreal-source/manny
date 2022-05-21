@@ -27,34 +27,18 @@ class ServerInfo extends SlashCommand {
 
     const boostCount = interaction.guild.premiumSubscriptionCount > 0 ? `${interaction.guild.premiumSubscriptionCount} Boosts •` : ''
     const nextTier = boostCount < boostThreshold[3] ? `• ${boostThreshold[interaction.guild.premiumTier + 1] - boostCount} more until next level` : ''
-
+    const boostStatus = `${boostTierName[interaction.guild.premiumTier]} ${boostCount} ${nextTier}`
+    const description = interaction.guild.description ? `${interaction.guild.description}\n—` : ''
     const totalMembers = interaction.guild.memberCount.toString()
     const onlineMembers = interaction.guild.members.cache.filter(member => member.presence?.status === 'online').size.toString()
-
-    const links = {
-      donate: process.env.DONATE_LINK,
-      github: process.env.GITHUB_LINK,
-      twitter: process.env.TWITTER_LINK,
-      website: process.env.WEBSITE_LINK
-    }
+    const created = `${time(interaction.guild.createdAt)} • ${time(interaction.guild.createdAt, 'R')}`
+    const links = `[Website](${process.env.WEBSITE_LINK}) • [Twitter](${process.env.TWITTER_LINK}) • [GitHub](${process.env.GITHUB_LINK}) • [Donate](${process.env.DONATE_LINK})`
+    const invite = interaction.guild.vanityURLCode ? `\n**Invite:** [discord.gg/${interaction.guild.vanityURLCode}](https://discord.gg/${interaction.guild.vanityURLCode})` : ''
 
     const info = new EmbedBuilder()
       .setTitle(interaction.guild.name)
+      .setDescription(`${description}\n**Members:** ${thousands(totalMembers)} • ${thousands(onlineMembers)} online\n**Boost Status:** ${boostStatus}\n**Created:** ${created}${invite}\n—\n${links}`)
       .setThumbnail(interaction.guild.iconURL())
-      .addFields([
-        { name: 'Members', value: thousands(totalMembers), inline: true },
-        { name: 'Online', value: thousands(onlineMembers), inline: true },
-        { name: 'Boost Status', value: `${boostTierName[interaction.guild.premiumTier]} ${boostCount} ${nextTier}` },
-        { name: 'Created', value: `${time(interaction.guild.createdAt)} • ${time(interaction.guild.createdAt, 'R')}` },
-        { name: 'Links', value: `[Website](${links.website}) • [Twitter](${links.twitter}) • [GitHub](${links.github}) • [Donate](${links.donate})` }])
-
-    if (interaction.guild.description) {
-      info.setDescription(interaction.guild.description)
-    }
-
-    if (interaction.guild.vanityURLCode) {
-      info.addFields([{ name: 'Invite', value: `[discord.gg/${interaction.guild.vanityURLCode}](https://discord.gg/${interaction.guild.vanityURLCode})` }])
-    }
 
     return interaction.reply({ embeds: [info] })
   }

@@ -20,6 +20,10 @@ class UserInfo extends SlashCommand {
 
   async run (interaction) {
     const member = interaction.options.getMember('user')
+    const membership = member.pending ? 'Pending' : 'Confirmed'
+    const roles = member.roles.cache.map(role => `\`${role.name}\``).join(' ')
+    const joinedServer = `${time(member.joinedAt)} • ${time(member.joinedAt, 'R')}`
+    const joinedDiscord = `${time(member.user.createdAt)} • ${time(member.user.createdAt, 'R')}`
     const status = {
       online: 'Online',
       idle: 'Idle',
@@ -29,14 +33,8 @@ class UserInfo extends SlashCommand {
 
     const info = new EmbedBuilder()
       .setTitle(`${member.user.tag} ${member.nickname ? `(${member.nickname})` : ''} ${member.user.bot ? '`BOT`' : ''}`)
+      .setDescription(`**ID:** ${member.id}\n**Status:** ${status[member.presence.status]}\n**Membership:** ${membership}\n**Roles:** ${roles}\n**Joined Server:** ${joinedServer}\n**Joined Discord:** ${joinedDiscord}`)
       .setThumbnail(member.displayAvatarURL())
-      .addFields([
-        { name: 'Status', value: status[member.presence.status], inline: true },
-        { name: 'ID', value: member.id, inline: true },
-        { name: 'Membership', value: member.pending ? 'Pending' : 'Confirmed' },
-        { name: 'Roles', value: member.roles.cache.map(role => `\`${role.name}\``).join(' ') },
-        { name: 'Joined Server', value: `${time(member.joinedAt)} • ${time(member.joinedAt, 'R')}` },
-        { name: 'Joined Discord', value: `${time(member.user.createdAt)} • ${time(member.user.createdAt, 'R')}` }])
 
     return interaction.reply({ embeds: [info] })
   }

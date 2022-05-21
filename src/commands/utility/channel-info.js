@@ -26,46 +26,33 @@ class ChannelInfo extends SlashCommand {
       2: 'Voice',
       4: 'Category',
       5: 'News',
-      9: 'Stage'
+      13: 'Stage'
     }
 
+    const category = `**Category:** ${channel.parent ? capitalize(channel.parent.name) : 'None'}\n`
     const info = new EmbedBuilder()
-      .setTitle(channel.name)
-      .addFields([
-        { name: 'Type', value: channelTypes[channel.type], inline: true },
-        { name: 'ID', value: channel.id, inline: true }])
-
-    if (channel.parent) {
-      info.addFields([{ name: 'Category', value: capitalize(channel.parent.name) }])
-    }
 
     if (channel.isText()) {
-      info.addFields([{ name: 'Topic', value: channel.topic ?? 'None' }])
+      const latestActivity = channel.lastMessage ? `**Latest Activity:** ${time(channel.lastMessage.editedAt || channel.lastMessage.createdAt)} • ${time(channel.lastMessage.editedAt || channel.lastMessage.createdAt, 'R')}\n` : ''
 
-      if (channel.lastMessage) {
-        info.addFields([{ name: 'Latest Activity', value: `${time(channel.lastMessage.editedAt || channel.lastMessage.createdAt)} • ${time(channel.lastMessage.editedAt || channel.lastMessage.createdAt, 'R')}` }])
-      }
+      info
+        .setTitle(`#${channel.name}`)
+        .setDescription(`**ID:** ${channel.id}\n**Type:** ${channelTypes[channel.type]}\n${category}**Topic:** ${channel.topic ?? 'None'}\n${latestActivity}**Created:** ${time(channel.createdAt)} • ${time(channel.createdAt, 'R')}`)
     }
 
-    if (channel.isVoice()) {
-      info
-        .addFields([
-          { name: 'Bitrate', value: `${channel.bitrate / 1000}kbps` },
-          { name: 'Users', value: channel.userLimit > 0 ? `${channel.members.size.toString()} / ${channel.userLimit}` : channel.members.size.toString() }])
-    }
+    if (channel.isVoice() || channel.isStage()) {
+      const users = channel.userLimit > 0 ? `${channel.members.size.toString()} / ${channel.userLimit}` : channel.members.size.toString()
 
-    if (channel.isStage()) {
       info
-        .addFields([
-          { name: 'Bitrate', value: `${channel.bitrate / 1000}kbps` },
-          { name: 'Users', value: channel.userLimit > 0 ? `${channel.members.size.toString()} / ${channel.userLimit}` : channel.members.size.toString() }])
+        .setTitle(channel.name)
+        .setDescription(`**ID:** ${channel.id}\n**Type:** ${channelTypes[channel.type]}\n${category}**Bitrate:** ${channel.bitrate / 1000}kbps\n**Users:** ${users}\n**Created:** ${time(channel.createdAt)} • ${time(channel.createdAt, 'R')}`)
     }
 
     if (channel.isCategory()) {
-      info.addFields([{ name: 'Channels', value: channel.children.cache.size.toString() }])
+      info
+        .setTitle(`${channel.name}`)
+        .setDescription(`**ID:** ${channel.id}\n**Type:** ${channelTypes[channel.type]}\n**Channels:** ${channel.children.cache.size.toString()}\n**Created:** ${time(channel.createdAt)} • ${time(channel.createdAt, 'R')}`)
     }
-
-    info.addFields([{ name: 'Created', value: `${time(channel.createdAt)} • ${time(channel.createdAt, 'R')}` }])
 
     return interaction.reply({ embeds: [info] })
   }
