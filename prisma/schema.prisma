@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,30 +8,31 @@ datasource db {
 }
 
 model Case {
-  id                 Int             @id @default(autoincrement())
+  id                 Int      @id @default(autoincrement())
   action             String
   member             String
   memberId           String
-  moderator          String
-  moderatorId        String
-  reason             String
-  strike             Strike?
-  timeout            Timeout?
-  createdAt          DateTime        @default(now())
-  updatedAt          DateTime        @updatedAt
+  moderator   String
+  moderatorId String
+  reason      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  reference   String
+  strike      Strike?
+  timeout     Timeout?
 }
 
 model Strike {
-  id                 Int             @id @unique
-  case               Case            @relation(fields: [id], references: [id])
-  expiration         DateTime
-  isActive           Boolean
+  id         Int      @id @unique
+  expiration DateTime
+  isActive   Boolean
+  case       Case     @relation(fields: [id], references: [id])
 }
 
 model Timeout {
-  id                 Int             @id @unique
-  case               Case            @relation(fields: [id], references: [id])
-  duration           String
+  id       Int    @id @unique
+  duration String
+  case     Case   @relation(fields: [id], references: [id])
 }
 
 model JobPost {
