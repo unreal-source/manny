@@ -18,16 +18,16 @@ class VoiceStateUpdateListener extends Listener {
 
     // User joined a voice channel
     if (oldState.channel === null && newState.channel !== null) {
-      await newState.member.roles.add(config.roles.voice)
-      this.client.log.info(`Voice role added >> ${newState.member.user.tag}`)
+      // await newState.member.roles.add(config.roles.voice)
+      // this.client.log.info(`Voice role added >> ${newState.member.user.tag}`)
 
       channel.send(`${username} joined **${newState.channel.name}**`)
     }
 
     // User left a voice channel
     if (oldState.channel !== null && newState.channel === null) {
-      await newState.member.roles.remove(config.roles.voice)
-      this.client.log.info(`Voice role removed >> ${newState.member.user.tag}`)
+      // await newState.member.roles.remove(config.roles.voice)
+      // this.client.log.info(`Voice role removed >> ${newState.member.user.tag}`)
 
       channel.send(`${username} left **${oldState.channel.name}**`)
     }
