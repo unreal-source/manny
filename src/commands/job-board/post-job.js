@@ -91,12 +91,12 @@ class Job extends SlashCommand {
             const channel = i.guild.channels.cache.get(process.env.SALARY_JOB_CHANNEL)
             const jobPost = new EmbedBuilder()
               .setTitle(role)
-              .addFields(
+              .addFields([
                 { name: 'Location', value: location },
                 { name: 'Responsibilities', value: responsibilities },
                 { name: 'Qualifications', value: qualificiations },
                 { name: 'How to Apply', value: apply }
-              )
+              ])
               .setTimestamp()
 
             await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [jobPost] })
@@ -161,12 +161,12 @@ class Job extends SlashCommand {
             const channel = i.guild.channels.cache.get(process.env.FREELANCE_JOB_CHANNEL)
             const jobPost = new EmbedBuilder()
               .setTitle(role)
-              .addFields(
+              .addFields([
                 { name: 'Location', value: location },
                 { name: 'Responsibilities', value: responsibilities },
                 { name: 'Qualifications', value: qualificiations },
                 { name: 'How to Apply', value: apply }
-              )
+              ])
               .setTimestamp()
 
             await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [jobPost] })
@@ -231,12 +231,12 @@ class Job extends SlashCommand {
             const channel = i.guild.channels.cache.get(process.env.REVSHARE_JOB_CHANNEL)
             const jobPost = new EmbedBuilder()
               .setTitle(role)
-              .addFields(
+              .addFields([
                 { name: 'Location', value: location },
                 { name: 'Responsibilities', value: responsibilities },
                 { name: 'Qualifications', value: qualificiations },
                 { name: 'How to Apply', value: apply }
-              )
+              ])
               .setTimestamp()
 
             await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [jobPost] })
