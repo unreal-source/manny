@@ -3,7 +3,7 @@ import { ActionRowBuilder, ApplicationCommandOptionType, EmbedBuilder, ModalBuil
 import { channelMention } from '@discordjs/builders'
 import { createModalCollector } from '../../utilities/discord-util.js'
 
-class Job extends SlashCommand {
+class AddJob extends SlashCommand {
   constructor () {
     super({
       name: 'job',
@@ -302,4 +302,4 @@ class Job extends SlashCommand {
   }
 }
 
-export default Job
+export default AddJob
