@@ -1,0 +1,157 @@
+import { SlashCommand } from 'hiei.js'
+import { ActionRowBuilder, ApplicationCommandOptionType, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from 'discord.js'
+import { channelMention } from '@discordjs/builders'
+import { createModalCollector } from '../../utilities/discord-util.js'
+
+class AddPortfolio extends SlashCommand {
+  constructor () {
+    super({
+      name: 'portfolio',
+      description: 'Post your portfolio on the job board',
+      options: [
+        {
+          type: ApplicationCommandOptionType.Subcommand,
+          name: 'freelancer',
+          description: 'Post your freelancer portfolio on the job board'
+        },
+        {
+          type: ApplicationCommandOptionType.Subcommand,
+          name: 'studio',
+          description: 'Post your studio portfolio on job on the job board'
+        }
+      ]
+    })
+  }
+
+  async run (interaction) {
+    const subcommand = interaction.options.getSubcommand()
+
+    switch (subcommand) {
+      case 'freelancer': {
+        const questions = new ModalBuilder()
+          .setCustomId('freelancerPortfolioModal')
+          .setTitle('Post a Freelancer Portfolio')
+
+        const nameInput = new TextInputBuilder()
+          .setCustomId('name')
+          .setLabel('Your name or company name')
+          .setPlaceholder('Stylish Joe')
+          .setStyle(TextInputStyle.Short)
+
+        const servicesInput = new TextInputBuilder()
+          .setCustomId('services')
+          .setLabel('Your Services')
+          .setStyle(TextInputStyle.Paragraph)
+
+        const websiteInput = new TextInputBuilder()
+          .setCustomId('website')
+          .setLabel('Website URL')
+          .setStyle(TextInputStyle.Short)
+
+        const contactInput = new TextInputBuilder()
+          .setCustomId('contact')
+          .setLabel('Contact Info')
+          .setStyle(TextInputStyle.Short)
+
+        const firstRow = new ActionRowBuilder().addComponents([nameInput])
+        const secondRow = new ActionRowBuilder().addComponents([servicesInput])
+        const thirdRow = new ActionRowBuilder().addComponents([websiteInput])
+        const fourthRow = new ActionRowBuilder().addComponents([contactInput])
+
+        questions.addComponents([firstRow, secondRow, thirdRow, fourthRow])
+
+        await interaction.showModal(questions)
+
+        const collector = createModalCollector(this.client, interaction)
+
+        collector.on('collect', async i => {
+          if (i.customId === 'freelancerPortfolioModal') {
+            const submitter = i.user
+            const name = i.fields.getTextInputValue('name')
+            const services = i.fields.getTextInputValue('services')
+            const website = i.fields.getTextInputValue('website')
+            const contact = i.fields.getTextInputValue('contact')
+            const channel = i.guild.channels.cache.get(process.env.FREELANCER_PORTFOLIO_CHANNEL)
+            const portfolioPost = new EmbedBuilder()
+              .setTitle(name)
+              .setDescription(website)
+              .addFields([
+                { name: 'Services', value: services },
+                { name: 'Contact', value: contact }
+              ])
+              .setTimestamp()
+
+            await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [portfolioPost] })
+            return i.reply({ content: `Your portfolio was successfully submitted to ${channelMention(process.env.FREELANCER_PORTFOLIO_CHANNEL)}`, ephemeral: true })
+          }
+        })
+
+        break
+      }
+
+      case 'studio': {
+        const questions = new ModalBuilder()
+          .setCustomId('studioPortfolioModal')
+          .setTitle('Post a Studio Portfolio')
+
+        const nameInput = new TextInputBuilder()
+          .setCustomId('name')
+          .setLabel('Your company name')
+          .setPlaceholder('Stylish Joe')
+          .setStyle(TextInputStyle.Short)
+
+        const servicesInput = new TextInputBuilder()
+          .setCustomId('services')
+          .setLabel('Your Services')
+          .setStyle(TextInputStyle.Paragraph)
+
+        const websiteInput = new TextInputBuilder()
+          .setCustomId('website')
+          .setLabel('Website URL')
+          .setStyle(TextInputStyle.Short)
+
+        const contactInput = new TextInputBuilder()
+          .setCustomId('contact')
+          .setLabel('Contact Info')
+          .setStyle(TextInputStyle.Short)
+
+        const firstRow = new ActionRowBuilder().addComponents([nameInput])
+        const secondRow = new ActionRowBuilder().addComponents([servicesInput])
+        const thirdRow = new ActionRowBuilder().addComponents([websiteInput])
+        const fourthRow = new ActionRowBuilder().addComponents([contactInput])
+
+        questions.addComponents([firstRow, secondRow, thirdRow, fourthRow])
+
+        await interaction.showModal(questions)
+
+        const collector = createModalCollector(this.client, interaction)
+
+        collector.on('collect', async i => {
+          if (i.customId === 'studioPortfolioModal') {
+            const submitter = i.user
+            const name = i.fields.getTextInputValue('name')
+            const services = i.fields.getTextInputValue('services')
+            const website = i.fields.getTextInputValue('website')
+            const contact = i.fields.getTextInputValue('contact')
+            const channel = i.guild.channels.cache.get(process.env.STUDIO_PORTFOLIO_CHANNEL)
+            const portfolioPost = new EmbedBuilder()
+              .setTitle(name)
+              .setDescription(website)
+              .addFields([
+                { name: 'Services', value: services },
+                { name: 'Contact', value: contact }
+              ])
+              .setTimestamp()
+
+            await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [portfolioPost] })
+            return i.reply({ content: `Your portfolio was successfully submitted to ${channelMention(process.env.STUDIO_PORTFOLIO_CHANNEL)}`, ephemeral: true })
+          }
+        })
+
+        break
+      }
+    }
+  }
+}
+
+export default AddPortfolio
