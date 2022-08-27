@@ -54,8 +54,3 @@ model Portfolio {
   createdAt DateTime @default(now())
   updatedAt DateTime
 }
-
-model Settings {
-  guild  String  @id @unique
-  shield Boolean @default(false)
-}
