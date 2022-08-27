@@ -1,5 +1,5 @@
 import { SlashCommand } from 'hiei.js'
-import { ApplicationCommandOptionType, EmbedBuilder } from 'discord.js'
+import { ApplicationCommandOptionType, ChannelType, EmbedBuilder } from 'discord.js'
 import { time } from '@discordjs/builders'
 import { capitalize } from '../../utilities/string-util.js'
 
@@ -32,7 +32,7 @@ class ChannelInfo extends SlashCommand {
     const category = `**Category:** ${channel.parent ? capitalize(channel.parent.name) : 'None'}\n`
     const info = new EmbedBuilder()
 
-    if (channel.isText()) {
+    if (channel.type === ChannelType.GuildText) {
       const latestActivity = channel.lastMessage ? `**Latest Activity:** ${time(channel.lastMessage.editedAt || channel.lastMessage.createdAt)} • ${time(channel.lastMessage.editedAt || channel.lastMessage.createdAt, 'R')}\n` : ''
 
       info
@@ -40,7 +40,7 @@ class ChannelInfo extends SlashCommand {
         .setDescription(`**ID:** ${channel.id}\n**Type:** ${channelTypes[channel.type]}\n${category}**Topic:** ${channel.topic ?? 'None'}\n${latestActivity}**Created:** ${time(channel.createdAt)} • ${time(channel.createdAt, 'R')}`)
     }
 
-    if (channel.isVoice() || channel.isStage()) {
+    if (channel.type === ChannelType.GuildVoice || channel.type === ChannelType.GuildStageVoice) {
       const users = channel.userLimit > 0 ? `${channel.members.size.toString()} / ${channel.userLimit}` : channel.members.size.toString()
 
       info
@@ -48,7 +48,7 @@ class ChannelInfo extends SlashCommand {
         .setDescription(`**ID:** ${channel.id}\n**Type:** ${channelTypes[channel.type]}\n${category}**Bitrate:** ${channel.bitrate / 1000}kbps\n**Users:** ${users}\n**Created:** ${time(channel.createdAt)} • ${time(channel.createdAt, 'R')}`)
     }
 
-    if (channel.isCategory()) {
+    if (channel.type === ChannelType.GuildCategory) {
       info
         .setTitle(`${channel.name}`)
         .setDescription(`**ID:** ${channel.id}\n**Type:** ${channelTypes[channel.type]}\n**Channels:** ${channel.children.cache.size.toString()}\n**Created:** ${time(channel.createdAt)} • ${time(channel.createdAt, 'R')}`)
