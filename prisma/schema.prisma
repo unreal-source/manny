@@ -37,9 +37,9 @@ model Timeout {
 
 model JobPost {
   id        Int      @id @default(autoincrement())
-  type      String
-  member    String
-  memberId  String
+  channel   String
+  author    String
+  authorId  String
   messageId String
   createdAt DateTime @default(now())
   updatedAt DateTime
@@ -47,9 +47,9 @@ model JobPost {
 
 model Portfolio {
   id        Int      @id @default(autoincrement())
-  type      String
-  member    String
-  memberId  String
+  channel   String
+  author    String
+  authorId  String
   messageId String
   createdAt DateTime @default(now())
   updatedAt DateTime
