@@ -42,7 +42,7 @@ model Job {
   authorId  String
   messageId String
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
 }
 
 model Portfolio {
@@ -52,5 +52,5 @@ model Portfolio {
   authorId  String
   messageId String
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
 }
