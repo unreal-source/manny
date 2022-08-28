@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.2.1",
-    "discord.js": "^14.1.2",
+    "discord.js": "^14.3.0",
     "dotenv": "^16.0.1",
     "hiei.js": "^0.8.0",
     "ms": "^2.1.3"
