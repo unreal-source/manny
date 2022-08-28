@@ -2,6 +2,8 @@ import { SlashCommand } from 'hiei.js'
 import { ActionRowBuilder, ApplicationCommandOptionType, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from 'discord.js'
 import { channelMention } from '@discordjs/builders'
 import { createModalCollector } from '../../utilities/discord-util.js'
+import pkg from '@prisma/client'
+const { PrismaClient } = pkg
 
 class AddJob extends SlashCommand {
   constructor () {
@@ -27,7 +29,7 @@ class AddJob extends SlashCommand {
         {
           type: ApplicationCommandOptionType.Subcommand,
           name: 'volunteer',
-          description: 'Post volunteer/unpaid job on the job board'
+          description: 'Post volunteer project on the job board'
         }
       ]
     })
@@ -97,9 +99,23 @@ class AddJob extends SlashCommand {
                 { name: 'Qualifications', value: qualificiations },
                 { name: 'How to Apply', value: apply }
               ])
-              .setTimestamp()
 
-            await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [jobPost] })
+            const post = await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [jobPost] })
+            const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
+            await post.edit({ embeds: [edited] })
+
+            const prisma = new PrismaClient()
+            await prisma.job.create({
+              data: {
+                channel: process.env.SALARY_JOB_CHANNEL,
+                author: submitter.tag,
+                authorId: submitter.id,
+                messageId: post.id
+              }
+            })
+
+            await prisma.$disconnect()
+
             return i.reply({ content: `Your post was successfully submitted to ${channelMention(process.env.SALARY_JOB_CHANNEL)}`, ephemeral: true })
           }
         })
@@ -167,9 +183,23 @@ class AddJob extends SlashCommand {
                 { name: 'Qualifications', value: qualificiations },
                 { name: 'How to Apply', value: apply }
               ])
-              .setTimestamp()
 
-            await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [jobPost] })
+            const post = await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [jobPost] })
+            const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
+            await post.edit({ embeds: [edited] })
+
+            const prisma = new PrismaClient()
+            await prisma.job.create({
+              data: {
+                channel: process.env.FREELANCE_JOB_CHANNEL,
+                author: submitter.tag,
+                authorId: submitter.id,
+                messageId: post.id
+              }
+            })
+
+            await prisma.$disconnect()
+
             return i.reply({ content: `Your post was successfully submitted to ${channelMention(process.env.FREELANCE_JOB_CHANNEL)}`, ephemeral: true })
           }
         })
@@ -237,9 +267,23 @@ class AddJob extends SlashCommand {
                 { name: 'Qualifications', value: qualificiations },
                 { name: 'How to Apply', value: apply }
               ])
-              .setTimestamp()
 
-            await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [jobPost] })
+            const post = await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [jobPost] })
+            const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
+            await post.edit({ embeds: [edited] })
+
+            const prisma = new PrismaClient()
+            await prisma.job.create({
+              data: {
+                channel: process.env.REVSHARE_JOB_CHANNEL,
+                author: submitter.tag,
+                authorId: submitter.id,
+                messageId: post.id
+              }
+            })
+
+            await prisma.$disconnect()
+
             return i.reply({ content: `Your post was successfully submitted to ${channelMention(process.env.REVSHARE_JOB_CHANNEL)}`, ephemeral: true })
           }
         })
@@ -289,9 +333,23 @@ class AddJob extends SlashCommand {
               .setTitle(title)
               .setDescription(details)
               .addFields([{ name: 'Contact', value: contact }])
-              .setTimestamp()
 
-            await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [jobPost] })
+            const post = await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [jobPost] })
+            const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
+            await post.edit({ embeds: [edited] })
+
+            const prisma = new PrismaClient()
+            await prisma.job.create({
+              data: {
+                channel: process.env.VOLUNTEER_JOB_CHANNEL,
+                author: submitter.tag,
+                authorId: submitter.id,
+                messageId: post.id
+              }
+            })
+
+            await prisma.$disconnect()
+
             return i.reply({ content: `Your post was successfully submitted to ${channelMention(process.env.VOLUNTEER_JOB_CHANNEL)}`, ephemeral: true })
           }
         })
