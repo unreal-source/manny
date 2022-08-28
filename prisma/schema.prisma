@@ -35,7 +35,7 @@ model Timeout {
   case     Case   @relation(fields: [id], references: [id])
 }
 
-model JobPost {
+model Job {
   id        Int      @id @default(autoincrement())
   channel   String
   author    String
