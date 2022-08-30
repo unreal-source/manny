@@ -1,5 +1,5 @@
 import { SlashCommand } from 'hiei.js'
-import { ApplicationCommandOptionType } from 'discord.js'
+import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js'
 import { randomInteger } from '../../utilities/random-util.js'
 
 class RollDice extends SlashCommand {
@@ -37,7 +37,8 @@ class RollDice extends SlashCommand {
             { name: 'd20', value: 20 }
           ]
         }
-      ]
+      ],
+      defaultMemberPermissions: PermissionFlagsBits.SendMessages
     })
   }
 

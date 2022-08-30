@@ -1,5 +1,5 @@
 import { SlashCommand } from 'hiei.js'
-import { ActionRowBuilder, ApplicationCommandOptionType, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from 'discord.js'
+import { ActionRowBuilder, ApplicationCommandOptionType, EmbedBuilder, ModalBuilder, PermissionFlagsBits, TextInputBuilder, TextInputStyle } from 'discord.js'
 import { channelMention } from '@discordjs/builders'
 import { createModalCollector } from '../../utilities/discord-util.js'
 import pkg from '@prisma/client'
@@ -21,7 +21,8 @@ class AddPortfolio extends SlashCommand {
           name: 'studio',
           description: 'Post your studio portfolio on job on the job board'
         }
-      ]
+      ],
+      defaultMemberPermissions: PermissionFlagsBits.SendMessages
     })
   }
 

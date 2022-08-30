@@ -1,4 +1,5 @@
 import { SlashCommand } from 'hiei.js'
+import { PermissionFlagsBits } from 'discord.js'
 import { generate } from '../../utilities/game-idea-generator.js'
 import { randomElement } from '../../utilities/random-util.js'
 
@@ -6,7 +7,8 @@ class GameIdea extends SlashCommand {
   constructor () {
     super({
       name: 'gameidea',
-      description: 'Generate a random game idea'
+      description: 'Generate a random game idea',
+      defaultMemberPermissions: PermissionFlagsBits.SendMessages
     })
   }
 

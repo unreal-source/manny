@@ -1,10 +1,12 @@
 import { SlashCommand } from 'hiei.js'
+import { PermissionFlagsBits } from 'discord.js'
 
 class BotPing extends SlashCommand {
   constructor () {
     super({
       name: 'ping',
-      description: 'Check the bot\'s latency and websocket heartbeat'
+      description: 'Check the bot\'s latency and websocket heartbeat',
+      defaultMemberPermissions: PermissionFlagsBits.BanMembers
     })
   }
 

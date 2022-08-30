@@ -1,5 +1,5 @@
 import { SlashCommand } from 'hiei.js'
-import { EmbedBuilder } from 'discord.js'
+import { EmbedBuilder, PermissionFlagsBits } from 'discord.js'
 import { time } from '@discordjs/builders'
 import { importJson } from '../../utilities/json-util.js'
 import { resolve } from 'node:path'
@@ -8,7 +8,8 @@ class BotInfo extends SlashCommand {
   constructor () {
     super({
       name: 'bot',
-      description: 'Learn more about Manny'
+      description: 'Learn more about Manny',
+      defaultMemberPermissions: PermissionFlagsBits.SendMessages
     })
   }
 

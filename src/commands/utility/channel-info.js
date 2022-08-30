@@ -1,5 +1,5 @@
 import { SlashCommand } from 'hiei.js'
-import { ApplicationCommandOptionType, ChannelType, EmbedBuilder } from 'discord.js'
+import { ApplicationCommandOptionType, ChannelType, EmbedBuilder, PermissionFlagsBits } from 'discord.js'
 import { time } from '@discordjs/builders'
 import { capitalize } from '../../utilities/string-util.js'
 
@@ -15,7 +15,8 @@ class ChannelInfo extends SlashCommand {
           description: 'The channel you want to learn about',
           required: true
         }
-      ]
+      ],
+      defaultMemberPermissions: PermissionFlagsBits.BanMembers
     })
   }
 

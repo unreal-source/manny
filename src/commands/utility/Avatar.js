@@ -1,5 +1,5 @@
 import { SlashCommand } from 'hiei.js'
-import { ApplicationCommandOptionType } from 'discord.js'
+import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js'
 
 class Avatar extends SlashCommand {
   constructor () {
@@ -13,7 +13,8 @@ class Avatar extends SlashCommand {
           description: 'The user who\'s avatar you want to see',
           required: true
         }
-      ]
+      ],
+      defaultMemberPermissions: PermissionFlagsBits.BanMembers
     })
   }
 

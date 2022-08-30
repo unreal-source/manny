@@ -1,5 +1,5 @@
 import { SlashCommand } from 'hiei.js'
-import { time } from '@discordjs/builders'
+import { PermissionFlagsBits, time } from 'discord.js'
 import pkg from '@prisma/client'
 const { PrismaClient } = pkg
 
@@ -7,7 +7,8 @@ class Stream extends SlashCommand {
   constructor () {
     super({
       name: 'stream',
-      description: 'Request permission to stream in a voice channel'
+      description: 'Request permission to stream in a voice channel',
+      defaultMemberPermissions: PermissionFlagsBits.SendMessages
     })
   }
 

@@ -1,5 +1,5 @@
 import { SlashCommand } from 'hiei.js'
-import { ApplicationCommandOptionType } from 'discord.js'
+import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js'
 
 class FAQ extends SlashCommand {
   constructor () {
@@ -14,7 +14,8 @@ class FAQ extends SlashCommand {
           required: true,
           autocomplete: true
         }
-      ]
+      ],
+      defaultMemberPermissions: PermissionFlagsBits.SendMessages
     })
   }
 

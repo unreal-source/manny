@@ -1,4 +1,5 @@
 import { SlashCommand } from 'hiei.js'
+import { PermissionFlagsBits } from 'discord.js'
 import { importJson } from '../../utilities/json-util.js'
 import { resolve } from 'node:path'
 
@@ -6,7 +7,8 @@ class BotVersion extends SlashCommand {
   constructor () {
     super({
       name: 'version',
-      description: 'Check which version of the bot is running'
+      description: 'Check which version of the bot is running',
+      defaultMemberPermissions: PermissionFlagsBits.ManageGuild
     })
   }
 

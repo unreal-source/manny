@@ -1,5 +1,5 @@
 import { SlashCommand } from 'hiei.js'
-import { ApplicationCommandOptionType } from 'discord.js'
+import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js'
 import { randomElement } from '../../utilities/random-util.js'
 
 class Magic8Ball extends SlashCommand {
@@ -14,7 +14,8 @@ class Magic8Ball extends SlashCommand {
           description: 'The yes/no question you want to ask',
           required: true
         }
-      ]
+      ],
+      defaultMemberPermissions: PermissionFlagsBits.SendMessages
     })
   }
 

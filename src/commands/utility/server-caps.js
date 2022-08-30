@@ -1,12 +1,13 @@
 import { SlashCommand } from 'hiei.js'
-import { EmbedBuilder } from 'discord.js'
+import { EmbedBuilder, PermissionFlagsBits } from 'discord.js'
 import { thousands } from '../../utilities/number-util.js'
 
 class ServerCaps extends SlashCommand {
   constructor () {
     super({
       name: 'caps',
-      description: 'Check the server\'s member and presence caps'
+      description: 'Check the server\'s member and presence caps',
+      defaultMemberPermissions: PermissionFlagsBits.ManageGuild
     })
   }
 

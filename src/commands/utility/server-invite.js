@@ -1,10 +1,12 @@
 import { SlashCommand } from 'hiei.js'
+import { PermissionFlagsBits } from 'discord.js'
 
 class ServerInvite extends SlashCommand {
   constructor () {
     super({
       name: 'invite',
-      description: 'Get the server\'s invite link'
+      description: 'Get the server\'s invite link',
+      defaultMemberPermissions: PermissionFlagsBits.SendMessages
     })
   }
 

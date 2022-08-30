@@ -1,11 +1,13 @@
 import { SlashCommand } from 'hiei.js'
+import { PermissionFlagsBits } from 'discord.js'
 import ms from 'ms'
 
 class BotUptime extends SlashCommand {
   constructor () {
     super({
       name: 'uptime',
-      description: 'Check how long the bot has been online'
+      description: 'Check how long the bot has been online',
+      defaultMemberPermissions: PermissionFlagsBits.ManageGuild
     })
   }
 

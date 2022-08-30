@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, EmbedBuilder } from 'discord.js'
+import { ApplicationCommandOptionType, EmbedBuilder, PermissionFlagsBits } from 'discord.js'
 import { SlashCommand } from 'hiei.js'
 import { time } from '@discordjs/builders'
 
@@ -14,7 +14,8 @@ class RoleInfo extends SlashCommand {
           description: 'The role you want to learn about',
           required: true
         }
-      ]
+      ],
+      defaultMemberPermissions: PermissionFlagsBits.BanMembers
     })
   }
 

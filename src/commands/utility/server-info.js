@@ -1,5 +1,5 @@
 import { SlashCommand } from 'hiei.js'
-import { EmbedBuilder } from 'discord.js'
+import { EmbedBuilder, PermissionFlagsBits } from 'discord.js'
 import { time } from '@discordjs/builders'
 import { thousands } from '../../utilities/number-util.js'
 
@@ -7,7 +7,8 @@ class ServerInfo extends SlashCommand {
   constructor () {
     super({
       name: 'server',
-      description: 'Learn more about the server'
+      description: 'Learn more about the server',
+      defaultMemberPermissions: PermissionFlagsBits.SendMessages
     })
   }
 
