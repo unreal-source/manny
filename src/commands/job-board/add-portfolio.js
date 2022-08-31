@@ -31,6 +31,15 @@ class AddPortfolio extends SlashCommand {
 
     switch (subcommand) {
       case 'freelancer': {
+        const prisma = new PrismaClient()
+        const check = await prisma.portfolio.findFirst({
+          where: { authorId: interaction.member.id }
+        })
+
+        if (check) {
+          return interaction.reply({ content: `You already posted your portfolio in ${channelMention(check.channel)}. Please remove it before posting a new one.`, ephemeral: true })
+        }
+
         const questions = new ModalBuilder()
           .setCustomId('freelancerPortfolioModal')
           .setTitle('Post a Freelancer Portfolio')
@@ -88,7 +97,7 @@ class AddPortfolio extends SlashCommand {
             await post.edit({ embeds: [edited] })
 
             const prisma = new PrismaClient()
-            await prisma.job.create({
+            await prisma.portfolio.create({
               data: {
                 channel: process.env.FREELANCER_PORTFOLIO_CHANNEL,
                 author: submitter.tag,
@@ -107,6 +116,15 @@ class AddPortfolio extends SlashCommand {
       }
 
       case 'studio': {
+        const prisma = new PrismaClient()
+        const check = await prisma.portfolio.findFirst({
+          where: { authorId: interaction.member.id }
+        })
+
+        if (check) {
+          return interaction.reply({ content: `You already posted your portfolio in ${channelMention(check.channel)}. Please remove it before posting a new one.`, ephemeral: true })
+        }
+
         const questions = new ModalBuilder()
           .setCustomId('studioPortfolioModal')
           .setTitle('Post a Studio Portfolio')
@@ -164,7 +182,7 @@ class AddPortfolio extends SlashCommand {
             await post.edit({ embeds: [edited] })
 
             const prisma = new PrismaClient()
-            await prisma.job.create({
+            await prisma.portfolio.create({
               data: {
                 channel: process.env.STUDIO_PORTFOLIO_CHANNEL,
                 author: submitter.tag,
