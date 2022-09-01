@@ -61,6 +61,10 @@ class RemovePost extends SlashCommand {
 
         if (message.content.includes(interaction.member.id) && post.authorId === interaction.member.id) {
           await message.delete()
+          await prisma.job.delete({
+            where: { messageId: id }
+          })
+
           await prisma.$disconnect()
 
           return interaction.reply({ content: 'Job post successfully removed.', ephemeral: true })
@@ -87,6 +91,10 @@ class RemovePost extends SlashCommand {
 
         if (message.content.includes(interaction.member.id) && post.authorId === interaction.member.id) {
           await message.delete()
+          await prisma.portfolio.delete({
+            where: { messageId: id }
+          })
+
           await prisma.$disconnect()
 
           return interaction.reply({ content: 'Portfolio successfully removed.', ephemeral: true })
