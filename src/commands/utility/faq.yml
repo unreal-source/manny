@@ -1,0 +1,14 @@
+- question: Will my 4.x project open in Unreal Engine 5?
+  answer: |
+    If your project was...
+    • Saved in 4.0-4.26 → It will load in any engine version the same or newer
+    • Saved in 4.27 → It will load in 4.27 or 5.0.0 or newer (but not 5.0EA)
+    • Saved in 5.0EA → It will load in any version of UE5
+    • Saved in 5.0.0 → It will load in 5.0.0 or newer (but not 5.0EA)
+    • Saved in 5.1 → It will load in 5.1 or newer, etc.
+
+    [Learn more](<https://forums.unrealengine.com/docs?topic=503528>)
+
+- question: When does Epic release featured free Marketplace content?
+  answer: |
+    Epic releases a new batch of featured free Marketplace content on the first Tuesday of each month.
