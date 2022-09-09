@@ -43,13 +43,13 @@ class RemovePost extends SlashCommand {
 
   async run (interaction) {
     const subcommand = interaction.options.getSubcommand()
+    const prisma = new PrismaClient()
 
     log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
     switch (subcommand) {
       case 'job': {
         const id = interaction.options.getString('id')
-        const prisma = new PrismaClient()
         const post = await prisma.job.findFirst({
           where: { messageId: id }
         })
@@ -81,7 +81,6 @@ class RemovePost extends SlashCommand {
 
       case 'portfolio': {
         const id = interaction.options.getString('id')
-        const prisma = new PrismaClient()
         const post = await prisma.portfolio.findFirst({
           where: { messageId: id }
         })

@@ -29,17 +29,18 @@ class AddPortfolio extends SlashCommand {
 
   async run (interaction) {
     const subcommand = interaction.options.getSubcommand()
+    const prisma = new PrismaClient()
 
     log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
     switch (subcommand) {
       case 'freelancer': {
-        const prisma = new PrismaClient()
         const check = await prisma.portfolio.findFirst({
           where: { authorId: interaction.member.id }
         })
 
         if (check) {
+          await prisma.$disconnect()
           return interaction.reply({ content: `You already posted your portfolio in ${channelMention(check.channel)}. Please remove it before posting a new one.`, ephemeral: true })
         }
 
@@ -121,12 +122,12 @@ class AddPortfolio extends SlashCommand {
       }
 
       case 'studio': {
-        const prisma = new PrismaClient()
         const check = await prisma.portfolio.findFirst({
           where: { authorId: interaction.member.id }
         })
 
         if (check) {
+          await prisma.$disconnect()
           return interaction.reply({ content: `You already posted your portfolio in ${channelMention(check.channel)}. Please remove it before posting a new one.`, ephemeral: true })
         }
 

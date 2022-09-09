@@ -39,6 +39,7 @@ class AddJob extends SlashCommand {
 
   async run (interaction) {
     const subcommand = interaction.options.getSubcommand()
+    const prisma = new PrismaClient()
 
     log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
@@ -108,7 +109,6 @@ class AddJob extends SlashCommand {
             const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
             await post.edit({ embeds: [edited] })
 
-            const prisma = new PrismaClient()
             await prisma.job.create({
               data: {
                 channel: process.env.SALARY_JOB_CHANNEL,
@@ -194,7 +194,6 @@ class AddJob extends SlashCommand {
             const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
             await post.edit({ embeds: [edited] })
 
-            const prisma = new PrismaClient()
             await prisma.job.create({
               data: {
                 channel: process.env.FREELANCE_JOB_CHANNEL,
@@ -280,7 +279,6 @@ class AddJob extends SlashCommand {
             const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
             await post.edit({ embeds: [edited] })
 
-            const prisma = new PrismaClient()
             await prisma.job.create({
               data: {
                 channel: process.env.REVSHARE_JOB_CHANNEL,
@@ -348,7 +346,6 @@ class AddJob extends SlashCommand {
             const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
             await post.edit({ embeds: [edited] })
 
-            const prisma = new PrismaClient()
             await prisma.job.create({
               data: {
                 channel: process.env.VOLUNTEER_JOB_CHANNEL,
