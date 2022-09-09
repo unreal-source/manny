@@ -1,4 +1,5 @@
 import { Listener } from 'hiei.js'
+import log from '../utilities/logger.js'
 
 class ClientReady extends Listener {
   constructor () {
@@ -10,8 +11,8 @@ class ClientReady extends Listener {
     })
   }
 
-  run () {
-    this.client.guilds.cache.each(guild => console.log(`${this.client.user.username} connected to ${guild.name}`))
+  run (client) {
+    client.guilds.cache.each(guild => log.info({ event: 'client-ready', guild: guild.name }, `${client.user.username} connected to ${guild.name}`))
   }
 }
 
