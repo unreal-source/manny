@@ -2,6 +2,7 @@ import { SlashCommand } from 'hiei.js'
 import { ActionRowBuilder, ApplicationCommandOptionType, EmbedBuilder, ModalBuilder, PermissionFlagsBits, TextInputBuilder, TextInputStyle } from 'discord.js'
 import { channelMention } from '@discordjs/builders'
 import { createModalCollector } from '../../utilities/discord-util.js'
+import log from '../../utilities/logger.js'
 import pkg from '@prisma/client'
 const { PrismaClient } = pkg
 
@@ -38,6 +39,8 @@ class AddJob extends SlashCommand {
 
   async run (interaction) {
     const subcommand = interaction.options.getSubcommand()
+
+    log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
     switch (subcommand) {
       case 'salary': {
@@ -116,6 +119,8 @@ class AddJob extends SlashCommand {
             })
 
             await prisma.$disconnect()
+
+            log.info({ event: 'job-posted', channel: interaction.channel.name })
 
             return i.reply({ content: `Your post was successfully submitted to ${channelMention(process.env.SALARY_JOB_CHANNEL)}`, ephemeral: true })
           }
@@ -201,6 +206,8 @@ class AddJob extends SlashCommand {
 
             await prisma.$disconnect()
 
+            log.info({ event: 'job-posted', channel: interaction.channel.name })
+
             return i.reply({ content: `Your post was successfully submitted to ${channelMention(process.env.FREELANCE_JOB_CHANNEL)}`, ephemeral: true })
           }
         })
@@ -285,6 +292,8 @@ class AddJob extends SlashCommand {
 
             await prisma.$disconnect()
 
+            log.info({ event: 'job-posted', channel: interaction.channel.name })
+
             return i.reply({ content: `Your post was successfully submitted to ${channelMention(process.env.REVSHARE_JOB_CHANNEL)}`, ephemeral: true })
           }
         })
@@ -350,6 +359,8 @@ class AddJob extends SlashCommand {
             })
 
             await prisma.$disconnect()
+
+            log.info({ event: 'job-posted', channel: interaction.channel.name })
 
             return i.reply({ content: `Your post was successfully submitted to ${channelMention(process.env.VOLUNTEER_JOB_CHANNEL)}`, ephemeral: true })
           }

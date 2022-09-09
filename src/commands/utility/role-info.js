@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionType, EmbedBuilder, PermissionFlagsBits } from 'discord.js'
 import { SlashCommand } from 'hiei.js'
 import { time } from '@discordjs/builders'
+import log from '../../utilities/logger.js'
 
 class RoleInfo extends SlashCommand {
   constructor () {
@@ -28,6 +29,8 @@ class RoleInfo extends SlashCommand {
       .setColor(role.hexColor)
       .setTitle(role.name)
       .setDescription(`**ID:** ${role.id}\n**Color:** ${role.hexColor}\n**Members:** ${members}\n**Mentionable:** ${mentionable}\n**Created:** ${created}`)
+
+    log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
     return interaction.reply({ embeds: [info] })
   }

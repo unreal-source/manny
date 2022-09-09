@@ -1,6 +1,7 @@
 import { SlashCommand } from 'hiei.js'
 import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js'
 import { randomInteger } from '../../utilities/random-util.js'
+import log from '../../utilities/logger.js'
 
 class RollDice extends SlashCommand {
   constructor () {
@@ -46,6 +47,8 @@ class RollDice extends SlashCommand {
     const quantity = interaction.options.getInteger('quantity')
     const sides = interaction.options.getInteger('sides')
     const roll = Array(quantity).fill(0).map(i => randomInteger(1, sides)).join(', ')
+
+    log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
     return interaction.reply({ content: `:game_die: ${roll}` })
   }

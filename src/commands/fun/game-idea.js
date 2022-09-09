@@ -2,6 +2,7 @@ import { SlashCommand } from 'hiei.js'
 import { PermissionFlagsBits } from 'discord.js'
 import { generate } from '../../utilities/game-idea-generator.js'
 import { randomElement } from '../../utilities/random-util.js'
+import log from '../../utilities/logger.js'
 
 class GameIdea extends SlashCommand {
   constructor () {
@@ -39,6 +40,8 @@ class GameIdea extends SlashCommand {
       'A {style:a} {genre:a} where you {verb} {supernatural:singular} in {setting:in}.',
       'A {style:a} {genre:an} where you {verb} {supernatural:singular} in {setting:in}, but {diversifier}.'
     ]
+
+    log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
     return interaction.reply({ content: generate(randomElement(templates)), ephemeral: true })
   }

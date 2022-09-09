@@ -2,6 +2,7 @@ import { SlashCommand } from 'hiei.js'
 import { ApplicationCommandOptionType, ChannelType, EmbedBuilder, PermissionFlagsBits } from 'discord.js'
 import { time } from '@discordjs/builders'
 import { capitalize } from '../../utilities/string-util.js'
+import log from '../../utilities/logger.js'
 
 class ChannelInfo extends SlashCommand {
   constructor () {
@@ -32,6 +33,8 @@ class ChannelInfo extends SlashCommand {
 
     const category = `**Category:** ${channel.parent ? capitalize(channel.parent.name) : 'None'}\n`
     const info = new EmbedBuilder()
+
+    log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
     if (channel.type === ChannelType.GuildText) {
       const latestActivity = channel.lastMessage ? `**Latest Activity:** ${time(channel.lastMessage.editedAt || channel.lastMessage.createdAt)} • ${time(channel.lastMessage.editedAt || channel.lastMessage.createdAt, 'R')}\n` : ''

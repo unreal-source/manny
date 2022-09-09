@@ -1,5 +1,6 @@
 import { SlashCommand } from 'hiei.js'
 import { PermissionFlagsBits, time } from 'discord.js'
+import log from '../../utilities/logger.js'
 import pkg from '@prisma/client'
 const { PrismaClient } = pkg
 
@@ -29,6 +30,8 @@ class Stream extends SlashCommand {
         strike: { expiration: 'desc' }
       }
     })
+
+    log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
     if (daysSinceJoin < 7) {
       return interaction.reply({ content: `You are not eligible for streaming yet. Please try again ${time(eligibleDate, 'R')}.`, ephemeral: true })

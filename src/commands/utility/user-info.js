@@ -1,6 +1,7 @@
 import { SlashCommand } from 'hiei.js'
 import { ApplicationCommandOptionType, EmbedBuilder, PermissionFlagsBits } from 'discord.js'
 import { time } from '@discordjs/builders'
+import log from '../../utilities/logger.js'
 
 class UserInfo extends SlashCommand {
   constructor () {
@@ -36,6 +37,8 @@ class UserInfo extends SlashCommand {
       .setTitle(`${member.user.tag} ${member.nickname ? `(${member.nickname})` : ''} ${member.user.bot ? '`BOT`' : ''}`)
       .setDescription(`**ID:** ${member.id}\n**Status:** ${status[member.presence.status]}\n**Membership:** ${membership}\n**Roles:** ${roles}\n**Joined Server:** ${joinedServer}\n**Joined Discord:** ${joinedDiscord}`)
       .setThumbnail(member.displayAvatarURL())
+
+    log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
     return interaction.reply({ embeds: [info] })
   }

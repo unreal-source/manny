@@ -1,6 +1,7 @@
 import { SlashCommand } from 'hiei.js'
 import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js'
 import { randomElement } from '../../utilities/random-util.js'
+import log from '../../utilities/logger.js'
 
 class Magic8Ball extends SlashCommand {
   constructor () {
@@ -43,6 +44,8 @@ class Magic8Ball extends SlashCommand {
       'Outlook not so good.',
       'Very doubtful.'
     ]
+
+    log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
     return interaction.reply({ content: `:question: **${question}**\n:8ball: ${randomElement(answers)}` })
   }

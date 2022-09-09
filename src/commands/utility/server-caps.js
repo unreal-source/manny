@@ -1,6 +1,7 @@
 import { SlashCommand } from 'hiei.js'
 import { EmbedBuilder, PermissionFlagsBits } from 'discord.js'
 import { thousands } from '../../utilities/number-util.js'
+import log from '../../utilities/logger.js'
 
 class ServerCaps extends SlashCommand {
   constructor () {
@@ -17,6 +18,8 @@ class ServerCaps extends SlashCommand {
     const maxPresences = guild.maximumPresences ? thousands(guild.maximumPresences) : 'Unknown'
     const embed = new EmbedBuilder()
       .setDescription(`**Maximum Members:** ${maxMembers}\n**Maximum Presences:** ${maxPresences}`)
+
+    log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
     return interaction.reply({ embeds: [embed], ephemeral: true })
   }

@@ -1,5 +1,6 @@
 import { SlashCommand } from 'hiei.js'
 import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js'
+import log from '../../utilities/logger.js'
 import pkg from '@prisma/client'
 const { PrismaClient } = pkg
 
@@ -43,6 +44,8 @@ class RemovePost extends SlashCommand {
   async run (interaction) {
     const subcommand = interaction.options.getSubcommand()
 
+    log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
+
     switch (subcommand) {
       case 'job': {
         const id = interaction.options.getString('id')
@@ -66,6 +69,8 @@ class RemovePost extends SlashCommand {
           })
 
           await prisma.$disconnect()
+
+          log.info({ event: 'job-removed', channel: interaction.channel.name })
 
           return interaction.reply({ content: 'Job post successfully removed.', ephemeral: true })
         }
@@ -96,6 +101,8 @@ class RemovePost extends SlashCommand {
           })
 
           await prisma.$disconnect()
+
+          log.info({ event: 'portfolio-removed', channel: interaction.channel.name })
 
           return interaction.reply({ content: 'Portfolio successfully removed.', ephemeral: true })
         }

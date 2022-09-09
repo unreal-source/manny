@@ -1,5 +1,6 @@
 import { SlashCommand } from 'hiei.js'
 import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js'
+import log from '../../utilities/logger.js'
 
 class Avatar extends SlashCommand {
   constructor () {
@@ -20,6 +21,8 @@ class Avatar extends SlashCommand {
 
   async run (interaction) {
     const user = interaction.options.getUser('user')
+
+    log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
     return interaction.reply({ content: user.displayAvatarURL({ size: 512 }), ephemeral: true })
   }

@@ -2,6 +2,7 @@ import { SlashCommand } from 'hiei.js'
 import { EmbedBuilder, PermissionFlagsBits } from 'discord.js'
 import { time } from '@discordjs/builders'
 import { thousands } from '../../utilities/number-util.js'
+import log from '../../utilities/logger.js'
 
 class ServerInfo extends SlashCommand {
   constructor () {
@@ -40,6 +41,8 @@ class ServerInfo extends SlashCommand {
       .setTitle(interaction.guild.name)
       .setDescription(`${description}\n**Members:** ${thousands(totalMembers)} • ${thousands(onlineMembers)} online\n**Boost Status:** ${boostStatus}\n**Created:** ${created}${invite}\n—\n${links}`)
       .setThumbnail(interaction.guild.iconURL())
+
+    log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
     return interaction.reply({ embeds: [info] })
   }

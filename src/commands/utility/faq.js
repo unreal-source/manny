@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises'
 import { SlashCommand } from 'hiei.js'
 import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js'
 import yaml from 'js-yaml'
+import log from '../../utilities/logger.js'
 
 class FAQ extends SlashCommand {
   constructor () {
@@ -31,6 +32,8 @@ class FAQ extends SlashCommand {
     const question = interaction.options.getString('question')
     const choices = await this.choices()
     const answer = choices.find(choice => choice.question === question).answer
+
+    log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
     return interaction.reply({ content: `:question: **${question}**\n${answer}` })
   }
