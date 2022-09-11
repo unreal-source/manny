@@ -27,7 +27,7 @@ class GuildBanAddListener extends Listener {
       await _.delay(1000)
       const auditLogs = await guild.fetchAuditLogs({ type: 'MEMBER_BAN_ADD' })
       const entry = auditLogs.entries.first()
-      this.client.log.warning('User banned without bot. Audit log retreived:', entry)
+      this.client.log.warn('User banned without bot. Audit log retreived:', entry)
 
       // If the user was banned with a bot command, logging via this event will show the bot as the executor.
       // Since we always want the executor to be the moderator who took the action, we skip logging here
