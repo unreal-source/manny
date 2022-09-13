@@ -33,7 +33,7 @@ class FAQ extends SlashCommand {
     const choices = await this.choices()
     const answer = choices.find(choice => choice.question === question).answer
 
-    log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
+    log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name, faq: question })
 
     return interaction.reply({ content: `:question: **${question}**\n${answer}` })
   }
