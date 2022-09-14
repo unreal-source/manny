@@ -1,6 +1,7 @@
 import { GatewayIntentBits } from 'discord.js'
 import { HieiClient } from 'hiei.js'
-import log from './utilities/logger.js'
+import * as Sentry from '@sentry/node'
+import * as Tracing from '@sentry/tracing' // eslint-disable-line
 
 const client = new HieiClient({
   intents: [
@@ -12,14 +13,10 @@ const client = new HieiClient({
   ]
 })
 
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  integrations: [new Sentry.Integrations.Http({ tracing: true })],
+  tracesSampleRate: 1.0
+})
+
 client.login(process.env.TOKEN)
-
-process.on('uncaughtException', (error) => {
-  log.error({ event: 'uncaught-exception', error })
-  process.exit(1)
-})
-
-process.on('unhandledRejection', (reason, promise) => {
-  log.error({ event: 'unhandled-rejection', promise, reason })
-  process.exit(1)
-})
