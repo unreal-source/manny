@@ -20,7 +20,7 @@ class AddPortfolio extends SlashCommand {
         {
           type: ApplicationCommandOptionType.Subcommand,
           name: 'studio',
-          description: 'Post your studio portfolio on job on the job board'
+          description: 'Post your studio portfolio on the job board'
         }
       ],
       defaultMemberPermissions: PermissionFlagsBits.SendMessages
@@ -51,7 +51,7 @@ class AddPortfolio extends SlashCommand {
         const nameInput = new TextInputBuilder()
           .setCustomId('name')
           .setLabel('Your name or company name')
-          .setPlaceholder('Stylish Joe')
+          .setPlaceholder('Joe McUnreal')
           .setStyle(TextInputStyle.Short)
 
         const servicesInput = new TextInputBuilder()
@@ -138,7 +138,7 @@ class AddPortfolio extends SlashCommand {
         const nameInput = new TextInputBuilder()
           .setCustomId('name')
           .setLabel('Your company name')
-          .setPlaceholder('Stylish Joe')
+          .setPlaceholder('Lumen Lover Studios')
           .setStyle(TextInputStyle.Short)
 
         const servicesInput = new TextInputBuilder()
