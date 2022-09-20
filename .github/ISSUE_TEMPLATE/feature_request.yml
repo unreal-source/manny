@@ -1,0 +1,27 @@
+name: Feature request
+description: Suggest a new feature or enhancement for Manny
+title: "<title>"
+labels: [feature]
+body:
+- type: textarea
+  attributes:
+    label: Feature
+    description: Describe the feature you want, and what problem(s) it would solve.
+    placeholder: |
+      I wish I could...
+      It's frustrating when...
+      Manny should use this new Discord feature...
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Ideal solution
+    description: Describe what you want to happen.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Alternative solutions
+    description: Describe any alterantive solutions or features you have considered.
+  validations:
+    required: true
