@@ -1,0 +1,45 @@
+name: Bug report
+description: Did Manny break or do something unexpected? Let us know so we can fix it.
+title: "<title>"
+labels: [bug]
+body:
+- type: checkboxes
+  attributes:
+    label: Was this issue already reported?
+    description: Please search the existing issues to see if this was already reported.
+    options:
+      - label: I have searched the existing issues
+        required: true
+- type: dropdown
+  id: platform
+  attributes:
+    label: On which platform did you encounter this issue?
+    options:
+      - Desktop app
+      - Web browser
+      - iOS
+      - Android
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: What happened
+    description: Describe the problem you encountered. You can attach screenshots by dragging and dropping images onto this field.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: What you expected
+    description: Describe what you expected to happen.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Steps to reproduce
+    description: List the steps we can take to reproduce the issue.
+    placeholder: |
+      1. Go to channel...
+      2. Use command with these parameters...
+      3. See error message...
+  validations:
+    required: true

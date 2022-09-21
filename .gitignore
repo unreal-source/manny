@@ -102,3 +102,11 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Scratch file
+scratch.md
+
+.env*
+.flaskenv*
+!.env.project
+!.env.vault

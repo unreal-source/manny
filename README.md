@@ -1,15 +1,21 @@
-# Manny
-Everyone's favorite mannequin, here to serve the Unreal Slackers Discord server.
+![Manny Splash Image](/assets/manny-splash.png)
 
-[![Linter](https://github.com/unreal-slackers/manny/workflows/Linter/badge.svg)](https://github.com/standard/standard)
+<div align="center">
+  <a href="https://manny.unrealslackers.org">Documentation</a> • 
+  <a href="https://discord.gg/unreal-slackers">Discord</a> • 
+  <a href="https://twitter.com/unrealslackers">Twitter</a>
+</div>
 
-![Manny Splash Image](https://i.imgur.com/yDcBwKO.png)
+## About
+Manny is a friendly mannequin that informs and entertains our Discord community. He has a variety of handy commands that return useful info and resources, plus a few that are just for fun, such as generating a random game idea. He also manages our job board.
 
-## How can I report a bug or suggest a feature?
-If you find a bug or have an idea for a new feature, check the [issue tracker](https://github.com/unreal-slackers/manny/issues) to make sure it hasn't already been added. If you don't see it, [open a new issue](https://github.com/unreal-slackers/manny/issues/new/choose).
+## Help us improve
+If you find a bug or have an idea for a new feature, check the [issue tracker](https://github.com/unreal-slackers/manny/issues) to see if someone already mentioned it. If you don't see it, [open a new issue](https://github.com/unreal-slackers/manny/issues/new/choose).
 
-## How can I contribute?
+## Contributing
 If you're interested in contributing code, please read our [contributing guidelines](https://github.com/unreal-slackers/manny/blob/master/.github/CONTRIBUTING.md) to get started.
 
-## Can I invite this bot to my server?
-No. Manny is specifically designed to work with Unreal Slackers, and it contains a lot of code that assumes the bot is only present in one server. The main reason the code is open source is to provide the Unreal Slackers community with a way to directly contribute to improving the bot. Hosting your own copy of the bot is not supported. If you decide to adapt any of the code for your own purposes, please respect the [license](https://github.com/unreal-slackers/manny/blob/master/LICENSE).
+## Can I invite Manny to my server?
+No. Manny is not hosted publicly or designed to work with multiple servers. The main reason the code is open source is to provide the Unreal Slackers community with an opportunity to see how the bot works and contribute directly if they’re interested.
+
+Hosting your own copy of the bot is not supported. If you decide to adapt any of the code for your own purposes, please respect the [license](https://github.com/unreal-slackers/manny/blob/main/LICENSE).

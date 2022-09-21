@@ -1,33 +1,32 @@
 {
   "name": "manny",
-  "version": "1.6.0",
-  "description": "Everyone's favorite mannequin.",
-  "main": "bot.js",
+  "version": "1.5.0",
+  "description": "Everyone's favorite mannequin",
+  "type": "module",
+  "main": "src/manny.js",
   "engines": {
-    "node": "^14.15.0"
-  },
-  "dependencies": {
-    "@sentry/node": "^6.0.2",
-    "cron": "^1.8.2",
-    "discord-akairo": "^8.1.0",
-    "discord.js": "^12.5.3",
-    "esm": "^3.2.25",
-    "luxon": "^1.25.0",
-    "ms": "^2.1.3",
-    "pg": "^8.5.1",
-    "pg-hstore": "^2.3.3",
-    "pretty-ms": "^7.0.1",
-    "sequelize": "^6.4.0",
-    "signale": "^1.4.0"
-  },
-  "devDependencies": {
-    "dotenv": "^8.2.0",
-    "snazzy": "^9.0.0",
-    "standard": "^16.0.3"
+    "node": ">=16.9.0"
   },
   "scripts": {
-    "start": "node -r esm bot",
-    "dev": "node -r esm -r dotenv/config bot",
-    "test": "standard | snazzy"
+    "dev": "node -r dotenv/config src/manny.js",
+    "lint": "standard | snazzy",
+    "start": "node src/manny.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.3.0",
+    "@sentry/node": "^7.12.1",
+    "@sentry/tracing": "^7.12.1",
+    "discord.js": "^14.3.0",
+    "dotenv": "^16.0.2",
+    "hiei.js": "^0.13.0",
+    "js-yaml": "^4.1.0",
+    "ms": "^2.1.3",
+    "pino": "^8.5.0",
+    "pino-loki": "^2.0.3"
+  },
+  "devDependencies": {
+    "prisma": "^4.3.0",
+    "snazzy": "^9.0.0",
+    "standard": "^17.0.0"
   }
 }
