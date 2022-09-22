@@ -67,3 +67,7 @@
 - question: Can I ask a question?
   answer: |
     [Don't ask to ask. Just ask!](<https://dontasktoask.com/>)
+    
+- question: Should I use Hot Reload?
+  answer: |
+    [No.](<http://hotreloadsucks.com/>)
