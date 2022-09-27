@@ -21,8 +21,8 @@ jobs:
           key: ${{ secrets.KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            cd ~/bots/quinn
-            git pull git@github.com:unreal-slackers/quinn.git
+            cd ~/bots/manny
+            git pull git@github.com:unreal-slackers/manny.git
       - name: Build & run
         uses: appleboy/ssh-action@v0.1.5
         with:
