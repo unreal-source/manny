@@ -58,7 +58,7 @@ class ChannelInfo extends SlashCommand {
         .setDescription(`**ID:** ${channel.id}\n**Type:** ${channelTypes[channel.type]}\n**Channels:** ${channel.children.cache.size.toString()}\n**Created:** ${time(channel.createdAt)} • ${time(channel.createdAt, 'R')}`)
     }
 
-    return interaction.reply({ embeds: [info] })
+    return interaction.reply({ embeds: [info], ephemeral: true })
   }
 }
 

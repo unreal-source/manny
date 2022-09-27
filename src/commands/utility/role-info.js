@@ -32,7 +32,7 @@ class RoleInfo extends SlashCommand {
 
     log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
-    return interaction.reply({ embeds: [info] })
+    return interaction.reply({ embeds: [info], ephemeral: true })
   }
 }
 
