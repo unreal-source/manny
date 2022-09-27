@@ -109,7 +109,7 @@ class AddJob extends SlashCommand {
             const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
             await post.edit({ embeds: [edited] })
 
-            await prisma.jobPost.create({
+            await prisma.job.create({
               data: {
                 channel: process.env.SALARY_JOB_CHANNEL,
                 author: submitter.tag,
@@ -194,7 +194,7 @@ class AddJob extends SlashCommand {
             const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
             await post.edit({ embeds: [edited] })
 
-            await prisma.jobPost.create({
+            await prisma.job.create({
               data: {
                 channel: process.env.FREELANCE_JOB_CHANNEL,
                 author: submitter.tag,
@@ -279,7 +279,7 @@ class AddJob extends SlashCommand {
             const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
             await post.edit({ embeds: [edited] })
 
-            await prisma.jobPost.create({
+            await prisma.job.create({
               data: {
                 channel: process.env.REVSHARE_JOB_CHANNEL,
                 author: submitter.tag,
@@ -346,7 +346,7 @@ class AddJob extends SlashCommand {
             const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
             await post.edit({ embeds: [edited] })
 
-            await prisma.jobPost.create({
+            await prisma.job.create({
               data: {
                 channel: process.env.VOLUNTEER_JOB_CHANNEL,
                 author: submitter.tag,

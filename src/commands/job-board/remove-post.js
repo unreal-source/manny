@@ -50,7 +50,7 @@ class RemovePost extends SlashCommand {
     switch (subcommand) {
       case 'job': {
         const id = interaction.options.getString('id')
-        const post = await prisma.jobPost.findFirst({
+        const post = await prisma.job.findFirst({
           where: { messageId: id }
         })
 
@@ -64,7 +64,7 @@ class RemovePost extends SlashCommand {
 
         if (message.content.includes(interaction.member.id) && post.authorId === interaction.member.id) {
           await message.delete()
-          await prisma.jobPost.delete({
+          await prisma.job.delete({
             where: { messageId: id }
           })
 
