@@ -31,6 +31,6 @@ jobs:
           key: ${{ secrets.KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            cd ~/bots/quinn
+            cd ~/bots/manny
             npm ci
-            pm2 reload demotron
+            pm2 reload manny
