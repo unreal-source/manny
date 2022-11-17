@@ -53,21 +53,25 @@ class AddPortfolio extends SlashCommand {
           .setLabel('Your name or company name')
           .setPlaceholder('Joe McUnreal')
           .setStyle(TextInputStyle.Short)
+          .setMaxLength(256)
 
         const servicesInput = new TextInputBuilder()
           .setCustomId('services')
           .setLabel('Your Services')
           .setStyle(TextInputStyle.Paragraph)
+          .setMaxLength(1024)
 
         const websiteInput = new TextInputBuilder()
           .setCustomId('website')
           .setLabel('Website URL')
           .setStyle(TextInputStyle.Short)
+          .setMaxLength(1024)
 
         const contactInput = new TextInputBuilder()
           .setCustomId('contact')
           .setLabel('Contact Info')
           .setStyle(TextInputStyle.Short)
+          .setMaxLength(1024)
 
         const firstRow = new ActionRowBuilder().addComponents([nameInput])
         const secondRow = new ActionRowBuilder().addComponents([servicesInput])
@@ -140,21 +144,25 @@ class AddPortfolio extends SlashCommand {
           .setLabel('Your company name')
           .setPlaceholder('Lumen Lover Studios')
           .setStyle(TextInputStyle.Short)
+          .setMaxLength(256)
 
         const servicesInput = new TextInputBuilder()
           .setCustomId('services')
           .setLabel('Your Services')
           .setStyle(TextInputStyle.Paragraph)
+          .setMaxLength(1024)
 
         const websiteInput = new TextInputBuilder()
           .setCustomId('website')
           .setLabel('Website URL')
           .setStyle(TextInputStyle.Short)
+          .setMaxLength(1024)
 
         const contactInput = new TextInputBuilder()
           .setCustomId('contact')
           .setLabel('Contact Info')
           .setStyle(TextInputStyle.Short)
+          .setMaxLength(1024)
 
         const firstRow = new ActionRowBuilder().addComponents([nameInput])
         const secondRow = new ActionRowBuilder().addComponents([servicesInput])
