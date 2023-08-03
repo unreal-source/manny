@@ -1,7 +1,6 @@
 import { SlashCommand } from 'hiei.js'
-import { ActionRowBuilder, ApplicationCommandOptionType, EmbedBuilder, ModalBuilder, PermissionFlagsBits, TextInputBuilder, TextInputStyle } from 'discord.js'
+import { ActionRowBuilder, ApplicationCommandOptionType, ModalBuilder, PermissionFlagsBits, TextInputBuilder, TextInputStyle } from 'discord.js'
 import { channelMention } from '@discordjs/builders'
-import { createModalCollector } from '../../utilities/discord-util.js'
 import log from '../../utilities/logger.js'
 import pkg from '@prisma/client'
 const { PrismaClient } = pkg
@@ -82,46 +81,6 @@ class AddPortfolio extends SlashCommand {
 
         await interaction.showModal(questions)
 
-        const collector = createModalCollector(this.client, interaction)
-
-        collector.on('collect', async i => {
-          if (i.customId === 'freelancerPortfolioModal') {
-            const submitter = i.user
-            const name = i.fields.getTextInputValue('name')
-            const services = i.fields.getTextInputValue('services')
-            const website = i.fields.getTextInputValue('website')
-            const contact = i.fields.getTextInputValue('contact')
-            const channel = i.guild.channels.cache.get(process.env.FREELANCER_PORTFOLIO_CHANNEL)
-            const portfolioPost = new EmbedBuilder()
-              .setTitle(name)
-              .setDescription(website)
-              .addFields([
-                { name: 'Services', value: services },
-                { name: 'Contact', value: contact }
-              ])
-
-            const post = await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [portfolioPost] })
-            const edited = portfolioPost.setFooter({ text: `Portfolio ID: ${post.id}` })
-            await post.edit({ embeds: [edited] })
-
-            const prisma = new PrismaClient()
-            await prisma.portfolio.create({
-              data: {
-                channel: process.env.FREELANCER_PORTFOLIO_CHANNEL,
-                author: submitter.tag,
-                authorId: submitter.id,
-                messageId: post.id
-              }
-            })
-
-            await prisma.$disconnect()
-
-            log.info({ event: 'portfolio-posted', channel: interaction.channel.name })
-
-            return i.reply({ content: `Your portfolio was successfully submitted to ${channelMention(process.env.FREELANCER_PORTFOLIO_CHANNEL)}`, ephemeral: true })
-          }
-        })
-
         break
       }
 
@@ -172,46 +131,6 @@ class AddPortfolio extends SlashCommand {
         questions.addComponents([firstRow, secondRow, thirdRow, fourthRow])
 
         await interaction.showModal(questions)
-
-        const collector = createModalCollector(this.client, interaction)
-
-        collector.on('collect', async i => {
-          if (i.customId === 'studioPortfolioModal') {
-            const submitter = i.user
-            const name = i.fields.getTextInputValue('name')
-            const services = i.fields.getTextInputValue('services')
-            const website = i.fields.getTextInputValue('website')
-            const contact = i.fields.getTextInputValue('contact')
-            const channel = i.guild.channels.cache.get(process.env.STUDIO_PORTFOLIO_CHANNEL)
-            const portfolioPost = new EmbedBuilder()
-              .setTitle(name)
-              .setDescription(website)
-              .addFields([
-                { name: 'Services', value: services },
-                { name: 'Contact', value: contact }
-              ])
-
-            const post = await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [portfolioPost] })
-            const edited = portfolioPost.setFooter({ text: `Portfolio ID: ${post.id}` })
-            await post.edit({ embeds: [edited] })
-
-            const prisma = new PrismaClient()
-            await prisma.portfolio.create({
-              data: {
-                channel: process.env.STUDIO_PORTFOLIO_CHANNEL,
-                author: submitter.tag,
-                authorId: submitter.id,
-                messageId: post.id
-              }
-            })
-
-            await prisma.$disconnect()
-
-            log.info({ event: 'portfolio-posted', channel: interaction.channel.name })
-
-            return i.reply({ content: `Your portfolio was successfully submitted to ${channelMention(process.env.STUDIO_PORTFOLIO_CHANNEL)}`, ephemeral: true })
-          }
-        })
 
         break
       }

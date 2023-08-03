@@ -2,7 +2,7 @@ import { SlashCommand } from 'hiei.js'
 import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js'
 import log from '../../utilities/logger.js'
 
-class Avatar extends SlashCommand {
+class UserAvatar extends SlashCommand {
   constructor () {
     super({
       name: 'avatar',
@@ -28,4 +28,4 @@ class Avatar extends SlashCommand {
   }
 }
 
-export default Avatar
+export default UserAvatar

@@ -23,7 +23,7 @@ class FAQ extends SlashCommand {
   }
 
   async choices () {
-    const file = await readFile('./src/commands/utility/faq.yml')
+    const file = await readFile('./src/interactions/data/faq.yml')
     const data = await yaml.load(file)
     return data
   }

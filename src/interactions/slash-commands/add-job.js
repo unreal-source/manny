@@ -1,10 +1,6 @@
 import { SlashCommand } from 'hiei.js'
-import { ActionRowBuilder, ApplicationCommandOptionType, EmbedBuilder, ModalBuilder, PermissionFlagsBits, TextInputBuilder, TextInputStyle } from 'discord.js'
-import { channelMention } from '@discordjs/builders'
-import { createModalCollector } from '../../utilities/discord-util.js'
+import { ActionRowBuilder, ApplicationCommandOptionType, ModalBuilder, PermissionFlagsBits, TextInputBuilder, TextInputStyle } from 'discord.js'
 import log from '../../utilities/logger.js'
-import pkg from '@prisma/client'
-const { PrismaClient } = pkg
 
 class AddJob extends SlashCommand {
   constructor () {
@@ -39,7 +35,6 @@ class AddJob extends SlashCommand {
 
   async run (interaction) {
     const subcommand = interaction.options.getSubcommand()
-    const prisma = new PrismaClient()
 
     log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
@@ -90,47 +85,6 @@ class AddJob extends SlashCommand {
 
         await interaction.showModal(questions)
 
-        const collector = createModalCollector(this.client, interaction)
-
-        collector.on('collect', async i => {
-          if (i.customId === 'salaryJobModal') {
-            const submitter = i.user
-            const role = i.fields.getTextInputValue('role')
-            const location = i.fields.getTextInputValue('location')
-            const responsibilities = i.fields.getTextInputValue('responsibilities')
-            const qualificiations = i.fields.getTextInputValue('qualifications')
-            const apply = i.fields.getTextInputValue('apply')
-            const channel = i.guild.channels.cache.get(process.env.SALARY_JOB_CHANNEL)
-            const jobPost = new EmbedBuilder()
-              .setTitle(role)
-              .addFields([
-                { name: 'Location', value: location },
-                { name: 'Responsibilities', value: responsibilities },
-                { name: 'Qualifications', value: qualificiations },
-                { name: 'How to Apply', value: apply }
-              ])
-
-            const post = await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [jobPost] })
-            const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
-            await post.edit({ embeds: [edited] })
-
-            await prisma.job.create({
-              data: {
-                channel: process.env.SALARY_JOB_CHANNEL,
-                author: submitter.tag,
-                authorId: submitter.id,
-                messageId: post.id
-              }
-            })
-
-            await prisma.$disconnect()
-
-            log.info({ event: 'job-posted', channel: interaction.channel.name })
-
-            return i.reply({ content: `Your post was successfully submitted to ${channelMention(process.env.SALARY_JOB_CHANNEL)}`, ephemeral: true })
-          }
-        })
-
         break
       }
 
@@ -180,53 +134,12 @@ class AddJob extends SlashCommand {
 
         await interaction.showModal(questions)
 
-        const collector = createModalCollector(this.client, interaction)
-
-        collector.on('collect', async i => {
-          if (i.customId === 'freelanceJobModal') {
-            const submitter = i.user
-            const role = i.fields.getTextInputValue('role')
-            const location = i.fields.getTextInputValue('location')
-            const responsibilities = i.fields.getTextInputValue('responsibilities')
-            const qualificiations = i.fields.getTextInputValue('qualifications')
-            const apply = i.fields.getTextInputValue('apply')
-            const channel = i.guild.channels.cache.get(process.env.FREELANCE_JOB_CHANNEL)
-            const jobPost = new EmbedBuilder()
-              .setTitle(role)
-              .addFields([
-                { name: 'Location', value: location },
-                { name: 'Responsibilities', value: responsibilities },
-                { name: 'Qualifications', value: qualificiations },
-                { name: 'How to Apply', value: apply }
-              ])
-
-            const post = await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [jobPost] })
-            const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
-            await post.edit({ embeds: [edited] })
-
-            await prisma.job.create({
-              data: {
-                channel: process.env.FREELANCE_JOB_CHANNEL,
-                author: submitter.tag,
-                authorId: submitter.id,
-                messageId: post.id
-              }
-            })
-
-            await prisma.$disconnect()
-
-            log.info({ event: 'job-posted', channel: interaction.channel.name })
-
-            return i.reply({ content: `Your post was successfully submitted to ${channelMention(process.env.FREELANCE_JOB_CHANNEL)}`, ephemeral: true })
-          }
-        })
-
         break
       }
 
       case 'revshare': {
         const questions = new ModalBuilder()
-          .setCustomId('revshareJobModal')
+          .setCustomId('revShareJobModal')
           .setTitle('Post a Revenue Share Job')
 
         const roleInput = new TextInputBuilder()
@@ -270,47 +183,6 @@ class AddJob extends SlashCommand {
 
         await interaction.showModal(questions)
 
-        const collector = createModalCollector(this.client, interaction)
-
-        collector.on('collect', async i => {
-          if (i.customId === 'revshareJobModal') {
-            const submitter = i.user
-            const role = i.fields.getTextInputValue('role')
-            const location = i.fields.getTextInputValue('location')
-            const responsibilities = i.fields.getTextInputValue('responsibilities')
-            const qualificiations = i.fields.getTextInputValue('qualifications')
-            const apply = i.fields.getTextInputValue('apply')
-            const channel = i.guild.channels.cache.get(process.env.REVSHARE_JOB_CHANNEL)
-            const jobPost = new EmbedBuilder()
-              .setTitle(role)
-              .addFields([
-                { name: 'Location', value: location },
-                { name: 'Responsibilities', value: responsibilities },
-                { name: 'Qualifications', value: qualificiations },
-                { name: 'How to Apply', value: apply }
-              ])
-
-            const post = await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [jobPost] })
-            const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
-            await post.edit({ embeds: [edited] })
-
-            await prisma.job.create({
-              data: {
-                channel: process.env.REVSHARE_JOB_CHANNEL,
-                author: submitter.tag,
-                authorId: submitter.id,
-                messageId: post.id
-              }
-            })
-
-            await prisma.$disconnect()
-
-            log.info({ event: 'job-posted', channel: interaction.channel.name })
-
-            return i.reply({ content: `Your post was successfully submitted to ${channelMention(process.env.REVSHARE_JOB_CHANNEL)}`, ephemeral: true })
-          }
-        })
-
         break
       }
 
@@ -345,41 +217,6 @@ class AddJob extends SlashCommand {
         questions.addComponents([firstRow, secondRow, thirdRow])
 
         await interaction.showModal(questions)
-
-        const collector = createModalCollector(this.client, interaction)
-
-        collector.on('collect', async i => {
-          if (i.customId === 'volunteerJobModal') {
-            const submitter = i.user
-            const title = i.fields.getTextInputValue('title')
-            const details = i.fields.getTextInputValue('details')
-            const contact = i.fields.getTextInputValue('contact')
-            const channel = i.guild.channels.cache.get(process.env.VOLUNTEER_JOB_CHANNEL)
-            const jobPost = new EmbedBuilder()
-              .setTitle(title)
-              .setDescription(details)
-              .addFields([{ name: 'Contact', value: contact }])
-
-            const post = await channel.send({ content: `Posted by <@${submitter.id}>`, embeds: [jobPost] })
-            const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
-            await post.edit({ embeds: [edited] })
-
-            await prisma.job.create({
-              data: {
-                channel: process.env.VOLUNTEER_JOB_CHANNEL,
-                author: submitter.tag,
-                authorId: submitter.id,
-                messageId: post.id
-              }
-            })
-
-            await prisma.$disconnect()
-
-            log.info({ event: 'job-posted', channel: interaction.channel.name })
-
-            return i.reply({ content: `Your post was successfully submitted to ${channelMention(process.env.VOLUNTEER_JOB_CHANNEL)}`, ephemeral: true })
-          }
-        })
 
         break
       }
