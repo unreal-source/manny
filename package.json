@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@prisma/client": "^5.1.0",
-    "@sentry/node": "^7.56.0",
-    "@sentry/tracing": "^7.56.0",
+    "@sentry/node": "^7.61.0",
+    "@sentry/tracing": "^7.61.0",
     "discord.js": "^14.12.1",
     "dotenv": "^16.3.1",
     "hiei.js": "^1.0.3",
