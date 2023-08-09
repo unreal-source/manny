@@ -1,3 +1,5 @@
+import prisma from '../../utilities/prisma-client.js'
+
 export default function (client) {
   return {
     method: 'POST',
@@ -6,16 +8,16 @@ export default function (client) {
       body: {
         type: 'object',
         properties: {
-          current: {
+          member: {
             type: 'object',
             properties: {
-              status: {
-                type: 'string'
-              }
+              current: { type: 'object' },
+              previous: { type: 'object' }
             },
-            required: ['status']
+            required: ['current', 'previous']
           }
-        }
+        },
+        required: ['member']
       }
     },
     handler: async (request, reply) => {

@@ -1,3 +1,5 @@
+import prisma from '../../utilities/prisma-client.js'
+
 export default function (client) {
   return {
     method: 'POST',
