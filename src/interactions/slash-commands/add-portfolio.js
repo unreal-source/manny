@@ -2,8 +2,7 @@ import { SlashCommand } from 'hiei.js'
 import { ActionRowBuilder, ApplicationCommandOptionType, ModalBuilder, PermissionFlagsBits, TextInputBuilder, TextInputStyle } from 'discord.js'
 import { channelMention } from '@discordjs/builders'
 import log from '../../utilities/logger.js'
-import pkg from '@prisma/client'
-const { PrismaClient } = pkg
+import prisma from '../../utilities/prisma-client.js'
 
 class AddPortfolio extends SlashCommand {
   constructor () {
@@ -28,7 +27,6 @@ class AddPortfolio extends SlashCommand {
 
   async run (interaction) {
     const subcommand = interaction.options.getSubcommand()
-    const prisma = new PrismaClient()
 
     log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
@@ -39,7 +37,6 @@ class AddPortfolio extends SlashCommand {
         })
 
         if (check) {
-          await prisma.$disconnect()
           return interaction.reply({ content: `You already posted your portfolio in ${channelMention(check.channel)}. Please remove it before posting a new one.`, ephemeral: true })
         }
 
@@ -90,7 +87,6 @@ class AddPortfolio extends SlashCommand {
         })
 
         if (check) {
-          await prisma.$disconnect()
           return interaction.reply({ content: `You already posted your portfolio in ${channelMention(check.channel)}. Please remove it before posting a new one.`, ephemeral: true })
         }
 

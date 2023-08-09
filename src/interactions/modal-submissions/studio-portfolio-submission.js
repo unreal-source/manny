@@ -2,8 +2,7 @@ import { ModalSubmission } from 'hiei.js'
 import { EmbedBuilder } from 'discord.js'
 import { channelMention } from '@discordjs/builders'
 import log from '../../utilities/logger.js'
-import pkg from '@prisma/client'
-const { PrismaClient } = pkg
+import prisma from '../../utilities/prisma-client.js'
 
 class StudioPortfolioSubmission extends ModalSubmission {
   constructor () {
@@ -13,7 +12,6 @@ class StudioPortfolioSubmission extends ModalSubmission {
   }
 
   async run (interaction) {
-    const prisma = new PrismaClient()
     const submitter = interaction.user
     const name = interaction.fields.getTextInputValue('name')
     const services = interaction.fields.getTextInputValue('services')
@@ -40,8 +38,6 @@ class StudioPortfolioSubmission extends ModalSubmission {
         messageId: post.id
       }
     })
-
-    await prisma.$disconnect()
 
     log.info({ event: 'portfolio-posted', channel: interaction.channel.name })
 

@@ -1,8 +1,7 @@
 import { SlashCommand } from 'hiei.js'
 import { PermissionFlagsBits, time } from 'discord.js'
 import log from '../../utilities/logger.js'
-import pkg from '@prisma/client'
-const { PrismaClient } = pkg
+import prisma from '../../utilities/prisma-client.js'
 
 class Stream extends SlashCommand {
   constructor () {
@@ -16,7 +15,6 @@ class Stream extends SlashCommand {
   async run (interaction) {
     const daysSinceJoin = Math.floor((Date.now() - interaction.member.joinedAt) / (86400 * 1000))
     const eligibleDate = new Date(interaction.member.joinedAt.setDate(interaction.member.joinedAt.getDate() + 7))
-    const prisma = new PrismaClient()
     const strikes = await prisma.case.findMany({
       where: {
         action: 'Strike added',
