@@ -2,7 +2,7 @@ import { GatewayIntentBits } from 'discord.js'
 import { HieiClient } from 'hiei.js'
 import * as Sentry from '@sentry/node'
 import * as Tracing from '@sentry/tracing' // eslint-disable-line
-import webhookServer from './webhooks/server.js'
+import api from './api/server.js'
 
 const client = new HieiClient({
   intents: [
@@ -22,5 +22,5 @@ Sentry.init({
 
 await client.login(process.env.TOKEN)
 
-webhookServer.configure(client)
-webhookServer.start()
+api.configure(client)
+api.start()

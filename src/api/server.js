@@ -1,8 +1,8 @@
 import fastify from 'fastify'
 // import fetch from 'node-fetch'
-import memberCreated from './routes/member-created.js'
+import memberAdded from './routes/member-added.js'
 import memberUpdated from './routes/member-updated.js'
-import memberRemoved from './routes/member-removed.js'
+import memberDeleted from './routes/member-deleted.js'
 
 const app = fastify({ logger: true })
 
@@ -11,9 +11,9 @@ const server = {
     // Register plugins
     // Register routes
     app.register((instance, opts, done) => {
-      instance.route(memberCreated(client))
+      instance.route(memberAdded(client))
       instance.route(memberUpdated(client))
-      instance.route(memberRemoved(client))
+      instance.route(memberDeleted(client))
       done()
     })
   },

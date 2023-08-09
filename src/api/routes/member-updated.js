@@ -6,25 +6,41 @@ export default function (client) {
       body: {
         type: 'object',
         properties: {
-          current: {
+          member: {
             type: 'object',
             properties: {
-              status: {
-                type: 'string'
-              }
+              current: { type: 'object' },
+              previous: { type: 'object' }
             },
-            required: ['status']
+            required: ['current', 'previous']
           }
-        }
+        },
+        required: ['member']
       }
     },
     handler: async (request, reply) => {
       try {
         const data = request.body
+        const free = /free/g
+        const paid = /paid|comped/g
+
+        if (!data.member.previous.status) {
+          // ignore
+        }
+
+        if (data.member.previous.status.match(free) && data.member.current.status.match(paid)) {
+          // upgrade, grant role
+        }
+
+        if (data.member.previous.status.match(paid) && data.member.current.status.match(free)) {
+          // downgrade, revoke role
+        }
+
         const guild = await client.guilds.fetch(process.env.GUILD)
         const channel = guild.channels.cache.get(process.env.WEBHOOK_CHANNEL)
 
-        channel.send({ content: `Member updated: ${data.member.current.name}, Status: ${data.member.current.status}` })
+        console.log(data)
+        console.log(reply)
       } catch (error) {
         console.error(`Error processing webhook: ${error}`)
         reply.code(500).send({ error: 'An error occured while processing the webhook' })
