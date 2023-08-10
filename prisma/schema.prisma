@@ -8,49 +8,57 @@ datasource db {
 }
 
 model Case {
-  id          Int      @id @default(autoincrement())
-  action      String
-  member      String
-  memberId    String
-  moderator   String
-  moderatorId String
-  reason      String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  reference   String?
-  strike      Strike?
-  timeout     Timeout?
+  id             Int           @id @default(autoincrement())
+  action         String
+  member         String
+  memberId       String
+  moderator      String
+  moderatorId    String
+  reason         String
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  reference      String?
+  strike         Strike?
+  timeout        Timeout?
 }
 
 model Strike {
-  id         Int      @id @unique
-  expiration DateTime
-  isActive   Boolean
-  case       Case     @relation(fields: [id], references: [id])
+  id             Int           @id @unique
+  expiration     DateTime
+  isActive       Boolean
+  case           Case          @relation(fields: [id], references: [id])
 }
 
 model Timeout {
-  id       Int    @id @unique
-  duration String
-  case     Case   @relation(fields: [id], references: [id])
+  id             Int           @id @unique
+  duration       String
+  case           Case          @relation(fields: [id], references: [id])
 }
 
 model Job {
-  id        Int      @id @default(autoincrement())
-  channel   String
-  author    String
-  authorId  String
-  messageId String @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              Int          @id @default(autoincrement())
+  channel         String
+  author          String
+  authorId        String
+  messageId       String       @unique
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
 }
 
 model Portfolio {
-  id        Int      @id @default(autoincrement())
-  channel   String
-  author    String
-  authorId  String
-  messageId String @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              Int          @id @default(autoincrement())
+  channel         String
+  author          String
+  authorId        String
+  messageId       String       @unique
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+}
+
+model Supporter {
+  id              Int          @id @unique
+  ghostName       String
+  ghostEmail      String       @unique
+  ghostStatus     String
+  discordUsername String       @unique
 }
