@@ -27,25 +27,51 @@ export default function (client) {
         const paid = /paid|comped/g
 
         if (!data.member.previous.status) {
-          // ignore
+          return reply.code(400).send({ error: 'Membership status unchanged' })
         }
 
         if (data.member.previous.status.match(free) && data.member.current.status.match(paid)) {
-          // upgrade, grant role
+          await prisma.supporter.create({
+            data: {
+              id: data.member.current.id,
+              ghostName: data.member.current.name,
+              ghostEmail: data.member.current.email,
+              discordUsername: null
+            }
+          })
+
+          reply.code(200).send({ message: 'New paid member added' })
         }
 
         if (data.member.previous.status.match(paid) && data.member.current.status.match(free)) {
-          // downgrade, revoke role
+          const supporter = await prisma.supporter.findFirst({
+            where: {
+              id: data.member.current.id,
+              ghostName: data.member.current.name,
+              ghostEmail: data.member.current.email
+            }
+          })
+
+          if (supporter) {
+            const guild = await client.guilds.fetch(process.env.GUILD)
+            const member = await guild.fetch(supporter.discordUsername)
+
+            // Revoke supporter role on Discord
+            if (member) {
+              await member.roles.remove(process.env.SUPPORTER_ROLE)
+            }
+
+            // Remove supporter profile from database
+            await prisma.supporter.delete({
+              where: { id: data.member.current.id }
+            })
+
+            return reply.code(200).send({ message: 'Paid supporter removed' })
+          }
         }
-
-        const guild = await client.guilds.fetch(process.env.GUILD)
-        const channel = guild.channels.cache.get(process.env.WEBHOOK_CHANNEL)
-
-        console.log(data)
-        console.log(reply)
       } catch (error) {
-        console.error(`Error processing webhook: ${error}`)
-        reply.code(500).send({ error: 'An error occured while processing the webhook' })
+        console.error(`Error processing request: ${error}`)
+        reply.code(500).send({ error: 'An error occured while processing the request' })
       }
     }
   }
