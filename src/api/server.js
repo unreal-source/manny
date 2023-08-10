@@ -21,7 +21,7 @@ const server = {
     // Start the server
     try {
       await app.listen({ port: process.env.WEBHOOK_PORT })
-      console.log(`Server is running on http://localhost:${process.env.WEBHOOK_PORT}`)
+      app.log.info(`Server is running on http://localhost:${process.env.WEBHOOK_PORT}`)
     } catch (e) {
       app.log(e)
       process.exit(1)
