@@ -15,6 +15,12 @@ const transport = pino.transport({
   }
 })
 
-const log = pino(transport)
+const dev = {
+  info: console.info,
+  warn: console.warn,
+  error: console.error
+}
+
+const log = process.env.LOKI_HOST ? pino(transport) : dev
 
 export default log
