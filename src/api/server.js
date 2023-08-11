@@ -1,5 +1,4 @@
 import fastify from 'fastify'
-// import fetch from 'node-fetch'
 import memberAdded from './routes/member-added.js'
 import memberUpdated from './routes/member-updated.js'
 import memberDeleted from './routes/member-deleted.js'
