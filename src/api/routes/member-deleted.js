@@ -23,13 +23,33 @@ export default function (client) {
     handler: async (request, reply) => {
       try {
         const data = request.body
-        const guild = await client.guilds.fetch(process.env.GUILD)
-        const channel = guild.channels.cache.get(process.env.WEBHOOK_CHANNEL)
+        const supporter = await prisma.supporter.findFirst({
+          where: {
+            id: data.member.current.id,
+            ghostName: data.member.current.name,
+            ghostEmail: data.member.current.email
+          }
+        })
 
-        channel.send({ content: `Member removed: ${data.member.current.name}, Status: ${data.member.current.status}` })
+        if (supporter) {
+          const guild = await client.guilds.fetch(process.env.GUILD)
+          const member = await guild.fetch(supporter.discordUsername)
+
+          // Revoke supporter role on Discord
+          if (member) {
+            await member.roles.remove(process.env.PREMIUM_ROLE)
+          }
+
+          // Remove supporter profile from database
+          await prisma.supporter.delete({
+            where: { id: data.member.current.id }
+          })
+
+          return reply.code(200).send({ message: 'Paid supporter removed' })
+        }
       } catch (error) {
-        console.error(`Error processing webhook: ${error}`)
-        reply.code(500).send({ error: 'An error occured while processing the webhook' })
+        console.error(`Error processing request: ${error}`)
+        reply.code(500).send({ error: 'An error occured while processing the request' })
       }
     }
   }
