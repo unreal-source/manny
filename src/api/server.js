@@ -1,4 +1,7 @@
 import fastify from 'fastify'
+import cors from '@fastify/cors'
+import helmet from '@fastify/helmet'
+import rateLimit from '@fastify/rate-limit'
 import memberAdded from './routes/member-added.js'
 import memberUpdated from './routes/member-updated.js'
 import memberDeleted from './routes/member-deleted.js'
@@ -8,6 +11,13 @@ const app = fastify({ logger: true })
 const server = {
   configure (client) {
     // Register plugins
+    app.register(cors, {
+      origin: 'https://primeval-fivus.unrealcommons.org',
+      methods: ['POST']
+    })
+    app.register(helmet)
+    app.register(rateLimit)
+
     // Register routes
     app.register((instance, opts, done) => {
       instance.route(memberAdded(client))
@@ -19,8 +29,8 @@ const server = {
   async start () {
     // Start the server
     try {
-      await app.listen({ port: process.env.WEBHOOK_PORT })
-      app.log.info(`Server is running on http://localhost:${process.env.WEBHOOK_PORT}`)
+      await app.listen({ port: process.env.API_PORT })
+      app.log.info(`Server is running on http://localhost:${process.env.API_PORT}`)
     } catch (e) {
       app.log(e)
       process.exit(1)
