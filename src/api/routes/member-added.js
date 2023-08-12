@@ -38,11 +38,6 @@ export default function (client) {
         })
 
         reply.code(200).send({ message: 'New paid member added' })
-
-        const guild = await client.guilds.fetch(process.env.GUILD)
-        const channel = guild.channels.cache.get(process.env.WEBHOOK_CHANNEL)
-
-        channel.send({ content: `Member created: ${data.member.current.name}, Status: ${data.member.current.status}` })
       } catch (error) {
         console.error(`Error processing request: ${error}`)
         reply.code(500).send({ error: 'An error occured while processing the request' })

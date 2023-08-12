@@ -53,12 +53,15 @@ export default function (client) {
           })
 
           if (supporter) {
-            const guild = await client.guilds.fetch(process.env.GUILD)
-            const member = await guild.fetch(supporter.discordUsername)
-
             // Revoke supporter role on Discord
-            if (member) {
-              await member.roles.remove(process.env.SUPPORTER_ROLE)
+            if (supporter.discordUsername) {
+              const guild = await client.guilds.fetch(process.env.GUILD)
+              const member = await guild.fetch(supporter.discordUsername)
+              const hasRole = member.roles.cache.some(role => role.id === process.env.SUPPORTER_ROLE)
+
+              if (member && hasRole) {
+                await member.roles.remove(process.env.SUPPORTER_ROLE)
+              }
             }
 
             // Remove supporter profile from database

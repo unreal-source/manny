@@ -25,24 +25,27 @@ export default function (client) {
         const data = request.body
         const supporter = await prisma.supporter.findFirst({
           where: {
-            id: data.member.current.id,
-            ghostName: data.member.current.name,
-            ghostEmail: data.member.current.email
+            id: data.member.previous.id,
+            ghostName: data.member.previous.name,
+            ghostEmail: data.member.previous.email
           }
         })
 
         if (supporter) {
-          const guild = await client.guilds.fetch(process.env.GUILD)
-          const member = await guild.fetch(supporter.discordUsername)
-
           // Revoke supporter role on Discord
-          if (member) {
-            await member.roles.remove(process.env.PREMIUM_ROLE)
+          if (supporter.discordUsername) {
+            const guild = await client.guilds.fetch(process.env.GUILD)
+            const member = await guild.fetch(supporter.discordUsername)
+            const hasRole = member.roles.cache.some(role => role.id === process.env.SUPPORTER_ROLE)
+
+            if (member && hasRole) {
+              await member.roles.remove(process.env.SUPPORTER_ROLE)
+            }
           }
 
           // Remove supporter profile from database
           await prisma.supporter.delete({
-            where: { id: data.member.current.id }
+            where: { id: data.member.previous.id }
           })
 
           return reply.code(200).send({ message: 'Paid supporter removed' })
