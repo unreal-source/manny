@@ -53,9 +53,9 @@ export default function (client) {
 
           if (supporter) {
             // Revoke supporter role on Discord
-            if (supporter.discordUsername) {
+            if (supporter.discordId) {
               const guild = await client.guilds.fetch(process.env.GUILD)
-              const member = await guild.members.fetch(supporter.discordUsername)
+              const member = await guild.members.fetch(supporter.discordId)
               const hasRole = member.roles.cache.some(role => role.id === process.env.SUPPORTER_ROLE)
 
               if (member && hasRole) {
