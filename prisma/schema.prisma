@@ -56,9 +56,8 @@ model Portfolio {
 }
 
 model Supporter {
-  id              Int          @id @unique
+  id              String       @id @unique
   ghostName       String
   ghostEmail      String       @unique
-  ghostStatus     String
-  discordUsername String       @unique
+  discordUsername String?      @unique
 }
