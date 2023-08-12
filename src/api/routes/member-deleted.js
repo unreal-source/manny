@@ -32,7 +32,6 @@ export default function (client) {
         })
 
         if (supporter) {
-          // Revoke supporter role on Discord
           if (supporter.discordId) {
             const guild = await client.guilds.fetch(process.env.GUILD)
             const member = await guild.members.fetch(supporter.discordId)
@@ -43,7 +42,6 @@ export default function (client) {
             }
           }
 
-          // Remove supporter profile from database
           await prisma.supporter.delete({
             where: { id: data.member.previous.id }
           })
