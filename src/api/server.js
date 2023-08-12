@@ -5,8 +5,9 @@ import rateLimit from '@fastify/rate-limit'
 import memberAdded from './routes/member-added.js'
 import memberUpdated from './routes/member-updated.js'
 import memberDeleted from './routes/member-deleted.js'
+import logger from '../utilities/logger.js'
 
-const app = fastify({ logger: true })
+const app = fastify({ logger })
 
 const server = {
   configure (client) {
