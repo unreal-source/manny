@@ -17,7 +17,10 @@ const server = {
       methods: ['POST']
     })
     app.register(helmet)
-    app.register(rateLimit)
+    app.register(rateLimit, {
+      max: 100,
+      timeWindow: '1 minute'
+    })
 
     // Register routes
     app.register((instance, opts, done) => {
