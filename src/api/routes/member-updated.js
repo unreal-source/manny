@@ -35,8 +35,7 @@ export default function (client) {
             data: {
               id: data.member.current.id,
               ghostName: data.member.current.name,
-              ghostEmail: data.member.current.email,
-              discordUsername: null
+              ghostEmail: data.member.current.email
             }
           })
 
@@ -56,7 +55,7 @@ export default function (client) {
             // Revoke supporter role on Discord
             if (supporter.discordUsername) {
               const guild = await client.guilds.fetch(process.env.GUILD)
-              const member = await guild.fetch(supporter.discordUsername)
+              const member = await guild.members.fetch(supporter.discordUsername)
               const hasRole = member.roles.cache.some(role => role.id === process.env.SUPPORTER_ROLE)
 
               if (member && hasRole) {

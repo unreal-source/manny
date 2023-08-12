@@ -32,8 +32,7 @@ export default function (client) {
           data: {
             id: data.member.current.id,
             ghostName: data.member.current.name,
-            ghostEmail: data.member.current.email,
-            discordUsername: null
+            ghostEmail: data.member.current.email
           }
         })
 

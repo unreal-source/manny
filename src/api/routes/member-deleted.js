@@ -35,7 +35,7 @@ export default function (client) {
           // Revoke supporter role on Discord
           if (supporter.discordUsername) {
             const guild = await client.guilds.fetch(process.env.GUILD)
-            const member = await guild.fetch(supporter.discordUsername)
+            const member = await guild.members.fetch(supporter.discordUsername)
             const hasRole = member.roles.cache.some(role => role.id === process.env.SUPPORTER_ROLE)
 
             if (member && hasRole) {
@@ -48,8 +48,10 @@ export default function (client) {
             where: { id: data.member.previous.id }
           })
 
-          return reply.code(200).send({ message: 'Paid supporter removed' })
+          return reply.code(200).send({ message: 'Paid member removed' })
         }
+
+        return reply.code(400).send({ message: 'Not a paid member' })
       } catch (error) {
         console.error(`Error processing request: ${error}`)
         reply.code(500).send({ error: 'An error occured while processing the request' })
