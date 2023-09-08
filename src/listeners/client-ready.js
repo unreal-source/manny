@@ -11,8 +11,10 @@ class ClientReady extends Listener {
     })
   }
 
-  run (client) {
-    client.guilds.cache.each(guild => log.info({ event: 'client-ready', guild: guild.name }, `${client.user.username} connected to ${guild.name}`))
+  async run (client) {
+    const guild = await this.client.guilds.fetch(process.env.GUILD)
+
+    log.info({ event: 'client-ready', guild: guild.name }, `${client.user.username} connected to ${guild.name}`)
   }
 }
 
