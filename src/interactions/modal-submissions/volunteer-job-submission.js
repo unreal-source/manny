@@ -2,8 +2,7 @@ import { ModalSubmission } from 'hiei.js'
 import { EmbedBuilder } from 'discord.js'
 import { channelMention } from '@discordjs/builders'
 import log from '../../utilities/logger.js'
-import pkg from '@prisma/client'
-const { PrismaClient } = pkg
+import prisma from '../../utilities/prisma-client.js'
 
 class VolunteerJobSubmission extends ModalSubmission {
   constructor () {
@@ -13,7 +12,6 @@ class VolunteerJobSubmission extends ModalSubmission {
   }
 
   async run (interaction) {
-    const prisma = new PrismaClient()
     const submitter = interaction.user
     const title = interaction.fields.getTextInputValue('title')
     const details = interaction.fields.getTextInputValue('details')
@@ -36,8 +34,6 @@ class VolunteerJobSubmission extends ModalSubmission {
         messageId: post.id
       }
     })
-
-    await prisma.$disconnect()
 
     log.info({ event: 'job-posted', channel: interaction.channel.name })
 
