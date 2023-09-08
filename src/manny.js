@@ -15,6 +15,7 @@ const client = new HieiClient({
 })
 
 Sentry.init({
+  environment: process.env.SENTRY_ENVIRONMENT,
   dsn: process.env.SENTRY_DSN,
   integrations: [new Sentry.Integrations.Http({ tracing: true })],
   tracesSampleRate: 1.0
