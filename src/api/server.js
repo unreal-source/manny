@@ -13,7 +13,7 @@ const server = {
   configure (client) {
     // Register plugins
     app.register(cors, {
-      origin: 'https://primeval-fivus.unrealcommons.org',
+      origin: process.env.API_CORS_ORIGIN,
       methods: ['POST']
     })
     app.register(helmet)
