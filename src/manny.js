@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { GatewayIntentBits } from 'discord.js'
 import { HieiClient } from 'hiei.js'
 import * as Sentry from '@sentry/node'
