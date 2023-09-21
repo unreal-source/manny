@@ -22,7 +22,6 @@ const server = {
       timeWindow: '1 minute'
     })
 
-    // Register routes
     app.register((instance, opts, done) => {
       instance.route(memberAdded(client))
       instance.route(memberUpdated(client))
@@ -31,7 +30,6 @@ const server = {
     })
   },
   async start () {
-    // Start the server
     try {
       await app.listen({ port: process.env.API_PORT })
       app.log.info(`Server is running on http://localhost:${process.env.API_PORT}`)
