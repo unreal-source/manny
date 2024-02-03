@@ -41,6 +41,8 @@ class RevShareJobSubmission extends ModalSubmission {
       }
     })
 
+    prisma.$disconnect()
+
     log.info({ event: 'job-posted', channel: interaction.channel.name })
 
     return interaction.reply({ content: `Your post was successfully submitted to ${channelMention(process.env.REVSHARE_JOB_CHANNEL)}`, ephemeral: true })

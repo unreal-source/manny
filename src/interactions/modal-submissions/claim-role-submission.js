@@ -35,6 +35,8 @@ class ClaimRoleSubmission extends ModalSubmission {
       }
     }
 
+    prisma.$disconnect()
+
     return interaction.followUp({ content: 'Email not found. You must sign up for a paid membership on our website to claim the exclusive Discord role.' })
   }
 }

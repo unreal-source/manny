@@ -49,6 +49,8 @@ export default function (client) {
           return reply.code(200).send({ message: 'Paid member removed' })
         }
 
+        prisma.$disconnect()
+
         return reply.code(400).send({ message: 'Not a paid member' })
       } catch (error) {
         console.error(`Error processing request: ${error}`)

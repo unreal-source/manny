@@ -36,6 +36,8 @@ export default function (client) {
           }
         })
 
+        prisma.$disconnect()
+
         reply.code(200).send({ message: 'New paid member added' })
       } catch (error) {
         console.error(`Error processing request: ${error}`)

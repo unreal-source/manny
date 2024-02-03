@@ -39,6 +39,8 @@ class StudioPortfolioSubmission extends ModalSubmission {
       }
     })
 
+    prisma.$disconnect()
+
     log.info({ event: 'portfolio-posted', channel: interaction.channel.name })
 
     return interaction.reply({ content: `Your portfolio was successfully submitted to ${channelMention(process.env.STUDIO_PORTFOLIO_CHANNEL)}`, ephemeral: true })

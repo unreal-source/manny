@@ -102,6 +102,8 @@ class RemovePost extends SlashCommand {
         break
       }
     }
+
+    prisma.$disconnect()
   }
 }
 

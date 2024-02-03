@@ -68,6 +68,8 @@ export default function (client) {
 
             return reply.code(200).send({ message: 'Paid supporter removed' })
           }
+
+          prisma.$disconnect()
         }
       } catch (error) {
         console.error(`Error processing request: ${error}`)
