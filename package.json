@@ -1,6 +1,6 @@
 {
   "name": "manny",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "Everyone's favorite mannequin",
   "type": "module",
   "main": "src/manny.js",
