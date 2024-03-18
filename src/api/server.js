@@ -5,6 +5,7 @@ import rateLimit from '@fastify/rate-limit'
 import memberAdded from './routes/member-added.js'
 import memberUpdated from './routes/member-updated.js'
 import memberDeleted from './routes/member-deleted.js'
+import postPublished from './routes/post-published.js'
 import logger from '../utilities/logger.js'
 
 const app = fastify({ logger })
@@ -26,6 +27,7 @@ const server = {
       instance.route(memberAdded(client))
       instance.route(memberUpdated(client))
       instance.route(memberDeleted(client))
+      instance.route(postPublished(client))
       done()
     })
   },
