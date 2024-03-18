@@ -1,4 +1,4 @@
-name: Deploy new release
+name: Deploy New Release
 
 on:
   release:
@@ -10,27 +10,21 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout main branch
-        uses: actions/checkout@v3
-      - name: Pull latest release from GitHub
-        uses: appleboy/ssh-action@v0.1.5
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Update and restart
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            cd ~/bots/manny
-            git pull git@github.com:unreal-slackers/manny.git
-      - name: Build & run
-        uses: appleboy/ssh-action@v0.1.5
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
-          script: |
-            cd ~/bots/manny
-            npm ci
+            cd bots/manny
+            git pull
+            sudo npm ci
             pm2 reload manny
+            
