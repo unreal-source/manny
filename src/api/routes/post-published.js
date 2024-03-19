@@ -71,7 +71,7 @@ export default function (client) {
                 properties: {
                   status: {
                     type: 'string',
-                    const: 'draft'
+                    enum: ['draft', 'scheduled']
                   }
                 }
               }
