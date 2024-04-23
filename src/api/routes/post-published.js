@@ -47,7 +47,7 @@ export default function (client) {
                       properties: {
                         slug: {
                           type: 'string',
-                          enum: ['note', 'news']
+                          enum: ['dispatch']
                         }
                       }
                     }
@@ -96,7 +96,7 @@ export default function (client) {
         }
 
         newsChannel.send(message)
-        return reply.code(200).send({ message: 'A new note with the news tag was published' })
+        return reply.code(200).send({ message: 'A new dispatch post was published' })
       } catch (error) {
         console.error(`Error processing request: ${error}`)
         return reply.code(500).send({ error: 'An error occured while processing the request' })
