@@ -32,7 +32,7 @@
   "devDependencies": {
     "ngrok": "^5.0.0-beta.2",
     "pino-pretty": "^10.3.1",
-    "prisma": "^5.11.0",
+    "prisma": "^5.13.0",
     "snazzy": "^9.0.0",
     "standard": "^17.1.0"
   }
