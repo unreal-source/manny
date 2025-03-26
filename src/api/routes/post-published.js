@@ -95,7 +95,10 @@ export default function (client) {
           message.files = [new AttachmentBuilder(post.feature_image)]
         }
 
-        newsChannel.send(message)
+        const postedMessage = newsChannel.send(message)
+        if (postedMessage !== null) {
+          postedMessage.crosspost()
+        }
         return reply.code(200).send({ message: 'A new dispatch post was published' })
       } catch (error) {
         console.error(`Error processing request: ${error}`)
