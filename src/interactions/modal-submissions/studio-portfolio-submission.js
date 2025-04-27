@@ -30,6 +30,14 @@ class StudioPortfolioSubmission extends ModalSubmission {
     const edited = portfolioPost.setFooter({ text: `Portfolio ID: ${post.id}` })
     await post.edit({ embeds: [edited] })
 
+    if (post) {
+      await post.crosspost()
+    }
+
+    if (post) {
+      await post.crosspost()
+    }
+
     await prisma.portfolio.create({
       data: {
         channel: process.env.STUDIO_PORTFOLIO_CHANNEL,

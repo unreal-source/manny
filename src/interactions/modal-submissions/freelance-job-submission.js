@@ -32,6 +32,10 @@ class FreelanceJobSubmission extends ModalSubmission {
     const edited = jobPost.setFooter({ text: `Job ID: ${post.id}` })
     await post.edit({ embeds: [edited] })
 
+    if (post) {
+      await post.crosspost()
+    }
+
     await prisma.job.create({
       data: {
         channel: process.env.FREELANCE_JOB_CHANNEL,
