@@ -1,8 +1,7 @@
 import { SlashCommand } from 'hiei.js'
 import { PermissionFlagsBits } from 'discord.js'
-import { importJson } from '../../utilities/json-util.js'
+import metadata from '../../../package.json'
 import log from '../../utilities/logger.js'
-import { resolve } from 'node:path'
 
 class BotVersion extends SlashCommand {
   constructor () {
@@ -14,11 +13,9 @@ class BotVersion extends SlashCommand {
   }
 
   async run (interaction) {
-    const meta = await importJson(resolve(process.cwd(), 'package.json'))
-
     log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
-    return interaction.reply({ content: `Current version is \`${meta.version}\``, ephemeral: true })
+    return interaction.reply({ content: `Current version is \`${metadata.version}\``, ephemeral: true })
   }
 }
 
