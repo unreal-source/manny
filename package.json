@@ -1,7 +1,7 @@
 {
   "name": "manny",
   "version": "3.3.0",
-  "description": "Everyone's favorite mannequin",
+  "description": "Everyone's favorite mannequin. Made to serve Unreal Source.",
   "type": "module",
   "main": "src/manny.js",
   "engines": {
