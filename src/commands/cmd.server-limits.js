@@ -17,13 +17,17 @@ export default {
       components: [
         new ContainerBuilder()
           .addTextDisplayComponents(
-            new TextDisplayBuilder().setContent('## Server Limits')
+            new TextDisplayBuilder()
+              .setContent('## Server Limits')
           )
           .addSeparatorComponents(
-            new SeparatorBuilder().setSpacing('Small').setDivider(true)
+            new SeparatorBuilder()
+              .setSpacing('Small')
+              .setDivider(true)
           )
           .addTextDisplayComponents(
-            new TextDisplayBuilder().setContent(`**Members:** ${membersCurrent} / ${membersLimit}\n**Presences:** ${presenceCurrent} / ${presenceLimit}`)
+            new TextDisplayBuilder()
+              .setContent(`**Members:** ${membersCurrent} / ${membersLimit}\n**Presences:** ${presenceCurrent} / ${presenceLimit}`)
           )
       ],
       flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2]
