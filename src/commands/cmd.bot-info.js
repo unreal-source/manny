@@ -1,0 +1,69 @@
+import metadata from '../../package.json'
+import { dedent } from '../utilities/string-util.js'
+import { log } from '../utilities/logger.js'
+import {
+  ActionRowBuilder,
+  ContainerBuilder,
+  MessageFlags,
+  PermissionFlagsBits,
+  SectionBuilder,
+  SeparatorBuilder,
+  TextDisplayBuilder,
+  ThumbnailBuilder
+} from 'discord.js'
+
+export default {
+  interaction: 'slash',
+  name: 'about',
+  description: 'Learn more about Manny',
+  defaultMemberPermissions: PermissionFlagsBits.SendMessages,
+  async execute ({ interaction, client, components }) {
+    await client.application.fetch()
+    const name = client.application.name
+    const description = client.application.description
+    const version = metadata.version
+    const sourceCodeButton = components.get('button:view-source-code')
+    const issuesButton = components.get('button:report-issue')
+    const patronageButton = components.get('button:become-patron')
+
+    return interaction.reply({
+      components: [
+        new ContainerBuilder()
+          .addSectionComponents(
+            new SectionBuilder()
+              .setThumbnailAccessory(
+                new ThumbnailBuilder()
+                  .setURL(client.user.displayAvatarURL())
+              )
+              .addTextDisplayComponents(
+                new TextDisplayBuilder()
+                  .setContent(`# ${name} ${version}\n${description}`)
+              )
+          )
+          .addTextDisplayComponents(
+            new TextDisplayBuilder()
+              .setContent(dedent`
+                ### Features
+                - Allows members to stream in voice chat
+                - Manages the job board
+                - Answers frequently-asked questions
+                - Provides information about the server
+                - Generates random game ideas
+                
+                Created by <@84183781501571072>. Code contributed by <@223322728424407042> and <@341285849301909506>.`
+              )
+          )
+          .addSeparatorComponents(
+            new SeparatorBuilder()
+              .setSpacing('Large')
+              .setDivider(true)
+          )
+          .addActionRowComponents(
+            new ActionRowBuilder()
+              .addComponents(sourceCodeButton.data, issuesButton.data, patronageButton.data)
+          )
+      ],
+      flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2]
+    })
+  }
+}
