@@ -1,6 +1,5 @@
 import metadata from '../../package.json'
 import { dedent } from '../utilities/string-util.js'
-import { log } from '../utilities/logger.js'
 import {
   ActionRowBuilder,
   ContainerBuilder,
@@ -37,21 +36,27 @@ export default {
               )
               .addTextDisplayComponents(
                 new TextDisplayBuilder()
-                  .setContent(`# ${name} ${version}\n${description}`)
+                  .setContent(dedent`
+                    # ${name} ${version}
+                    ${description}
+                    ### Features
+                    - Allows members to stream in voice chat
+                    - Manages the job board
+                    - Answers frequently-asked questions
+                    - Provides information about the server
+                    - Generates random game ideas`)
               )
+          )
+          .addSeparatorComponents(
+            new SeparatorBuilder()
+              .setSpacing('Small')
+              .setDivider(false)
           )
           .addTextDisplayComponents(
             new TextDisplayBuilder()
               .setContent(dedent`
-                ### Features
-                - Allows members to stream in voice chat
-                - Manages the job board
-                - Answers frequently-asked questions
-                - Provides information about the server
-                - Generates random game ideas
-                
-                Created by <@84183781501571072>. Code contributed by <@223322728424407042> and <@341285849301909506>.`
-              )
+                ### Credits
+                Created by pfist. Code contributed by Matt Boatswain and KaosSpectrum.`)
           )
           .addSeparatorComponents(
             new SeparatorBuilder()
