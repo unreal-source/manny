@@ -12,3 +12,19 @@ export function randomElement (arr) {
 export function randomInteger (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
+
+/** Get a random weighted element from an array
+ * @param {array} choices - The array you want to get a random weighted element from
+ */
+export function randomWeighted (choices) {
+  const totalWeight = choices.reduce((sum, choice) => sum + choice.weight, 0)
+  const random = Math.random() * totalWeight
+  let cumulative = 0
+
+  for (const choice of choices) {
+    cumulative += choice.weight
+    if (random < cumulative) {
+      return choice.outcome
+    }
+  }
+}

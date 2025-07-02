@@ -1,19 +1,13 @@
-import { SlashCommand } from 'hiei.js'
-import { PermissionFlagsBits } from 'discord.js'
-import { generate } from '../../utilities/game-idea-generator.js'
-import { randomElement } from '../../utilities/random-util.js'
-import log from '../../utilities/logger.js'
+import { MessageFlags, PermissionFlagsBits } from 'discord.js'
+import { generate } from '../utilities/game-idea-generator.js'
+import { randomElement } from '../utilities/random-util.js'
 
-class GameIdea extends SlashCommand {
-  constructor () {
-    super({
-      name: 'gameidea',
-      description: 'Generate a random game idea',
-      defaultMemberPermissions: PermissionFlagsBits.SendMessages
-    })
-  }
-
-  async run (interaction) {
+export default {
+  interaction: 'slash',
+  name: 'gameidea',
+  description: 'Ask Manny to generate a random game idea.',
+  defaultMemberPermissions: PermissionFlagsBits.SendMessages,
+  async execute ({ interaction }) {
     const templates = [
       'A game where you {verb} {object:plural} to {goal}.',
       'A game where you {verb} {object:plural} to {goal}. The twist: {diversifier}.',
@@ -41,10 +35,6 @@ class GameIdea extends SlashCommand {
       'A {style:a} {genre:an} where you {verb} {supernatural:singular} in {setting:in}, but {diversifier}.'
     ]
 
-    log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
-
-    return interaction.reply({ content: generate(randomElement(templates)), ephemeral: true })
+    return interaction.reply({ content: generate(randomElement(templates)), flags: [MessageFlags.Ephemeral] })
   }
 }
-
-export default GameIdea
