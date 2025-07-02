@@ -46,7 +46,7 @@ export default {
 
     return interaction.reply({
       content: dedent`
-      ## :game_die: ${interaction.member.displayName} rolled ${quantity} ${dice.name}...
+      ## :game_die: You rolled ${quantity} ${dice.name}...
       ${roll}`
     })
   }
