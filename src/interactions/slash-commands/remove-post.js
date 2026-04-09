@@ -1,5 +1,6 @@
 import { SlashCommand } from 'hiei.js'
 import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js'
+import { isStaff } from '../utilities/discord-util.js'
 import log from '../../utilities/logger.js'
 import prisma from '../../utilities/prisma-client.js'
 
@@ -59,7 +60,7 @@ class RemovePost extends SlashCommand {
         const channel = await interaction.guild.channels.fetch(post.channel)
         const message = await channel.messages.fetch(post.messageId)
 
-        if (message.content.includes(interaction.member.id) && post.authorId === interaction.member.id) {
+        if (isStaff(interaction.member) || (message.content.includes(interaction.member.id) && post.authorId === interaction.member.id)) {
           await message.delete()
           await prisma.job.delete({
             where: { messageId: id }
@@ -87,7 +88,7 @@ class RemovePost extends SlashCommand {
         const channel = await interaction.guild.channels.fetch(post.channel)
         const message = await channel.messages.fetch(post.messageId)
 
-        if (message.content.includes(interaction.member.id) && post.authorId === interaction.member.id) {
+        if (isStaff(interaction.member) || (message.content.includes(interaction.member.id) && post.authorId === interaction.member.id)) {
           await message.delete()
           await prisma.portfolio.delete({
             where: { messageId: id }
