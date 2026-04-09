@@ -1,6 +1,6 @@
 import { SlashCommand } from 'hiei.js'
 import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js'
-import { isStaff } from '../utilities/discord-util.js'
+import { isStaff } from '../../utilities/discord-util.js'
 import log from '../../utilities/logger.js'
 import prisma from '../../utilities/prisma-client.js'
 
