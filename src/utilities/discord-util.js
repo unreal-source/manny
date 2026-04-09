@@ -12,3 +12,13 @@ export function createModalCollector (client, interaction) {
     max: 1
   })
 }
+
+/** Detect whether a member is an admin or moderator
+ * @param {member} member - The guild member
+*/
+export function isStaff (member) {
+  const isAdmin = member.roles.cache.some(role => role.id === process.env.ADMIN_ROLE)
+  const isModerator = member.roles.cache.some(role => role.id === process.env.MODERATOR_ROLE)
+
+  return isAdmin || isModerator
+}
