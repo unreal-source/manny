@@ -1,7 +1,7 @@
 import { log } from '../utilities/logger.js'
 
 export default {
-  event: 'ready',
+  event: 'clientReady',
   emitter: 'client',
   once: true,
   async execute (client) {
