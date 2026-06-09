@@ -1,4 +1,4 @@
-import { MessageFlags, PermissionFlagsBits } from 'discord.js'
+import { ContainerBuilder, MessageFlags, PermissionFlagsBits, TextDisplayBuilder } from 'discord.js'
 import ms from 'ms'
 
 export default {
@@ -8,6 +8,11 @@ export default {
   defaultMemberPermissions: PermissionFlagsBits.ManageGuild,
   async execute ({ interaction, client }) {
     const uptime = ms(client.uptime, { long: true })
-    return interaction.reply({ content: `:stopwatch: I have been online for \`${uptime}\``, flags: MessageFlags.Ephemeral })
+    return interaction.reply({
+      components: [
+        new ContainerBuilder()
+          .addTextDisplayComponents(new TextDisplayBuilder().setContent(`:stopwatch:     Manny has been online for **${uptime}**`))
+      ], flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2]
+    })
   }
 }
