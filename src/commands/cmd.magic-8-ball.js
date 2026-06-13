@@ -1,6 +1,5 @@
-import { PermissionFlagsBits } from 'discord.js'
+import { ContainerBuilder, MessageFlags, PermissionFlagsBits, TextDisplayBuilder } from 'discord.js'
 import { randomElement } from '../utilities/random-util.js'
-import { dedent } from '../utilities/string-util.js'
 
 export default {
   interaction: 'slash',
@@ -40,10 +39,17 @@ export default {
       'Very doubtful.'
     ]
 
+    // return interaction.reply({
+    //   content: dedent`
+    //   ## :8ball: ${question}
+    //   ${randomElement(answers)}`
+    // })
+
     return interaction.reply({
-      content: dedent`
-      ## :8ball: ${question}
-      ${randomElement(answers)}`
+      components: [
+        new ContainerBuilder()
+          .addTextDisplayComponents(new TextDisplayBuilder().setContent(`### :8ball:   ${question}\n${randomElement(answers)}`))
+      ], flags: [MessageFlags.IsComponentsV2]
     })
   }
 }

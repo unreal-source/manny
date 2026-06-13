@@ -20,7 +20,7 @@ export default {
     const response = await interaction.reply({
       components: [
         new ContainerBuilder()
-          .addTextDisplayComponents(new TextDisplayBuilder().setContent(':ping_pong:     **Ping...**'))
+          .addTextDisplayComponents(new TextDisplayBuilder().setContent(':ping_pong:  Ping...'))
       ],
       flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       withResponse: true
@@ -33,7 +33,7 @@ export default {
     return interaction.editReply({
       components: [
         new ContainerBuilder()
-          .addTextDisplayComponents(new TextDisplayBuilder().setContent(`:ping_pong:     Ping... Pong! Roundtrip took **${roundtrip}ms**. Discord API heartbeat is **${heartbeatDisplay}**.`))
+          .addTextDisplayComponents(new TextDisplayBuilder().setContent(`:ping_pong:  Ping... Pong! Roundtrip took **${roundtrip}ms**. Discord API heartbeat is **${heartbeatDisplay}**.`))
       ],
       flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
     })

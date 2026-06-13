@@ -1,6 +1,5 @@
-import { PermissionFlagsBits } from 'discord.js'
+import { ContainerBuilder, MessageFlags, PermissionFlagsBits, TextDisplayBuilder } from 'discord.js'
 import { randomWeighted } from '../utilities/random-util.js'
-import { dedent } from '../utilities/string-util.js'
 
 export default {
   interaction: 'slash',
@@ -28,9 +27,10 @@ export default {
     ]
 
     return interaction.reply({
-      content: dedent`
-        ## :coin: You toss a coin high in the air...
-        ${randomWeighted(choices)}`
+      components: [
+        new ContainerBuilder()
+          .addTextDisplayComponents(new TextDisplayBuilder().setContent(`### :coin:   You toss a coin high in the air...\n${randomWeighted(choices)}`))
+      ], flags: [MessageFlags.IsComponentsV2]
     })
   }
 }

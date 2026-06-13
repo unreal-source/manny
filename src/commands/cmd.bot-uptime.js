@@ -11,7 +11,7 @@ export default {
     return interaction.reply({
       components: [
         new ContainerBuilder()
-          .addTextDisplayComponents(new TextDisplayBuilder().setContent(`:stopwatch:     Manny has been online for **${uptime}**`))
+          .addTextDisplayComponents(new TextDisplayBuilder().setContent(`Manny has been online for **${uptime}**`))
       ], flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2]
     })
   }

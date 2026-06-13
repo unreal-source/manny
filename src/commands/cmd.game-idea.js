@@ -1,4 +1,4 @@
-import { MessageFlags, PermissionFlagsBits } from 'discord.js'
+import { ContainerBuilder, MessageFlags, PermissionFlagsBits, TextDisplayBuilder } from 'discord.js'
 import { generate } from '../utilities/game-idea-generator.js'
 import { randomElement } from '../utilities/random-util.js'
 
@@ -35,6 +35,11 @@ export default {
       'A {style:a} {genre:an} where you {verb} {supernatural:singular} in {setting:in}, but {diversifier}.'
     ]
 
-    return interaction.reply({ content: generate(randomElement(templates)), flags: [MessageFlags.Ephemeral] })
+    return interaction.reply({
+      components: [
+        new ContainerBuilder()
+          .addTextDisplayComponents(new TextDisplayBuilder().setContent(`### :thought_balloon:   Here's a game idea...\n${generate(randomElement(templates))}`))
+      ], flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2]
+    })
   }
 }

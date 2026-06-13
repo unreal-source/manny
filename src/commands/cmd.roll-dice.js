@@ -1,4 +1,4 @@
-import { PermissionFlagsBits } from 'discord.js'
+import { ContainerBuilder, MessageFlags, PermissionFlagsBits, TextDisplayBuilder } from 'discord.js'
 import { randomInteger } from '../utilities/random-util.js'
 import { dedent } from '../utilities/string-util.js'
 
@@ -44,10 +44,17 @@ export default {
     const roll = Array(quantity).fill(0).map(i => randomInteger(1, sides)).join(' • ')
     const dice = this.options[1].choices.find(choice => choice.value === sides)
 
+    // return interaction.reply({
+    //   content: dedent`
+    //   ## :game_die: You rolled ${quantity} ${dice.name}...
+    //   ${roll}`
+    // })
+
     return interaction.reply({
-      content: dedent`
-      ## :game_die: You rolled ${quantity} ${dice.name}...
-      ${roll}`
+      components: [
+        new ContainerBuilder()
+          .addTextDisplayComponents(new TextDisplayBuilder().setContent(`### :game_die:   You rolled ${quantity} ${dice.name}...\n${roll}`))
+      ], flags: [MessageFlags.IsComponentsV2]
     })
   }
 }
