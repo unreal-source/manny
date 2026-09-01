@@ -11,7 +11,7 @@ class ClientError extends Listener {
   }
 
   run (error) {
-    return log.error({ event: 'client-error', error })
+    return log.error({ event: 'client-error', err: error })
   }
 }
 
