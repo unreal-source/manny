@@ -14,7 +14,7 @@ class MessageCreate extends Listener {
     })
   }
 
-  async run(message) {
+  async run (message) {
     if (message.author.bot) return
 
     const attachmentCount = [...message.attachments.values()].filter((a) => a.contentType.includes('image')).length
