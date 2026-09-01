@@ -33,5 +33,8 @@
     "prisma": "^5.11.0",
     "snazzy": "^9.0.0",
     "standard": "^17.1.0"
+  },
+  "overrides": {
+    "fast-uri": "2.4.4"
   }
 }
