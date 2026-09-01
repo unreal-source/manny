@@ -1,7 +1,6 @@
-import 'dotenv/config'
+import * as Sentry from '@sentry/node'
 import { GatewayIntentBits } from 'discord.js'
 import { HieiClient } from 'hiei.js'
-import * as Sentry from '@sentry/node'
 import api from './api/server.js'
 
 const client = new HieiClient({
@@ -10,9 +9,12 @@ const client = new HieiClient({
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildPresences,
-    GatewayIntentBits.GuildVoiceStates
+    GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.MessageContent
   ]
 })
+
+client.suspects = new Map()
 
 Sentry.init({
   environment: process.env.SENTRY_ENVIRONMENT,
