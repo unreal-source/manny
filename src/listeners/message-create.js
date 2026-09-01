@@ -30,7 +30,7 @@ class MessageCreate extends Listener {
     let entries = this.client.suspects.get(author) ?? []
 
     entries = entries.filter((e) => now - e.timestamp < ms(process.env.SUSPECT_WINDOW))
-    entries.push({ channel, timestamp: now })
+    entries.push({ channel, message, timestamp: now })
     this.client.suspects.set(author, entries)
 
     const distinctChannels = new Set(entries.map((e) => e.channel))
@@ -40,6 +40,10 @@ class MessageCreate extends Listener {
       log.info(`Timing out ${message.author.username} for suspected account compromise`)
       try {
         await message.member.timeout(ms('1h'), 'Suspected account compromise')
+
+        for (const entry of entries) {
+          await entry.message.delete()
+        }
 
         const incident = await prisma.case.create({
           data: {
