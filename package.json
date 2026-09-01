@@ -10,7 +10,7 @@
   "scripts": {
     "proxy": "ngrok http 3000",
     "lint": "standard | snazzy",
-    "start": "node src/manny.js"
+    "start": "nub src/manny.js"
   },
   "dependencies": {
     "@axiomhq/pino": "^0.1.3",
