@@ -41,7 +41,7 @@ class MessageCreate extends Listener {
         const notification = new EmbedBuilder()
           .setAuthor({ name: message.guild.name, iconURL: message.guild.iconURL() })
           .setTitle('You were kicked from the server')
-          .setDescription(`**Reason:** Suspicious activity indicates your account may be compromised. For your safety, please change your password immediately and consider enabling two-factor authentication for added protection before you rejoin the server.`)
+          .setDescription('**Reason:** Suspicious activity indicates your account may be compromised. For your safety, please change your password immediately and consider enabling two-factor authentication for added protection before you rejoin the server.')
           .setTimestamp()
 
         await message.member.send({ embeds: [notification] })
@@ -64,7 +64,7 @@ class MessageCreate extends Listener {
             memberId: message.member.id,
             moderator: this.client.user.username,
             moderatorId: this.client.user.id,
-            reason: 'Suspected account compromise',
+            reason: 'Suspected account compromise'
           }
         })
 
