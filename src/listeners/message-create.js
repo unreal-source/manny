@@ -51,6 +51,10 @@ class MessageCreate extends Listener {
 
       // Kick the suspect
       try {
+        const suspectUsername = message.author.username
+        const suspectId = message.author.id
+        const suspectAvatar = message.member.displayAvatarURL()
+
         await message.member.kick('Suspected account compromise')
 
         for (const entry of entries) {
@@ -60,8 +64,8 @@ class MessageCreate extends Listener {
         const incident = await prisma.case.create({
           data: {
             action: 'Kicked',
-            member: message.member.username,
-            memberId: message.member.id,
+            member: suspectUsername,
+            memberId: suspectId,
             moderator: this.client.user.username,
             moderatorId: this.client.user.id,
             reason: 'Suspected account compromise'
@@ -73,7 +77,7 @@ class MessageCreate extends Listener {
           .setAuthor({ name: '🥾 Kicked' })
           .setDescription(`**Member:** ${incident.member}\n**Member ID:** ${incident.memberId}\n**Reason:** ${incident.reason}`)
           .setFooter({ text: `Case ${incident.id} • ${incident.moderator}` })
-          .setThumbnail(message.member.displayAvatarURL())
+          .setThumbnail(suspectAvatar)
           .setTimestamp()
 
         const moderationLogEntry = await moderationLogChannel.send({ embeds: [moderationLogEmbed] })
@@ -85,7 +89,7 @@ class MessageCreate extends Listener {
 
         prisma.$disconnect()
 
-        log.info(`Kicked ${message.author.username} for suspected account compromise`)
+        log.info(`Kicked ${suspectUsername} for suspected account compromise`)
       } catch (e) {
         log.error(e)
       }
