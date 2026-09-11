@@ -1,11 +1,11 @@
 {
   "name": "manny",
-  "version": "3.5.1",
+  "version": "4.0.0",
   "description": "Everyone's favorite mannequin",
   "type": "module",
   "main": "src/manny.js",
   "engines": {
-    "node": ">=18.19.0"
+    "node": "^24.19.0"
   },
   "scripts": {
     "proxy": "ngrok http 3000",
