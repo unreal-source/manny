@@ -9,11 +9,10 @@
   },
   "scripts": {
     "proxy": "ngrok http 3000",
-    "lint": "standard | snazzy",
+    "lint": "biome lint ./src",
     "start": "nub src/manny.js"
   },
   "dependencies": {
-    "@axiomhq/pino": "^0.1.3",
     "@fastify/cors": "^9.0.1",
     "@fastify/helmet": "^11.1.1",
     "@fastify/rate-limit": "^9.1.0",
@@ -28,10 +27,9 @@
     "pino": "^8.19.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.5.12",
     "ngrok": "^5.0.0-beta.2",
     "pino-pretty": "^10.3.1",
-    "prisma": "^5.11.0",
-    "snazzy": "^9.0.0",
-    "standard": "^17.1.0"
+    "prisma": "^5.11.0"
   }
 }
