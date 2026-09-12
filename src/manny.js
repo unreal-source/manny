@@ -2,6 +2,9 @@ import * as Sentry from '@sentry/node'
 import { Client, GatewayIntentBits } from 'discord.js'
 import { createInteractionHandler, createEventHandler } from 'hiei.js'
 import api from './api/server.js'
+import { initLogger } from 'evlog'
+
+initLogger({ env: { service: 'manny' } })
 
 Sentry.init({
   environment: process.env.SENTRY_ENVIRONMENT,
@@ -25,9 +28,9 @@ createInteractionHandler(client, {
   commandsDirectory: 'src/interactions/commands'
 })
 
-// createEventHandler({
-//   eventsDirectory: './src/events'
-// })
+createEventHandler(client, {
+  eventsDirectory: 'src/events'
+})
 
 await client.login(process.env.TOKEN)
 
