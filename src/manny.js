@@ -1,9 +1,14 @@
 import * as Sentry from '@sentry/node'
-import { GatewayIntentBits } from 'discord.js'
-import { HieiClient } from 'hiei.js'
+import { Client, GatewayIntentBits } from 'discord.js'
+import { createInteractionHandler, createEventHandler } from 'hiei.js'
 import api from './api/server.js'
 
-const client = new HieiClient({
+Sentry.init({
+  environment: process.env.SENTRY_ENVIRONMENT,
+  dsn: process.env.SENTRY_DSN
+})
+
+const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMembers,
@@ -16,10 +21,13 @@ const client = new HieiClient({
 
 client.suspects = new Map()
 
-Sentry.init({
-  environment: process.env.SENTRY_ENVIRONMENT,
-  dsn: process.env.SENTRY_DSN
+createInteractionHandler(client, {
+  commandsDirectory: 'src/interactions/commands'
 })
+
+// createEventHandler({
+//   eventsDirectory: './src/events'
+// })
 
 await client.login(process.env.TOKEN)
 
