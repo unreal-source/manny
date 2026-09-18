@@ -6,6 +6,6 @@ export default {
   once: true,
   async execute (client) {
     const guild = await client.guilds.fetch(process.env.GUILD)
-    log.info('auth', `${client.user.username} successfully connected to ${guild.name}`)
+    log.info('ready', `${client.user.username} [${client.user.id}] connected to ${guild.name} [${guild.id}]`)
   }
 }
