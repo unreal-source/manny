@@ -14,6 +14,7 @@ class ServerInfo extends SlashCommand {
   }
 
   async run (interaction) {
+    const guild = await interaction.guild.fetch()
     const boostTierName = {
       0: 'No boosts',
       1: 'Level 1',
@@ -27,20 +28,20 @@ class ServerInfo extends SlashCommand {
       3: 14
     }
 
-    const boostCount = interaction.guild.premiumSubscriptionCount > 0 ? `${interaction.guild.premiumSubscriptionCount} Boosts •` : ''
-    const nextTier = boostCount < boostThreshold[3] ? `• ${boostThreshold[interaction.guild.premiumTier + 1] - boostCount} more until next level` : ''
-    const boostStatus = `${boostTierName[interaction.guild.premiumTier]} ${boostCount} ${nextTier}`
-    const description = interaction.guild.description ? `${interaction.guild.description}\n—` : ''
-    const totalMembers = interaction.guild.memberCount.toString()
-    const onlineMembers = interaction.guild.members.cache.filter(member => member.presence?.status === 'online').size.toString()
-    const created = `${time(interaction.guild.createdAt)} • ${time(interaction.guild.createdAt, 'R')}`
+    const boostCount = guild.premiumSubscriptionCount > 0 ? `${guild.premiumSubscriptionCount} Boosts •` : ''
+    const nextTier = boostCount < boostThreshold[3] ? `• ${boostThreshold[guild.premiumTier + 1] - boostCount} more until next level` : ''
+    const boostStatus = `${boostTierName[guild.premiumTier]} ${boostCount} ${nextTier}`
+    const description = guild.description ? `${guild.description}\n—` : ''
+    const totalMembers = guild.approximateMemberCount.toString()
+    const onlineMembers = guild.approximatePresenceCount.toString()
+    const created = `${time(guild.createdAt)} • ${time(guild.createdAt, 'R')}`
     const links = `[Website](${process.env.WEBSITE_LINK}) • [Twitter](${process.env.TWITTER_LINK}) • [GitHub](${process.env.GITHUB_LINK}) • [Donate](${process.env.DONATE_LINK})`
-    const invite = interaction.guild.vanityURLCode ? `\n**Invite:** [discord.gg/${interaction.guild.vanityURLCode}](https://discord.gg/${interaction.guild.vanityURLCode})` : ''
+    const invite = guild.vanityURLCode ? `\n**Invite:** [discord.gg/${guild.vanityURLCode}](https://discord.gg/${guild.vanityURLCode})` : ''
 
     const info = new EmbedBuilder()
-      .setTitle(interaction.guild.name)
+      .setTitle(guild.name)
       .setDescription(`${description}\n**Members:** ${thousands(totalMembers)} • ${thousands(onlineMembers)} online\n**Boost Status:** ${boostStatus}\n**Created:** ${created}${invite}\n—\n${links}`)
-      .setThumbnail(interaction.guild.iconURL())
+      .setThumbnail(guild.iconURL())
 
     log.info({ event: 'command-used', command: this.name, channel: interaction.channel.name })
 
