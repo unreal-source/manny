@@ -1,10 +1,14 @@
 import * as Sentry from '@sentry/node'
 import { Client, GatewayIntentBits } from 'discord.js'
 import { createInteractionHandler, createEventHandler } from 'hiei.js'
-import api from './api/server.js'
+// import api from './api/server.js'
 import { initLogger } from 'evlog'
+import { createSentryDrain } from 'evlog/sentry'
 
-initLogger({ env: { service: 'manny' } })
+initLogger({
+  env: { service: 'manny' },
+  drain: createSentryDrain()
+})
 
 Sentry.init({
   environment: process.env.SENTRY_ENVIRONMENT,
@@ -34,5 +38,5 @@ createEventHandler(client, {
 
 await client.login(process.env.TOKEN)
 
-api.configure(client)
-api.start()
+// api.configure(client)
+// api.start()
